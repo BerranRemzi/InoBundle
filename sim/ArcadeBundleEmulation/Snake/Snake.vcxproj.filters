@@ -7,33 +7,90 @@
     </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="bgi">
+      <UniqueIdentifier>{f63753fb-ef06-4dd6-857a-8a12f7e5a508}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="bgi\Header Files">
+      <UniqueIdentifier>{9a3a612e-c538-4e45-b75b-d58c408f1585}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arduino">
+      <UniqueIdentifier>{0185ea6b-7808-46d6-acf2-e31f91b4fc57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arduino\Header Files">
+      <UniqueIdentifier>{e03ea847-a073-41a4-868d-6638a4f5ba14}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Arduino.cpp">
+    <ClCompile Include="bgiout.cxx">
+      <Filter>bgi</Filter>
+    </ClCompile>
+    <ClCompile Include="dibutil.cxx">
+      <Filter>bgi</Filter>
+    </ClCompile>
+    <ClCompile Include="drawing.cxx">
+      <Filter>bgi</Filter>
+    </ClCompile>
+    <ClCompile Include="file.cxx">
+      <Filter>bgi</Filter>
+    </ClCompile>
+    <ClCompile Include="misc.cxx">
+      <Filter>bgi</Filter>
+    </ClCompile>
+    <ClCompile Include="mouse.cxx">
+      <Filter>bgi</Filter>
+    </ClCompile>
+    <ClCompile Include="palette.cxx">
+      <Filter>bgi</Filter>
+    </ClCompile>
+    <ClCompile Include="text.cxx">
+      <Filter>bgi</Filter>
+    </ClCompile>
+    <ClCompile Include="winbgi.cxx">
+      <Filter>bgi</Filter>
+    </ClCompile>
+    <ClCompile Include="winthread.cxx">
+      <Filter>bgi</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cxx">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SnakeGame.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Arduino.cpp">
+      <Filter>Arduino</Filter>
     </ClCompile>
     <ClCompile Include="Snake.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Arduino</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="LedControl.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="dibutil.h">
+      <Filter>bgi\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics.h">
+      <Filter>bgi\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="winbgi.h">
+      <Filter>bgi\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="winbgim.h">
+      <Filter>bgi\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="winbgitypes.h">
+      <Filter>bgi\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Arduino.h">
-      <Filter>Header Files</Filter>
+      <Filter>Arduino\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LedControl.h">
+      <Filter>Arduino\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Snake.h">
-      <Filter>Header Files</Filter>
+      <Filter>Arduino\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
