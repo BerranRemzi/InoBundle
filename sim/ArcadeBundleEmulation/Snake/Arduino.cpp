@@ -23,6 +23,12 @@ Snake snake;
 /* we always wait a bit between updates of the display */
 unsigned long delaytime = 100;
 
+static uint8_t screen[8][8];
+
+void setLed(int x, int y, uint8_t brightness) {
+	screen[y][x] = brightness;
+}
+
 void setup() {
 	Serial.begin(9600);
 	//Serial.println("Snake 8x8");
@@ -83,7 +89,7 @@ void loop() {
 
 	snake.update();
 	snake.render();
-	updateScreen();
+	updateScreen(&screen[0], 64);
 
 	delay(33);	// 30 fps
 }

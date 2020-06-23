@@ -1,10 +1,6 @@
 #pragma once
-
-#include <stdlib.h>
 #include <stdint.h>
-#include <ctime>
 #include <stdint.h>
-
 #include "Arduino.h"
 
 #define LED_ON 0xFF

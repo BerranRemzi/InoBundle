@@ -1,8 +1,10 @@
 #include "graphics.h"
+
 #include <iostream>
 #include <math.h>
 #include <stdlib.h>                     // Provides exit
 #include <ctype.h>                      // Provides toupper
+#include "Emulator.h"
 #include "Arduino.h"
 
 using namespace std;
@@ -50,4 +52,17 @@ void draw_dot(int _x, int _y, int _color) {
     setcolor(_color);
     setfillstyle(SOLID_FILL, _color);
     fillellipse(y, x, size, size);
+}
+
+void updateScreen(uint8_t _input[][8], uint8_t _size) {
+    for (int x = 0; x < 8; x++) {
+        for (int y = 0; y < 8; y++) {
+            if(_input[x][y]==0x00){
+                draw_dot(x, y, BLACK);
+            }
+            else {
+                draw_dot(x, y, RED);
+            }         
+        }
+    }
 }

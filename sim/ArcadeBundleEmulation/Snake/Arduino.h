@@ -1,22 +1,18 @@
 #pragma once
-#include <iostream>
-#include <string>
 #include <stdio.h>
 #include <stdint.h>
 #include <Windows.h>
+#include "Emulator.h"
 
 #define OUTPUT 0
 #define INPUT 1
 #define INPUT_PULLUP 2
 
 void setup(void);
-void loop(void);
-void delay(uint32_t _delay);
+void loop(void); 
 
-static uint8_t screen[8][8];
-inline void setLed(int x, int y, uint8_t brightness) {
-	screen[y][x] = brightness;
-}
+
+void setLed(int x, int y, uint8_t brightness);
 
 class SoftwareSerial {
 public:
