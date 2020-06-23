@@ -81,5 +81,9 @@ void loop() {
 	}
 	//rows();
 
+	snake.update();
+	snake.render();
+	updateScreen();
+
 	delay(33);	// 30 fps
 }
