@@ -11,6 +11,9 @@
 void setup(void);
 void loop(void); 
 
+
+void setLed(int x, int y, uint8_t brightness);
+
 class SoftwareSerial {
 public:
 	void begin(uint32_t _baud) {

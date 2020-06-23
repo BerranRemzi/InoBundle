@@ -95,8 +95,5 @@
     <ClInclude Include="Emulator.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="DualFunctionButton.h">
-      <Filter>Arduino</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
