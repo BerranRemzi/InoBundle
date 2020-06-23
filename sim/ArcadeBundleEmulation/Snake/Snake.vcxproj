@@ -67,6 +67,7 @@
     <ClCompile Include="bgiout.cxx" />
     <ClCompile Include="dibutil.cxx" />
     <ClCompile Include="drawing.cxx" />
+    <ClCompile Include="Emulator.cpp" />
     <ClCompile Include="file.cxx" />
     <ClCompile Include="misc.cxx" />
     <ClCompile Include="mouse.cxx" />
@@ -80,6 +81,7 @@
   <ItemGroup>
     <ClInclude Include="Arduino.h" />
     <ClInclude Include="dibutil.h" />
+    <ClInclude Include="DualFunctionButton.h" />
     <ClInclude Include="Emulator.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="LedControl.h" />

@@ -35,7 +35,6 @@ int APIENTRY WinMain
     // presses the ESC key to exit.
     while (GetAsyncKeyState(VK_ESCAPE) == false) {
         loop();
-        delay(10);
     }
 
 }
@@ -61,7 +60,7 @@ void updateScreen(uint8_t _input[][8], uint8_t _size) {
                 draw_dot(x, y, BLACK);
             }
             else {
-                draw_dot(x, y, RED);
+                draw_dot(x, y, WHITE);
             }         
         }
     }

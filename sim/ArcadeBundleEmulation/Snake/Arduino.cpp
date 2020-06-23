@@ -1,5 +1,5 @@
 #include "Arduino.h"
-//#include "DualFunctionButton.h"
+#include "DualFunctionButton.h"
 #include "LedControl.h"
 
 #include "Snake.h"
@@ -44,46 +44,18 @@ void setup() {
 	lc.clearDisplay(0);
 }
 
-
-void rows() {
-	for (int row = 0; row < 8; row++) {
-		delay(delaytime);
-		lc.setRow(0, row, 0b10100000);
-		delay(delaytime);
-		lc.setRow(0, row, (byte)0);
-		for (int i = 0; i < row; i++) {
-			delay(delaytime);
-			lc.setRow(0, row, 0b10100000);
-			delay(delaytime);
-			lc.setRow(0, row, (byte)0);
-		}
-	}
-}
-
-
 void loop() {
-	//printf("Hello");
-	//Serial.println("Hello");
-	//delay(100);
 	if (Up.shortPress()) {
 		snake.moveSnake(0);
-		//Serial.println("Up");
-		//lc.setLed(0, 0, 0, true);
 	}
 	if (Down.shortPress()) {
 		snake.moveSnake(1);
-		//Serial.println("Down");
-		//lc.setLed(0, 1, 0, true);
 	}
 	if (Right.shortPress()) {
 		snake.moveSnake(2);
-		//Serial.println("Right");
-		//lc.setLed(0, 2, 0, true);
 	}
 	if (Left.shortPress()) {
 		snake.moveSnake(3);
-		//Serial.println("Left");
-		//lc.setLed(0, 3, 0, true);
 	}
 	//rows();
 

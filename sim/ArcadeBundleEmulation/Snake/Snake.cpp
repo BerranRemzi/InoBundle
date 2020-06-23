@@ -38,8 +38,8 @@ void Snake::update() {
 }
 
 void Snake::generateFood() {
-	food[0] = rand() % 8;
-	food[1] = rand() % 8;
+	food[0] = random(8);
+	food[1] = random(8);
 }
 
 void Snake::extendSnake() {
