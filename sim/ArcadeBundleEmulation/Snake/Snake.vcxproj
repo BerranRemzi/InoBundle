@@ -80,6 +80,7 @@
   <ItemGroup>
     <ClInclude Include="Arduino.h" />
     <ClInclude Include="dibutil.h" />
+    <ClInclude Include="DualFunctionButton.h" />
     <ClInclude Include="Emulator.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="LedControl.h" />
