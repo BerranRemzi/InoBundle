@@ -88,8 +88,10 @@ void loop() {
 	lc.setLed(0, (int)snake.food[1], (int)snake.food[0], true);
 
 	// Print snake body
-	for (int i{ 0 }; i < 64; ++i) {
-		lc.setLed(0, (int)snake.y[i], (int)snake.x[i], true);
+	for (int i{ 0 }; i < SCREEN_WIDTH * SCREEN_HEIGHT; ++i) {
+		if (snake.isInScreen(i)) {
+			lc.setLed(0, (int)snake.y[i], (int)snake.x[i], true);
+		}
 	}
 
 	delay(33);	// 30 fps
