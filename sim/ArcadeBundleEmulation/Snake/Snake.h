@@ -5,7 +5,8 @@
 
 class Snake {
 public:
-	unsigned char body[64 * 2];
+	unsigned char x[64];
+	unsigned char y[64];
 	unsigned char head[2];	// 0 - head X, 1 - head Y
 	unsigned char food[2];	// 0 - food X, 1 - food Y
 public:
