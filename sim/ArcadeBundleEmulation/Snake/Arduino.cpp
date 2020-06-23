@@ -3,7 +3,6 @@
 #include "LedControl.h"
 
 #include "Snake.h"
-Snake snake;
 
 DualFunctionButton Up(VK_UP, 500, INPUT);
 DualFunctionButton Down(VK_DOWN, 500, INPUT);
@@ -19,6 +18,7 @@ DualFunctionButton Left(VK_LEFT, 500, INPUT);
  We have only a single MAX72XX.
  */
 LedControl lc(12, 11, 10, 1);
+Snake snake;
 
 /* we always wait a bit between updates of the display */
 unsigned long delaytime = 100;
@@ -80,19 +80,6 @@ void loop() {
 		//lc.setLed(0, 3, 0, true);
 	}
 	//rows();
-
-	// Print snake head
-	lc.setLed(0, (int)snake.head[1], (int)snake.head[0], true);
-
-	// Print food
-	lc.setLed(0, (int)snake.food[1], (int)snake.food[0], true);
-
-	// Print snake body
-	for (int i{ 0 }; i < SCREEN_WIDTH * SCREEN_HEIGHT; ++i) {
-		if (snake.isInScreen(i)) {
-			lc.setLed(0, (int)snake.y[i], (int)snake.x[i], true);
-		}
-	}
 
 	delay(33);	// 30 fps
 }

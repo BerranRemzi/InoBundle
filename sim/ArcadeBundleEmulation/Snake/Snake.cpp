@@ -1,7 +1,6 @@
 #include "Snake.h"
 
 Snake::Snake() {
-	srand(time(nullptr));
 
 	for (int i{ 0 }; i < 64; ++i) {
 		x[i] = -1;
@@ -12,6 +11,30 @@ Snake::Snake() {
 	head[1] = rand() % 8;
 
 	generateFood();
+}
+
+void Snake::render() {
+	// Print snake body
+	for (int _y{ 0 }; _y < SCREEN_HEIGHT; ++_y) {
+		for (int _x{ 0 }; _x < SCREEN_HEIGHT; ++_x) {
+			if (isInScreen(_y + _x * (SCREEN_WIDTH - 1))) {
+				setLed((int)x[_y + _x * (SCREEN_WIDTH - 1)], (int)y[_y + _x * (SCREEN_WIDTH - 1)], LED_ON);
+			}
+			else {
+				setLed(_x, _y, LED_OFF);
+			}
+		}
+	}
+
+	// Print snake head
+	setLed((int)head[0], (int)head[1], LED_ON);
+
+	// Print food
+	setLed((int)food[0], (int)food[1], LED_ON);
+}
+
+void Snake::update() {
+
 }
 
 void Snake::generateFood() {

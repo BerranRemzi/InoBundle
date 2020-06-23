@@ -3,6 +3,12 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <ctime>
+#include <stdint.h>
+
+#include "Arduino.h"
+
+#define LED_ON 0xFF
+#define LED_OFF 0x00
 
 #define SCREEN_WIDTH 8
 #define SCREEN_HEIGHT 8
@@ -15,6 +21,9 @@ public:
 	int8_t food[2];	// 0 - food X, 1 - food Y
 public:
 	Snake();
+
+	void render();
+	void update();
 
 	void generateFood();
 	void extendSnake();
