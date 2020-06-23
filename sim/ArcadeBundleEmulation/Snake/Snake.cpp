@@ -7,8 +7,8 @@ Snake::Snake() {
 		y[i] = -1;
 	}
 
-	head[0] = rand() % 8;
-	head[1] = rand() % 8;
+	head[0] = random(8);
+	head[1] = random(8);
 
 	generateFood();
 }
