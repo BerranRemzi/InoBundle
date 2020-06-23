@@ -1,18 +1,33 @@
 #pragma once
 
 #include <stdlib.h>
+#include <stdint.h>
 #include <ctime>
+#include <stdint.h>
+
+#include "Arduino.h"
+
+#define LED_ON 0xFF
+#define LED_OFF 0x00
+
+#define SCREEN_WIDTH 8
+#define SCREEN_HEIGHT 8
 
 class Snake {
 public:
-	unsigned char x[64];
-	unsigned char y[64];
-	unsigned char head[2];	// 0 - head X, 1 - head Y
-	unsigned char food[2];	// 0 - food X, 1 - food Y
+	int8_t x[64];
+	int8_t y[64];
+	int8_t head[2];	// 0 - head X, 1 - head Y
+	int8_t food[2];	// 0 - food X, 1 - food Y
 public:
 	Snake();
+
+	void render();
+	void update();
 
 	void generateFood();
 	void extendSnake();
 	void moveSnake(int direction);
+
+	bool isInScreen(int i);
 };

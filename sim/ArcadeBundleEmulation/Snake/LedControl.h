@@ -22,7 +22,7 @@ public:
 	void clearDisplay(int addr) {
 
 	}
-	void setLed(int addr, int row, int column, boolean state) {
+	void setLed(int addr, int row, int column, bool state) {
 		int offset;
 		byte val = 0x00;
 
