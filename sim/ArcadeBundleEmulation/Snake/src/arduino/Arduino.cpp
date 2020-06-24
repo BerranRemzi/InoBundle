@@ -47,8 +47,7 @@ void setup() {
 }
 
 void loop() {
-	snake.moveSnake(KeyboardByte());
-	snake.update();
+	snake.update(KeyboardByte());
 	snake.render();
 	updateScreen(&screen[0], 64);
 
