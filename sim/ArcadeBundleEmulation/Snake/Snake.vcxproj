@@ -44,6 +44,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(SolutionDir)Snake/src/arduino;$(SolutionDir)Snake/src/emulator;$(SolutionDir)Snake/src/graphics;$(SolutionDir)Snake/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -55,6 +56,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>$(SolutionDir)Snake/src/arduino;$(SolutionDir)Snake/src/emulator;$(SolutionDir)Snake/src/graphics;$(SolutionDir)Snake/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -63,32 +65,33 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Arduino.cpp" />
-    <ClCompile Include="bgiout.cxx" />
-    <ClCompile Include="dibutil.cxx" />
-    <ClCompile Include="drawing.cxx" />
-    <ClCompile Include="Emulator.cpp" />
-    <ClCompile Include="file.cxx" />
-    <ClCompile Include="misc.cxx" />
-    <ClCompile Include="mouse.cxx" />
-    <ClCompile Include="palette.cxx" />
-    <ClCompile Include="main.cxx" />
-    <ClCompile Include="Snake.cpp" />
-    <ClCompile Include="text.cxx" />
-    <ClCompile Include="winbgi.cxx" />
-    <ClCompile Include="winthread.cxx" />
+    <ClCompile Include="src\arduino\Arduino.cpp" />
+    <ClCompile Include="src\graphics\bgiout.cxx" />
+    <ClCompile Include="src\graphics\dibutil.cxx" />
+    <ClCompile Include="src\graphics\drawing.cxx" />
+    <ClCompile Include="src\emulator\Emulator.cpp" />
+    <ClCompile Include="src\graphics\file.cxx" />
+    <ClCompile Include="src\graphics\misc.cxx" />
+    <ClCompile Include="src\graphics\mouse.cxx" />
+    <ClCompile Include="src\graphics\palette.cxx" />
+    <ClCompile Include="src\main.cxx" />
+    <ClCompile Include="src\arduino\Snake.cpp" />
+    <ClCompile Include="src\graphics\text.cxx" />
+    <ClCompile Include="src\graphics\winbgi.cxx" />
+    <ClCompile Include="src\graphics\winthread.cxx" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Arduino.h" />
-    <ClInclude Include="dibutil.h" />
-    <ClInclude Include="DualFunctionButton.h" />
-    <ClInclude Include="Emulator.h" />
-    <ClInclude Include="graphics.h" />
-    <ClInclude Include="LedControl.h" />
-    <ClInclude Include="Snake.h" />
-    <ClInclude Include="winbgi.h" />
-    <ClInclude Include="winbgim.h" />
-    <ClInclude Include="winbgitypes.h" />
+    <ClInclude Include="src\emulator\Arduino.h" />
+    <ClInclude Include="src\graphics\dibapi.h" />
+    <ClInclude Include="src\graphics\dibutil.h" />
+    <ClInclude Include="src\emulator\DualFunctionButton.h" />
+    <ClInclude Include="src\emulator\Emulator.h" />
+    <ClInclude Include="src\graphics\graphics.h" />
+    <ClInclude Include="src\emulator\LedControl.h" />
+    <ClInclude Include="src\arduino\Snake.h" />
+    <ClInclude Include="src\graphics\winbgi.h" />
+    <ClInclude Include="src\graphics\winbgim.h" />
+    <ClInclude Include="src\graphics\winbgitypes.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

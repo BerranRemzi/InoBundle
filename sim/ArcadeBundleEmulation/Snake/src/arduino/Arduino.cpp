@@ -52,7 +52,7 @@ void loop() {
 	snake.render();
 	updateScreen(&screen[0], 64);
 
-	delay(33);	// 30 fps
+	delay(200);	// 5 fps
 }
 
 byte KeyboardByte(void) {

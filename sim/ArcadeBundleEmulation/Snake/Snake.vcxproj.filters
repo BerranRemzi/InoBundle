@@ -27,78 +27,81 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="bgiout.cxx">
+    <ClCompile Include="src\graphics\bgiout.cxx">
       <Filter>bgi</Filter>
     </ClCompile>
-    <ClCompile Include="dibutil.cxx">
+    <ClCompile Include="src\graphics\dibutil.cxx">
       <Filter>bgi</Filter>
     </ClCompile>
-    <ClCompile Include="drawing.cxx">
+    <ClCompile Include="src\graphics\drawing.cxx">
       <Filter>bgi</Filter>
     </ClCompile>
-    <ClCompile Include="file.cxx">
+    <ClCompile Include="src\graphics\file.cxx">
       <Filter>bgi</Filter>
     </ClCompile>
-    <ClCompile Include="misc.cxx">
+    <ClCompile Include="src\graphics\mouse.cxx">
       <Filter>bgi</Filter>
     </ClCompile>
-    <ClCompile Include="mouse.cxx">
+    <ClCompile Include="src\graphics\palette.cxx">
       <Filter>bgi</Filter>
     </ClCompile>
-    <ClCompile Include="palette.cxx">
+    <ClCompile Include="src\graphics\text.cxx">
       <Filter>bgi</Filter>
     </ClCompile>
-    <ClCompile Include="text.cxx">
+    <ClCompile Include="src\graphics\winbgi.cxx">
       <Filter>bgi</Filter>
     </ClCompile>
-    <ClCompile Include="winbgi.cxx">
+    <ClCompile Include="src\graphics\winthread.cxx">
       <Filter>bgi</Filter>
     </ClCompile>
-    <ClCompile Include="winthread.cxx">
-      <Filter>bgi</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cxx">
+    <ClCompile Include="src\main.cxx">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Arduino.cpp">
+    <ClCompile Include="src\arduino\Arduino.cpp">
       <Filter>Arduino</Filter>
     </ClCompile>
-    <ClCompile Include="Snake.cpp">
+    <ClCompile Include="src\arduino\Snake.cpp">
       <Filter>Arduino</Filter>
     </ClCompile>
-    <ClCompile Include="Emulator.cpp">
+    <ClCompile Include="src\emulator\Emulator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\misc.cxx">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="dibutil.h">
+    <ClInclude Include="src\graphics\dibutil.h">
       <Filter>bgi\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="graphics.h">
+    <ClInclude Include="src\graphics\graphics.h">
       <Filter>bgi\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="winbgi.h">
+    <ClInclude Include="src\graphics\winbgi.h">
       <Filter>bgi\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="winbgim.h">
+    <ClInclude Include="src\graphics\winbgim.h">
       <Filter>bgi\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="winbgitypes.h">
+    <ClInclude Include="src\graphics\winbgitypes.h">
       <Filter>bgi\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Arduino.h">
+    <ClInclude Include="src\arduino\Snake.h">
       <Filter>Arduino\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LedControl.h">
+    <ClInclude Include="src\emulator\Emulator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\emulator\Arduino.h">
       <Filter>Arduino\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Snake.h">
+    <ClInclude Include="src\emulator\DualFunctionButton.h">
       <Filter>Arduino\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DualFunctionButton.h">
+    <ClInclude Include="src\emulator\LedControl.h">
       <Filter>Arduino\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Emulator.h">
+    <ClInclude Include="src\graphics\dibapi.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
