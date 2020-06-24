@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "array": "cpp",
+        "vector": "cpp",
+        "xstring": "cpp",
+        "xutility": "cpp",
+        "string": "cpp",
+        "ios": "cpp",
+        "*.tcc": "cpp",
+        "iosfwd": "cpp"
+    }
+}
