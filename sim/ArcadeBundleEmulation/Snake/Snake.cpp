@@ -46,22 +46,18 @@ void Snake::extendSnake() {
 
 }
 
-void Snake::moveSnake(int direction) {
-	switch (direction) {
-	case 0:	// Up
+void Snake::moveSnake(byte _direction) {
+	if (true == ((_direction >> 0) & 1U)) {
 		--head[1];
-		break;
-	case 1:	// Down
+	}
+	if (true == ((_direction >> 1) & 1U)) {
 		++head[1];
-		break;
-	case 2:	// Right
+	}
+	if (true == ((_direction >> 2) & 1U)) {
 		++head[0];
-		break;
-	case 3: // Left
+	}
+	if (true == ((_direction >> 3) & 1U)) {
 		--head[0];
-		break;
-	default:
-		break;
 	}
 }
 

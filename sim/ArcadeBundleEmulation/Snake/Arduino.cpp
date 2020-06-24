@@ -29,6 +29,8 @@ void setLed(int x, int y, uint8_t brightness) {
 	screen[y][x] = brightness;
 }
 
+byte KeyboardByte(void);
+
 void setup() {
 	Serial.begin(9600);
 	//Serial.println("Snake 8x8");
@@ -45,23 +47,15 @@ void setup() {
 }
 
 void loop() {
-	if (Up.shortPress()) {
-		snake.moveSnake(0);
-	}
-	if (Down.shortPress()) {
-		snake.moveSnake(1);
-	}
-	if (Right.shortPress()) {
-		snake.moveSnake(2);
-	}
-	if (Left.shortPress()) {
-		snake.moveSnake(3);
-	}
-	//rows();
-
+	snake.moveSnake(KeyboardByte());
 	snake.update();
 	snake.render();
 	updateScreen(&screen[0], 64);
 
 	delay(33);	// 30 fps
+}
+
+byte KeyboardByte(void) {
+	byte returnValue = (Up.shortPress() << 0U) | (Down.shortPress() << 1U) | (Right.shortPress() << 2U) | (Left.shortPress() << 3U);
+	return returnValue;
 }

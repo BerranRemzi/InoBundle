@@ -23,7 +23,7 @@ public:
 
 	void generateFood();
 	void extendSnake();
-	void moveSnake(int direction);
+	void moveSnake(byte _direction);
 
 	bool isInScreen(int i);
 };
