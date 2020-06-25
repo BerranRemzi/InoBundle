@@ -19,7 +19,7 @@ void Snake::render() {
 
 	// Clear old last snake body if exists
 	if (size > 0)
-		setLed(x[size - 1] - (head[0] - head[2]), y[size - 1] - (head[1] - head[3]), LED_OFF);
+		setLed(bodyLast[0], bodyLast[1], LED_OFF);
 
 	// Print snake body
 	for (int i{ 0 }; i < SCREEN_WIDTH * SCREEN_HEIGHT; ++i) {
@@ -36,11 +36,14 @@ void Snake::render() {
 }
 
 void Snake::update(byte _direction) {
-	moveSnake(_direction);
+	bool snakeMoved = moveSnake(_direction);
 
 	if (food[0] == head[0] && food[1] == head[1]) {
 		generateFood();
 		extendSnake();
+		//moveBody();
+	}
+	else if (snakeMoved) {
 		moveBody();
 	}
 }
@@ -57,7 +60,7 @@ void Snake::extendSnake() {
 	++size;
 }
 
-void Snake::moveSnake(byte _direction) {
+bool Snake::moveSnake(byte _direction) {
 	// If snake is going to move
 	if (_direction > 0) {
 		head[2] = head[0];	// Set old head x to current head x
@@ -79,18 +82,24 @@ void Snake::moveSnake(byte _direction) {
 
 	// If snake has moved
 	if (_direction > 0) {
-		moveBody();
+		return true;
 	}
+
+	return false;
 }
 
 void Snake::moveBody() {
 	if (size > 0) {
-		for (int i{ size - 1 }; i > 0; --i) {
-			x[size] = x[size - 1];
-			y[size] = y[size - 1];
+		bodyLast[0] = x[0];
+		bodyLast[1] = y[0];
+
+		for (int i{ 0 }; i < size - 1; ++i) {
+			x[i] = x[i + 1];
+			y[i] = y[i + 1];
 		}
-		x[0] = head[2];
-		y[0] = head[3];
+
+		x[size - 1] = head[2];
+		y[size - 1] = head[3];
 	}
 }
 

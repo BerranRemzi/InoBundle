@@ -12,10 +12,11 @@
 
 class Snake {
 public:
-	int8_t x[64];	// Snake body X
-	int8_t y[64];	// Snake body Y
-	int8_t head[4];	// 0 - head X, 1 - head Y, 2 - old head X, 3 - old head Y
-	int8_t food[2];	// 0 - food X, 1 - food Y
+	int8_t x[64];		// Snake body X
+	int8_t y[64];		// Snake body Y
+	int8_t head[4];		// 0 - head X, 1 - head Y, 2 - old head X, 3 - old head Y
+	int8_t bodyLast[2];	// 0 - last body X, 1 - last body Y 
+	int8_t food[2];		// 0 - food X, 1 - food Y
 	int8_t size{ 0 };
 public:
 	Snake();
@@ -25,7 +26,7 @@ public:
 
 	void generateFood();
 	void extendSnake();
-	void moveSnake(byte _direction);
+	bool moveSnake(byte _direction);
 	void moveBody();
 
 	bool isInScreen(int i);
