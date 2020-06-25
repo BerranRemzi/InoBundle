@@ -21,6 +21,15 @@ void Snake::setup() {
 void Snake::reset() {
 	setup();
 
+	if (size > 32) {
+		delayTime *= 2;
+	}
+	if (size > 32 && delayTime > SLOW_SPEED_DELAY) {
+		delayTime /= 2;
+	}
+
+	sound = DEAD;
+
 	size = 0;
 
 	// Clear the whole screen
@@ -73,6 +82,7 @@ void Snake::update(byte _direction) {
 	if (food[0] == head[0] && food[1] == head[1]) {
 		generateFood();
 		extendSnake();
+		sound = SIZE_UP;
 	}
 	else if (snakeMoved) {
 		moveBody();
@@ -82,6 +92,23 @@ void Snake::update(byte _direction) {
 void Snake::generateFood() {
 	// TODO: Fix food appearing inside of body or head,
 	// if it appears inside the head, size doesn't grow
+	putFood();
+	for (int i{ 0 }; i < 8; ++i) {
+		for (int j{ 0 }; j < SCREEN_WIDTH * SCREEN_HEIGHT; ++j) {
+			if (food[0] == x[j] && food[1] == y[j]) {
+				putFood();
+			}
+			else if (head[0] == x[j] && head[1] == y[j]) {
+				putFood();
+			}
+			else {
+				break;
+			}
+		}
+	}
+}
+
+void Snake::putFood() {
 	food[0] = random(8);
 	food[1] = random(8);
 }
@@ -102,6 +129,8 @@ bool Snake::moveSnake() {
 		head[3] = head[1];	// Set old head y to current head y
 
 		snakeMoved = true;
+
+		sound = MOVE;
 	}
 
 	if (true == ((direction >> 0) & 1U)) {
@@ -161,4 +190,12 @@ bool Snake::isInScreen(int i) {
 		value = false;
 
 	return value;
+}
+
+Sound_t Snake::playSound() {
+	if (sound > SILENCE) {
+		sound = SILENCE;
+	}
+
+	return sound;
 }

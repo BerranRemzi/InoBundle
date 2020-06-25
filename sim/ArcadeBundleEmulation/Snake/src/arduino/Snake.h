@@ -10,6 +10,16 @@
 #define SCREEN_WIDTH 8
 #define SCREEN_HEIGHT 8
 
+#define SLOW_SPEED_DELAY 500
+#define FAST_SPEED_DELAY 50
+
+enum Sound_t {
+	SILENCE,
+	SIZE_UP,
+	DEAD,
+	MOVE
+};
+
 class Snake {
 public:
 	int8_t x[64];		// Snake body X
@@ -19,6 +29,9 @@ public:
 	int8_t food[2];		// 0 - food X, 1 - food Y
 	int8_t size{ 0 };
 	byte direction;
+	Sound_t sound;
+	uint8_t delayTime{ SLOW_SPEED_DELAY };
+	uint8_t{ 0 };
 public:
 	Snake();
 
@@ -29,9 +42,11 @@ public:
 	void update(byte _direction);
 
 	void generateFood();
+	void putFood();
 	void extendSnake();
 	bool moveSnake();
 	void moveBody();
 
 	bool isInScreen(int i);
+	Sound_t playSound();
 };

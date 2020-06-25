@@ -51,9 +51,12 @@ void setup() {
 void loop() {
 	snake.update(KeyboardByte());
 	snake.render();
+
+	if (snake.playSound() > 0) {}
+
 	updateScreen(&screen[0], 64);
 
-	delay(200);	// 5 fps
+	delay(200);
 }
 
 byte KeyboardByte(void) {
