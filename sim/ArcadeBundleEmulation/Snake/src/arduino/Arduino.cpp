@@ -44,6 +44,8 @@ void setup() {
 	lc.setIntensity(0, 1); //min = 1, max = 16
 	/* and clear the display */
 	lc.clearDisplay(0);
+
+	randomSeed(analogRead(0));
 }
 
 void loop() {
