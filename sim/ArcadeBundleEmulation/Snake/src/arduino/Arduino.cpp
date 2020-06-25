@@ -4,6 +4,16 @@
 
 #include "Snake.h"
 
+#if ARDUINO
+
+#define VK_UP		4
+#define VK_DOWN		5
+#define VK_RIGHT	6
+#define VK_LEFT		7
+
+#endif
+
+
 DualFunctionButton Up(VK_UP, 500, INPUT);
 DualFunctionButton Down(VK_DOWN, 500, INPUT);
 DualFunctionButton Right(VK_RIGHT, 500, INPUT);
@@ -17,7 +27,9 @@ DualFunctionButton Left(VK_LEFT, 500, INPUT);
  pin 10 is connected to LOAD
  We have only a single MAX72XX.
  */
-LedControl lc(12, 11, 10, 1);
+
+//LedControl lc(12, 11, 10, 1);
+LedControl lc(10, 1);
 Snake snake;
 
 /* we always wait a bit between updates of the display */
@@ -32,9 +44,6 @@ void setLed(int x, int y, uint8_t brightness) {
 byte KeyboardByte(void);
 
 void setup() {
-	Serial.begin(9600);
-	//Serial.println("Snake 8x8");
-
 	/*
 	The MAX72XX is in power-saving mode on startup,
 	we have to do a wakeup call
@@ -50,6 +59,7 @@ void setup() {
 
 void loop() {
 	snake.update(KeyboardByte());
+
 	snake.render();
 
 	if (snake.playSound() > 0) {}

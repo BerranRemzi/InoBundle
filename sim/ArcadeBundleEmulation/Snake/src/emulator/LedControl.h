@@ -10,6 +10,9 @@ public:
 	LedControl(int dataPin, int clkPin, int csPin, int numDevices) {
 		showConsoleCursor(false);
 	}
+	LedControl(int csPin, int numDevices) {
+		showConsoleCursor(false);
+	}
 	void setRow(int addr, int row, byte value) {
 		printToScreen(row, value);
 	}
