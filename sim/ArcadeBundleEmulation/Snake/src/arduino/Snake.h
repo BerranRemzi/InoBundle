@@ -18,15 +18,19 @@ public:
 	int8_t bodyLast[2];	// 0 - last body X, 1 - last body Y 
 	int8_t food[2];		// 0 - food X, 1 - food Y
 	int8_t size{ 0 };
+	byte direction;
 public:
 	Snake();
+
+	void setup();
+	void reset();
 
 	void render();
 	void update(byte _direction);
 
 	void generateFood();
 	void extendSnake();
-	bool moveSnake(byte _direction);
+	bool moveSnake();
 	void moveBody();
 
 	bool isInScreen(int i);
