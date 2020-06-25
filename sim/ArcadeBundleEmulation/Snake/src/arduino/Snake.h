@@ -10,8 +10,7 @@
 #define SCREEN_WIDTH 8
 #define SCREEN_HEIGHT 8
 
-#define SLOW_SPEED_DELAY 500
-#define FAST_SPEED_DELAY 50
+#define SLOW_SPEED_DELAY 0x1FF /* 511 */
 
 enum Sound_t {
 	SILENCE,
@@ -30,8 +29,8 @@ public:
 	int8_t size{ 0 };
 	byte direction;
 	Sound_t sound;
-	uint8_t delayTime{ SLOW_SPEED_DELAY };
-	uint8_t{ 0 };
+	uint16_t delayTime{ SLOW_SPEED_DELAY };
+	uint8_t speed{ 0 };
 public:
 	Snake();
 
@@ -46,7 +45,7 @@ public:
 	void extendSnake();
 	bool moveSnake();
 	void moveBody();
-
+	uint16_t loopTime();
 	bool isInScreen(int i);
 	Sound_t playSound();
 };

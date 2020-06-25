@@ -56,7 +56,7 @@ void loop() {
 
 	updateScreen(&screen[0], 64);
 
-	delay(200);
+	delay(snake.loopTime());
 }
 
 byte KeyboardByte(void) {

@@ -21,12 +21,14 @@ void Snake::setup() {
 void Snake::reset() {
 	setup();
 
-	if (size > 32) {
-		delayTime *= 2;
+	if (size > 5) {
+		speed++;
 	}
-	if (size > 32 && delayTime > SLOW_SPEED_DELAY) {
-		delayTime /= 2;
+	else if (speed > 0) {
+		speed--;
 	}
+
+	delayTime = SLOW_SPEED_DELAY >> speed;
 
 	sound = DEAD;
 
@@ -38,6 +40,10 @@ void Snake::reset() {
 			setLed(x, y, LED_OFF);
 		}
 	}
+}
+
+uint16_t Snake::loopTime() {
+	return delayTime;
 }
 
 void Snake::render() {
