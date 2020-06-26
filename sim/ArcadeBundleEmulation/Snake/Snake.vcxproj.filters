@@ -57,16 +57,13 @@
     <ClCompile Include="src\main.cxx">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\arduino\Arduino.cpp">
-      <Filter>Arduino</Filter>
-    </ClCompile>
-    <ClCompile Include="src\arduino\Snake.cpp">
-      <Filter>Arduino</Filter>
-    </ClCompile>
     <ClCompile Include="src\emulator\Emulator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\graphics\misc.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\arduino\SourceDummy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -86,9 +83,6 @@
     <ClInclude Include="src\graphics\winbgitypes.h">
       <Filter>bgi\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\arduino\Snake.h">
-      <Filter>Arduino\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\emulator\Emulator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -98,11 +92,11 @@
     <ClInclude Include="src\emulator\DualFunctionButton.h">
       <Filter>Arduino\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\emulator\LedControl.h">
-      <Filter>Arduino\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\graphics\dibapi.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\emulator\ArcadeBundle.h">
+      <Filter>Arduino\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

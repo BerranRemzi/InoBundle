@@ -44,7 +44,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)Snake/src/arduino;$(SolutionDir)Snake/src/emulator;$(SolutionDir)Snake/src/graphics;$(SolutionDir)Snake/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Snake/src/arduino;$(SolutionDir)Snake/src/emulator;$(SolutionDir)Snake/src/graphics;$(SolutionDir)Snake/src;$(SolutionDir)../../examples/SnakeGame;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -56,7 +56,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Snake/src/arduino;$(SolutionDir)Snake/src/emulator;$(SolutionDir)Snake/src/graphics;$(SolutionDir)Snake/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Snake/src/arduino;$(SolutionDir)Snake/src/emulator;$(SolutionDir)Snake/src/graphics;$(SolutionDir)Snake/src;$(SolutionDir)../../examples/SnakeGame;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -65,7 +65,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\arduino\Arduino.cpp" />
+    <ClCompile Include="src\arduino\SourceDummy.cpp" />
     <ClCompile Include="src\graphics\bgiout.cxx" />
     <ClCompile Include="src\graphics\dibutil.cxx" />
     <ClCompile Include="src\graphics\drawing.cxx" />
@@ -75,7 +75,6 @@
     <ClCompile Include="src\graphics\mouse.cxx" />
     <ClCompile Include="src\graphics\palette.cxx" />
     <ClCompile Include="src\main.cxx" />
-    <ClCompile Include="src\arduino\Snake.cpp" />
     <ClCompile Include="src\graphics\text.cxx" />
     <ClCompile Include="src\graphics\winbgi.cxx" />
     <ClCompile Include="src\graphics\winthread.cxx" />
@@ -87,8 +86,7 @@
     <ClInclude Include="src\emulator\DualFunctionButton.h" />
     <ClInclude Include="src\emulator\Emulator.h" />
     <ClInclude Include="src\graphics\graphics.h" />
-    <ClInclude Include="src\emulator\LedControl.h" />
-    <ClInclude Include="src\arduino\Snake.h" />
+    <ClInclude Include="src\emulator\ArcadeBundle.h" />
     <ClInclude Include="src\graphics\winbgi.h" />
     <ClInclude Include="src\graphics\winbgim.h" />
     <ClInclude Include="src\graphics\winbgitypes.h" />

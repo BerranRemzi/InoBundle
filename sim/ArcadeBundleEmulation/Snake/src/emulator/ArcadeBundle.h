@@ -43,6 +43,9 @@ public:
 		}
 		printToScreen(row, status[row]);
 	}
+	void updateScreen(uint8_t _input[][8], uint8_t _size) {
+		refreshScreen(&_input[0], _size);
+	}
 
 private:
 	/* The array for shifting the data to the devices */

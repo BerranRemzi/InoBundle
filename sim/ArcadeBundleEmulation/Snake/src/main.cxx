@@ -6,6 +6,8 @@
 #include <ctype.h>                      // Provides toupper
 #include "Emulator.h"
 #include "Arduino.h"
+#include "../../../../examples/SnakeGame/SnakeGame.ino"
+
 
 using namespace std;
 
@@ -23,13 +25,6 @@ int APIENTRY WinMain
 {
     initwindow((int)(SCREEN_SIZE * multiplier), (int)(SCREEN_SIZE * multiplier));
 
-    
-
-    for (int x = 0; x < 8; x++) {
-        for (int y = 0; y < 8; y++) {
-            draw_dot(x, y, RED);
-        }
-    }
     setup();
     // Infinite loop to keep program running... only quits when user
     // presses the ESC key to exit.
@@ -53,7 +48,7 @@ void draw_dot(int _x, int _y, int _color) {
     fillellipse(y, x, size, size);
 }
 
-void updateScreen(uint8_t _input[][8], uint8_t _size) {
+void refreshScreen(uint8_t _input[][8], uint8_t _size) {
     for (int x = 0; x < 8; x++) {
         for (int y = 0; y < 8; y++) {
             if(_input[x][y]==0x00){

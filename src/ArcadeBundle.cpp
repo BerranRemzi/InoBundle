@@ -242,3 +242,37 @@ void LedControl::spiTransfer(int addr, volatile byte opcode, volatile byte data)
     //latch the data onto the display
     digitalWrite(SPI_CS,HIGH);
 }    
+
+void LedControl::updateScreen(uint8_t _input[][8], uint8_t _size){
+
+  uint8_t data = 0x00;
+  for(uint8_t y = 0; y<8;y++){
+
+	data = 0x00;
+	for(uint8_t x = 0; x < 8; x++){
+		if(_input[x][y] > 0){
+			data |= 1 << x;
+		}
+	}
+	    // take the chip select low to select the device:
+    digitalWrite(SPI_CS, LOW);
+
+    SPI.transfer(y+1);  // Send row number
+    SPI.transfer(data); // Send register location  
+
+    // take the chip select high to de-select:
+    digitalWrite(SPI_CS, HIGH);
+  }
+  
+  /*
+  for(int i = 0; i<8; i++){
+    // take the chip select low to select the device:
+    digitalWrite(chipSelectPin, LOW);
+
+    SPI.transfer(i+1);  // Send row number
+    SPI.transfer(0x55); // Send register location  
+
+    // take the chip select high to de-select:
+    digitalWrite(chipSelectPin, HIGH);
+  }*/
+}

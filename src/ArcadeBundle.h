@@ -187,6 +187,8 @@ class LedControl {
          * dp	sets the decimal point.
          */
         void setChar(int addr, int digit, char value, boolean dp);
+
+        void updateScreen(uint8_t _input[][8], uint8_t _size);
 };
 
 #endif	//LedControl.h

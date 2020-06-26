@@ -68,7 +68,7 @@ void loop() {
 
 	if (snake.playSound() > 0) {}
 
-	updateScreen(&screen[0], 64);
+	lc.updateScreen(&screen[0], 64);
 
 	delay(snake.loopTime());
 }
@@ -77,38 +77,4 @@ byte KeyboardByte(void) {
 	//byte returnValue = (Up.shortPress() << 0U) | (Down.shortPress() << 1U) | (Right.shortPress() << 2U) | (Left.shortPress() << 3U);
 	byte returnValue = (!digitalRead(VK_UP) << 0) |(!digitalRead(VK_DOWN) << 1) |(!digitalRead(VK_RIGHT) << 2) | (!digitalRead(VK_LEFT) << 3) ;
 	return returnValue;
-}
-
-void updateScreen(uint8_t _input[][8], uint8_t _size){
-
-  uint8_t data = 0x00;
-  for(uint8_t y = 0; y<8;y++){
-
-	data = 0x00;
-	for(uint8_t x = 0; x < 8; x++){
-		if(_input[x][y] == LED_ON){
-			data |= 1 << x;
-		}
-	}
-	    // take the chip select low to select the device:
-    digitalWrite(chipSelectPin, LOW);
-
-    SPI.transfer(y+1);  // Send row number
-    SPI.transfer(data); // Send register location  
-
-    // take the chip select high to de-select:
-    digitalWrite(chipSelectPin, HIGH);
-  }
-  
-  /*
-  for(int i = 0; i<8; i++){
-    // take the chip select low to select the device:
-    digitalWrite(chipSelectPin, LOW);
-
-    SPI.transfer(i+1);  // Send row number
-    SPI.transfer(0x55); // Send register location  
-
-    // take the chip select high to de-select:
-    digitalWrite(chipSelectPin, HIGH);
-  }*/
 }
