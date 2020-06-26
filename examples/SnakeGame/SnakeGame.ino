@@ -1,7 +1,7 @@
 #include "Arduino.h"
 #include "DualFunctionButton.h"
 #include "ArcadeBundle.h"
-
+#include "xOS.h"
 #include "Snake.h"
 
 #if ARDUINO
@@ -12,6 +12,10 @@
 #define VK_LEFT		7
 
 #endif
+void Task_Keyboard(void);
+void Task_Snake(void);
+void Task_Screen(void);
+Task_t TaskStruct[4];
 
 DualFunctionButton Up(VK_UP, 500, INPUT_PULLUP);
 DualFunctionButton Down(VK_DOWN, 500, INPUT_PULLUP);
@@ -47,7 +51,7 @@ void setup() {
 	/*
 	The MAX72XX is in power-saving mode on startup,
 	we have to do a wakeup call
-	 */
+	*/
 	lc.shutdown(0, false);
 	/* Set the brightness to a medium values */
 	lc.setIntensity(0, 1); //min = 1, max = 16
@@ -55,26 +59,43 @@ void setup() {
 	lc.clearDisplay(0);
 
 	randomSeed(analogRead(0));
-  pinMode(VK_UP, INPUT_PULLUP);
-  pinMode(VK_DOWN, INPUT_PULLUP);
-  pinMode(VK_LEFT, INPUT_PULLUP);
-  pinMode(VK_RIGHT, INPUT_PULLUP);
+	
+	pinMode(VK_UP, INPUT_PULLUP);
+	pinMode(VK_DOWN, INPUT_PULLUP);
+	pinMode(VK_LEFT, INPUT_PULLUP);
+	pinMode(VK_RIGHT, INPUT_PULLUP);
+
+	xInit(TaskStruct);      //Struct with function parameters
+	
+	xTaskCreate(&Task_Keyboard, 10);
+	xTaskCreate(&Task_Snake, 100);
+	xTaskCreate(&Task_Screen, 10);
 }
 
 void loop() {
-	snake.update(KeyboardByte());
-
-	snake.render();
-
-	if (snake.playSound() > 0) {}
-
-	lc.updateScreen(&screen[0], 64);
-
-	delay(snake.loopTime());
+	//delay(snake.loopTime());
+	xLoop();  //xOS task
 }
 
 byte KeyboardByte(void) {
 	//byte returnValue = (Up.shortPress() << 0U) | (Down.shortPress() << 1U) | (Right.shortPress() << 2U) | (Left.shortPress() << 3U);
 	byte returnValue = (!digitalRead(VK_UP) << 0) |(!digitalRead(VK_DOWN) << 1) |(!digitalRead(VK_RIGHT) << 2) | (!digitalRead(VK_LEFT) << 3) ;
 	return returnValue;
+}
+
+void Task_Snake(void){
+
+	snake.update(KeyboardByte());
+
+	snake.render();
+
+	lc.updateScreen(&screen[0], 64);
+}
+
+void Task_Screen(void){
+
+}
+
+void Task_Keyboard(void){
+	
 }

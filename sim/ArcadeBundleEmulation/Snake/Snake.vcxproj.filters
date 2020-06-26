@@ -66,6 +66,9 @@
     <ClCompile Include="src\arduino\SourceDummy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\xOS\src\xOS.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\graphics\dibutil.h">
@@ -97,6 +100,9 @@
     </ClInclude>
     <ClInclude Include="src\emulator\ArcadeBundle.h">
       <Filter>Arduino\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\xOS\src\xOS.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

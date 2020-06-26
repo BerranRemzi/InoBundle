@@ -44,7 +44,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)Snake/src/arduino;$(SolutionDir)Snake/src/emulator;$(SolutionDir)Snake/src/graphics;$(SolutionDir)Snake/src;$(SolutionDir)../../examples/SnakeGame;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Snake/src/arduino;$(SolutionDir)Snake/src/emulator;$(SolutionDir)Snake/src/graphics;$(SolutionDir)Snake/src;$(SolutionDir)../../examples/SnakeGame;C:\Users\Berran\Documents\Arduino\libraries\xOS\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -56,7 +56,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Snake/src/arduino;$(SolutionDir)Snake/src/emulator;$(SolutionDir)Snake/src/graphics;$(SolutionDir)Snake/src;$(SolutionDir)../../examples/SnakeGame;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Snake/src/arduino;$(SolutionDir)Snake/src/emulator;$(SolutionDir)Snake/src/graphics;$(SolutionDir)Snake/src;$(SolutionDir)../../examples/SnakeGame;C:\Users\Berran\Documents\Arduino\libraries\xOS\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -65,6 +65,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\xOS\src\xOS.c" />
     <ClCompile Include="src\arduino\SourceDummy.cpp" />
     <ClCompile Include="src\graphics\bgiout.cxx" />
     <ClCompile Include="src\graphics\dibutil.cxx" />
@@ -80,6 +81,7 @@
     <ClCompile Include="src\graphics\winthread.cxx" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\xOS\src\xOS.h" />
     <ClInclude Include="src\emulator\Arduino.h" />
     <ClInclude Include="src\graphics\dibapi.h" />
     <ClInclude Include="src\graphics\dibutil.h" />

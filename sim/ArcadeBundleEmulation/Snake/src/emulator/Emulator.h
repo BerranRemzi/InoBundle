@@ -3,6 +3,7 @@
 #include <ctime>
 #include "graphics.h"
 
+
 void refreshScreen(uint8_t _input[][8], uint8_t _size);
 int random(int _max);
 void randomSeed(int16_t _input);
