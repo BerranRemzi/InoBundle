@@ -13,7 +13,7 @@ void loop(void);
 
 
 void setLed(int x, int y, uint8_t brightness);
-uint32_t millis();
+//uint32_t millis();
 
 class SoftwareSerial {
 public:

@@ -65,7 +65,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\xOS\src\xOS.c" />
+    <ClCompile Include="..\..\..\..\xOS\src\xOS.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </ClCompile>
     <ClCompile Include="src\arduino\SourceDummy.cpp" />
     <ClCompile Include="src\graphics\bgiout.cxx" />
     <ClCompile Include="src\graphics\dibutil.cxx" />
