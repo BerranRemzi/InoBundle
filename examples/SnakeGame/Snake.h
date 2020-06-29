@@ -17,6 +17,19 @@ enum Sound_t {
 	MOVE
 };
 
+enum Direction_t{
+	DIR_STOPPED,
+	DIR_UP,
+	DIR_DOWN,
+	DIR_RIGHT,
+	DIR_LEFT
+};
+
+enum Axis_t{
+	AXIS_X,
+	AXIS_Y
+};
+
 extern void setLed(int x, int y, uint8_t brightness);
 
 class Snake {
@@ -27,7 +40,7 @@ public:
 	int8_t bodyLast[2];	// 0 - last body X, 1 - last body Y 
 	int8_t food[2];		// 0 - food X, 1 - food Y
 	int8_t size{ 0 };
-	byte direction;
+	Direction_t direction; 
 	Sound_t sound;
 	uint16_t delayTime{ SLOW_SPEED_DELAY };
 	uint8_t speed{ 0 };
@@ -37,7 +50,7 @@ public:
 	void reset();
 
 	void render();
-	void update(byte _direction);
+	void update();
 
 	void generateFood();
 	void putFood();
@@ -47,4 +60,5 @@ public:
 	uint16_t loopTime();
 	bool isInScreen(int i);
 	Sound_t playSound();
+	Direction_t getLastDirection(void);
 };

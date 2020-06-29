@@ -3,15 +3,17 @@
 #include "ArcadeBundle.h"
 #include "xOS.h"
 #include "Snake.h"
+#include "Keyboard.h"
 
 #if ARDUINO
 
-#define VK_UP		4
-#define VK_DOWN		5
-#define VK_RIGHT	6
-#define VK_LEFT		7
+#define VK_UP		5
+#define VK_DOWN		2
+#define VK_RIGHT	3
+#define VK_LEFT		4
 
 #endif
+
 void Task_Keyboard(void);
 void Task_Snake(void);
 void Task_Screen(void);
@@ -68,7 +70,7 @@ void setup() {
 	xInit(TaskStruct);      //Struct with function parameters
 	
 	xTaskCreate(&Task_Keyboard, 10);
-	xTaskCreate(&Task_Snake, 100);
+	xTaskCreate(&Task_Snake, 150);
 	xTaskCreate(&Task_Screen, 10);
 }
 
@@ -77,15 +79,9 @@ void loop() {
 	xLoop();  //xOS task
 }
 
-byte KeyboardByte(void) {
-	//byte returnValue = (Up.shortPress() << 0U) | (Down.shortPress() << 1U) | (Right.shortPress() << 2U) | (Left.shortPress() << 3U);
-	byte returnValue = (!digitalRead(VK_UP) << 0) |(!digitalRead(VK_DOWN) << 1) |(!digitalRead(VK_RIGHT) << 2) | (!digitalRead(VK_LEFT) << 3) ;
-	return returnValue;
-}
-
 void Task_Snake(void){
 
-	snake.update(KeyboardByte());
+	snake.update();
 
 	snake.render();
 
@@ -97,5 +93,5 @@ void Task_Screen(void){
 }
 
 void Task_Keyboard(void){
-	
+	KB_ReadAll();
 }
