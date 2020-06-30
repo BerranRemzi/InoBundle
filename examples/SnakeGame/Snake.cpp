@@ -257,7 +257,7 @@ bool Snake::isInScreen(int i) {
 	}
 	*/
 
-	if (body[i].x == OUT_OF_SCREEN || body[i].x == OUT_OF_SCREEN)
+	if (body[i].x == OUT_OF_SCREEN || body[i].y == OUT_OF_SCREEN)
 		value = false;
 
 	return value;
