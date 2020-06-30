@@ -17,7 +17,7 @@ void Snake::setup() {
 	}
 
 	newGame();
-	totalTicks = levelTicks[1]; // medium level 250ms
+	totalTicks = levelTicks[2]; // medium level 250ms
 }
 void Snake::newGame(void){
 	// Start from position (0, 3) and direction is "right"
