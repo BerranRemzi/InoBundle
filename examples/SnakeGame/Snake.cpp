@@ -1,6 +1,12 @@
 #include "Snake.h"
 #include "Keyboard.h"
 
+uint8_t levelTicks[] = {
+	50, //slow 		50 x 10 = 500ms
+	25, //medium	25 x 10 = 250ms
+	15  //fast		15 x 10 = 150ms
+};
+
 Snake::Snake() {
 	setup();
 }
@@ -16,6 +22,7 @@ void Snake::setup() {
 	head[AXIS_Y] = 3;
 	direction = DIR_RIGHT;
 
+	totalTicks = levelTicks[1]; // medium level 250ms
 	generateFood();
 }
 
@@ -70,6 +77,14 @@ void Snake::render() {
 }
 
 void Snake::update() {
+	static uint8_t cycle = totalTicks;
+	if(cycle < totalTicks){
+		generateFood();
+		cycle++;
+		return;
+	}
+	cycle = 0;
+
 	Direction_t _direction = getLastDirection();
 	
 	if (_direction != DIR_STOPPED) {
@@ -102,6 +117,7 @@ void Snake::update() {
 
 	// If head is collided with food
 	if (food[0] == head[AXIS_X] && food[1] == head[AXIS_Y]) {
+		isFoodGenerated = false;
 		generateFood();
 		extendSnake();
 		sound = SIZE_UP;
@@ -111,13 +127,17 @@ void Snake::update() {
 	}
 	// Print to screen
 	render();
+	//isFoodGenerated = false;
 }
 
 void Snake::generateFood() {
+	if(isFoodGenerated == true){
+		return;
+	}
 	// TODO: Fix food appearing inside of body or head,
 	// if it appears inside the head, size doesn't grow
 	putFood();
-	for (int i{ 0 }; i < 8; ++i) {
+	for (int i{ 0 }; i < 16; ++i) {
 		for (int j{ 0 }; j < SCREEN_WIDTH * SCREEN_HEIGHT; ++j) {
 			if (food[0] == x[j] && food[1] == y[j]) {
 				putFood();
@@ -126,6 +146,7 @@ void Snake::generateFood() {
 				putFood();
 			}
 			else {
+				isFoodGenerated = true;
 				break;
 			}
 		}

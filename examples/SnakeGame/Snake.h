@@ -10,6 +10,8 @@
 
 #define SLOW_SPEED_DELAY 0x1FF /* 511 */
 
+
+
 enum Sound_t {
 	SILENCE,
 	SIZE_UP,
@@ -51,6 +53,8 @@ public:
 	Sound_t sound;
 	uint16_t delayTime{ SLOW_SPEED_DELAY };
 	uint8_t speed{ 0 };
+	uint8_t totalTicks;
+	bool isFoodGenerated = false;
 public:
 	Snake();
 	void setup();

@@ -70,7 +70,7 @@ void setup() {
 	xInit(TaskStruct);      //Struct with function parameters
 	
 	xTaskCreate(&Task_Keyboard, 10);
-	xTaskCreate(&Task_Snake, 150);
+	xTaskCreate(&Task_Snake, 10);
 	//xTaskCreate(&Task_Brick, 150);
 	//xTaskCreate(&Task_Invader, 150);
 	//xTaskCreate(&Task_Tetris, 150);
