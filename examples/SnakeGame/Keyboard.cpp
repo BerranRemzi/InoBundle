@@ -5,10 +5,10 @@ const uint8_t keyMap[] = {
     VK_DOWN,
     VK_RIGHT,
     VK_LEFT,
-    VK_A,
-    VK_B,
-    VK_C,
-    VK_D
+    'W',
+    'S',
+    'D',
+    'A'
 };
 
 const uint8_t keyMapSize = sizeof(keyMap);
@@ -40,5 +40,5 @@ void KB_ReadAll(void){
 }
 
 void KB_Reset(void){
-        keyData = 0x0000;
+    keyData = 0x0000;
 }

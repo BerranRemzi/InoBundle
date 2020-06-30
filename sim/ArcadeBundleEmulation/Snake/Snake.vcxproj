@@ -71,6 +71,8 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
     </ClCompile>
+    <ClCompile Include="..\..\..\examples\SnakeGame\Keyboard.cpp" />
+    <ClCompile Include="..\..\..\examples\SnakeGame\Snake.cpp" />
     <ClCompile Include="src\arduino\SourceDummy.cpp" />
     <ClCompile Include="src\graphics\bgiout.cxx" />
     <ClCompile Include="src\graphics\dibutil.cxx" />
@@ -87,6 +89,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\xOS\src\xOS.h" />
+    <ClInclude Include="..\..\..\examples\SnakeGame\Keyboard.h" />
+    <ClInclude Include="..\..\..\examples\SnakeGame\Snake.h" />
     <ClInclude Include="src\emulator\Arduino.h" />
     <ClInclude Include="src\graphics\dibapi.h" />
     <ClInclude Include="src\graphics\dibutil.h" />

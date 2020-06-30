@@ -69,6 +69,12 @@
     <ClCompile Include="..\..\..\..\xOS\src\xOS.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\examples\SnakeGame\Keyboard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\SnakeGame\Snake.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\graphics\dibutil.h">
@@ -102,6 +108,12 @@
       <Filter>Arduino\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\xOS\src\xOS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\examples\SnakeGame\Keyboard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\examples\SnakeGame\Snake.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -19,7 +19,7 @@ void pinMode(int16_t _pin, int16_t _mode) {
 
 }
 
-#define TICK_DELAY 10
+#define TICK_DELAY 5
 
 uint32_t millis(void) {
     static uint32_t time = 0;
