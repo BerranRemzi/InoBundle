@@ -1,7 +1,5 @@
 #include "Emulator.h"
 
-
-
 int random(int _max) {
     return (rand() % _max);
 }
@@ -19,12 +17,12 @@ void pinMode(int16_t _pin, int16_t _mode) {
 
 }
 
-#define TICK_DELAY 5
-
+/* 
+ * Retrieves the number of milliseconds that have elapsed since
+ * the system was started, up to 49.7 days. 
+ */
 uint32_t millis(void) {
-    static uint32_t time = 0;
-    time += TICK_DELAY;
-    Sleep(TICK_DELAY);
-    return time;
+
+    return (uint32_t)GetTickCount();
 }
 
