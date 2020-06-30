@@ -49,14 +49,19 @@ void draw_dot(int _x, int _y, int _color) {
 }
 
 void refreshScreen(uint8_t _input[][8], uint8_t _size) {
+    static uint8_t lastInput[8][8];
+
     for (int x = 0; x < 8; x++) {
         for (int y = 0; y < 8; y++) {
-            if(_input[x][y]==0x00){
-                draw_dot(x, y, BLACK);
+            if (_input[x][y] != lastInput[x][y]) {
+                if (_input[x][y] == 0x00) {
+                    draw_dot(x, y, BLACK);
+                }
+                else {
+                    draw_dot(x, y, WHITE);
+                }
             }
-            else {
-                draw_dot(x, y, WHITE);
-            }         
+            lastInput[x][y] = _input[x][y];
         }
     }
 }
