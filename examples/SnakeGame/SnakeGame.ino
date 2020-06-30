@@ -71,25 +71,24 @@ void setup() {
 	
 	xTaskCreate(&Task_Keyboard, 10);
 	xTaskCreate(&Task_Snake, 150);
+	//xTaskCreate(&Task_Brick, 150);
+	//xTaskCreate(&Task_Invader, 150);
+	//xTaskCreate(&Task_Tetris, 150);
+	//xTaskCreate(&Task_Square, 150);
 	xTaskCreate(&Task_Screen, 10);
 }
 
-void loop() {
-	//delay(snake.loopTime());
+void loop() {	
 	xLoop();  //xOS task
 }
 
 void Task_Snake(void){
-
+	// Game logic
 	snake.update();
-
-	snake.render();
-
-	lc.updateScreen(&screen[0], 64);
 }
 
 void Task_Screen(void){
-
+	lc.updateScreen(&screen[0], 64);
 }
 
 void Task_Keyboard(void){
