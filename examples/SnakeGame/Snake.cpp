@@ -13,13 +13,13 @@ Snake::Snake() {
 
 void Snake::setup() {
 	for (int i{ 0 }; i < SCREEN_WIDTH * SCREEN_HEIGHT; ++i) {
-		body[i] = {OUT_OF_SCREEN, OUT_OF_SCREEN};
+		body[i] = { OUT_OF_SCREEN, OUT_OF_SCREEN };
 	}
 
 	newGame();
 	totalTicks = levelTicks[2]; // medium level 250ms
 }
-void Snake::newGame(void){
+void Snake::newGame(void) {
 	// Start from position (0, 3) and direction is "right"
 	currentHead.x = 0;
 	currentHead.y = 3;
@@ -28,7 +28,7 @@ void Snake::newGame(void){
 
 	direction = DIR_RIGHT;
 	lastDirection = direction;
-	food = {OUT_OF_SCREEN, OUT_OF_SCREEN};
+	food = { OUT_OF_SCREEN, OUT_OF_SCREEN };
 	isFoodGenerated = false;
 	generateFood();
 }
@@ -76,7 +76,7 @@ void Snake::render() {
 
 void Snake::update() {
 	static uint8_t cycle = totalTicks;
-	if(cycle < totalTicks){
+	if (cycle < totalTicks) {
 		generateFood();
 		cycle++;
 		return;
@@ -84,29 +84,29 @@ void Snake::update() {
 	cycle = 0;
 
 	Direction_t _direction = getLastDirection();
-	
+
 	if (_direction != DIR_STOPPED) {
 		// TODO: Don't overwrite direction, if the "_direction" is
 		// opposite of the "direction"
-		if(DIR_UP != direction && DIR_DOWN == _direction){
+		if (DIR_UP != direction && DIR_DOWN == _direction) {
 			direction = _direction;
 		}
-		if(DIR_DOWN != direction && DIR_UP == _direction){
+		if (DIR_DOWN != direction && DIR_UP == _direction) {
 			direction = _direction;
 		}
-		if(DIR_RIGHT != direction && DIR_LEFT == _direction){
+		if (DIR_RIGHT != direction && DIR_LEFT == _direction) {
 			direction = _direction;
 		}
-		if(DIR_LEFT != direction && DIR_RIGHT == _direction){
+		if (DIR_LEFT != direction && DIR_RIGHT == _direction) {
 			direction = _direction;
 		}
 		_direction = direction;
 	}
-	
+
 
 	bool snakeMoved = moveSnake();
 
-	
+
 
 	// If head is collided with food
 	if (food.x == currentHead.x && food.y == currentHead.y) {
@@ -132,7 +132,7 @@ void Snake::update() {
 }
 
 void Snake::generateFood() {
-	if(isFoodGenerated == true){
+	if (isFoodGenerated == true) {
 		return;
 	}
 	// TODO: Fix food appearing inside of body or head,
@@ -171,22 +171,22 @@ bool Snake::moveSnake() {
 
 	// If snake is going to move
 	//if (direction > 0) {
-		oldHead.x = currentHead.x;	// Set old head x to current head x
-		oldHead.y = currentHead.y;	// Set old head y to current head y
+	oldHead.x = currentHead.x;	// Set old head x to current head x
+	oldHead.y = currentHead.y;	// Set old head y to current head y
 
-		snakeMoved = true;
+	snakeMoved = true;
 
-		sound = MOVE;
+	sound = MOVE;
 	//}
 
-	if(direction == DIR_UP){//if (true == ((direction >> 0) & 1U)) {
+	if (direction == DIR_UP) {//if (true == ((direction >> 0) & 1U)) {
 		--currentHead.y;
 		// If snake head is out of the screen, teleport it to mirrored position
 		if (currentHead.y < 0)
 			currentHead.y = SCREEN_HEIGHT - 1;
 	}
 	else if (direction == DIR_DOWN) {//else if (true == ((direction >> 1) & 1U)) {
-		
+
 		++currentHead.y;
 		// If snake head is out of the screen, teleport it to mirrored position
 		if (currentHead.y == SCREEN_HEIGHT)
@@ -199,7 +199,7 @@ bool Snake::moveSnake() {
 		if (currentHead.x == SCREEN_WIDTH)
 			currentHead.x = 0;
 	}
-	else if (direction == DIR_LEFT){ //else if (true == ((direction >> 3) & 1U)) {
+	else if (direction == DIR_LEFT) { //else if (true == ((direction >> 3) & 1U)) {
 		direction = DIR_LEFT;
 		--currentHead.x;
 		// If snake head is out of the screen, teleport it to mirrored position
@@ -210,22 +210,22 @@ bool Snake::moveSnake() {
 	return snakeMoved;
 }
 
-Direction_t Snake::getLastDirection(void){
-	
+Direction_t Snake::getLastDirection(void) {
 
-	if(KB_IsPressed(VK_UP) && DIR_UP != lastDirection){
+
+	if (KB_IsPressed(VK_UP) && DIR_UP != lastDirection) {
 		lastDirection = DIR_UP;
 	}
 
-	if(KB_IsPressed(VK_DOWN) && DIR_DOWN != lastDirection){
+	if (KB_IsPressed(VK_DOWN) && DIR_DOWN != lastDirection) {
 		lastDirection = DIR_DOWN;
 	}
 
-	if(KB_IsPressed(VK_RIGHT) && DIR_RIGHT != lastDirection){
+	if (KB_IsPressed(VK_RIGHT) && DIR_RIGHT != lastDirection) {
 		lastDirection = DIR_RIGHT;
 	}
 
-	if(KB_IsPressed(VK_LEFT) && DIR_LEFT != lastDirection){
+	if (KB_IsPressed(VK_LEFT) && DIR_LEFT != lastDirection) {
 		lastDirection = DIR_LEFT;
 	}
 	KB_Reset();

@@ -19,7 +19,7 @@ enum Sound_t {
 	MOVE
 };
 
-enum Direction_t{
+enum Direction_t {
 	DIR_STOPPED,
 	DIR_UP,
 	DIR_DOWN,
@@ -27,12 +27,12 @@ enum Direction_t{
 	DIR_LEFT
 };
 
-enum Axis_t{
+enum Axis_t {
 	AXIS_X,
 	AXIS_Y
 };
 
-typedef struct Position_t{
+typedef struct Position_t {
 	int8_t x;
 	int8_t y;
 };
@@ -44,7 +44,7 @@ public:
 
 	//int8_t x[64];		// Snake body X
 	//int8_t y[64];		// Snake body Y
-	Position_t body[SCREEN_WIDTH*SCREEN_HEIGHT]; //todo: change [x,y] array with this struct array
+	Position_t body[SCREEN_WIDTH * SCREEN_HEIGHT]; //todo: change [x,y] array with this struct array
 	//int8_t head[4];		// 0 - head X, 1 - head Y, 2 - old head X, 3 - old head Y
 	Position_t currentHead; //todo: change [x,y] array with this struct array
 	Position_t oldHead;
@@ -54,7 +54,7 @@ public:
 	Position_t food;
 
 	int8_t size{ 0 };
-	Direction_t direction; 
+	Direction_t direction;
 	Sound_t sound;
 	uint8_t speed{ 0 };
 	uint8_t totalTicks;
