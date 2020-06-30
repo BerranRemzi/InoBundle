@@ -30,12 +30,19 @@ enum Axis_t{
 	AXIS_Y
 };
 
+typedef struct Position_t{
+	int8_t x;
+	int8_t y;
+};
+
 extern void setLed(int x, int y, uint8_t brightness);
 
 class Snake {
 public:
+
 	int8_t x[64];		// Snake body X
 	int8_t y[64];		// Snake body Y
+	//Position_t pos[64]; //todo: change [x,y] array with this struct array
 	int8_t head[4];		// 0 - head X, 1 - head Y, 2 - old head X, 3 - old head Y
 	int8_t bodyLast[2];	// 0 - last body X, 1 - last body Y 
 	int8_t food[2];		// 0 - food X, 1 - food Y

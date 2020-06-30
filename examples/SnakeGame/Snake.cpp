@@ -109,6 +109,8 @@ void Snake::update() {
 	else if (snakeMoved) {
 		moveBody();
 	}
+	// Print to screen
+	render();
 }
 
 void Snake::generateFood() {
