@@ -56,7 +56,6 @@ public:
 	int8_t size{ 0 };
 	Direction_t direction; 
 	Sound_t sound;
-	uint16_t delayTime{ SLOW_SPEED_DELAY };
 	uint8_t speed{ 0 };
 	uint8_t totalTicks;
 	bool isFoodGenerated = false;
@@ -75,7 +74,6 @@ public:
 	void extendSnake();
 	bool moveSnake();
 	void moveBody();
-	uint16_t loopTime();
 	bool isInScreen(int i);
 	Sound_t playSound();
 	Direction_t getLastDirection(void);

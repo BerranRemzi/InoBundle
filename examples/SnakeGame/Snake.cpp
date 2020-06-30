@@ -43,8 +43,6 @@ void Snake::reset() {
 		speed--;
 	}
 
-	delayTime = SLOW_SPEED_DELAY >> speed;
-
 	sound = DEAD;
 	// Clear the whole screen
 	for (int x{ 0 }; x < SCREEN_WIDTH; ++x) {
@@ -52,10 +50,6 @@ void Snake::reset() {
 			setLed(x, y, LED_OFF);
 		}
 	}
-}
-
-uint16_t Snake::loopTime() {
-	return delayTime;
 }
 
 void Snake::render() {
