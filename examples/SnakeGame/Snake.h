@@ -41,16 +41,10 @@ extern void setLed(int x, int y, uint8_t brightness);
 
 class Snake {
 public:
-
-	//int8_t x[64];		// Snake body X
-	//int8_t y[64];		// Snake body Y
-	Position_t body[SCREEN_WIDTH * SCREEN_HEIGHT]; //todo: change [x,y] array with this struct array
-	//int8_t head[4];		// 0 - head X, 1 - head Y, 2 - old head X, 3 - old head Y
-	Position_t currentHead; //todo: change [x,y] array with this struct array
-	Position_t oldHead;
-	//int8_t bodyLast[2];	// 0 - last body X, 1 - last body Y
-	Position_t  bodyLast;
-	//int8_t food[2];		// 0 - food X, 1 - food Y
+	Position_t body[SCREEN_WIDTH * SCREEN_HEIGHT];
+	Position_t tail;
+	Position_t currentHead;
+	Position_t previousHead;
 	Position_t food;
 
 	int8_t size{ 0 };

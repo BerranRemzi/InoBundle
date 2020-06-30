@@ -54,11 +54,11 @@ void Snake::reset() {
 
 void Snake::render() {
 	// Clear old snake head
-	setLed(oldHead.x, oldHead.y, LED_OFF);
+	setLed(previousHead.x, previousHead.y, LED_OFF);
 
 	// Clear old last part of the snake body if exists
 	if (size > 0)
-		setLed(bodyLast.x, bodyLast.y, LED_OFF);
+		setLed(tail.x, tail.y, LED_OFF);
 
 	// Print snake body
 	for (int i{ 0 }; i < SCREEN_WIDTH * SCREEN_HEIGHT; ++i) {
@@ -160,8 +160,8 @@ void Snake::putFood() {
 }
 
 void Snake::extendSnake() {
-	body[size].x = oldHead.x;
-	body[size].y = oldHead.y;
+	body[size].x = previousHead.x;
+	body[size].y = previousHead.y;
 
 	++size;
 }
@@ -171,8 +171,8 @@ bool Snake::moveSnake() {
 
 	// If snake is going to move
 	//if (direction > 0) {
-	oldHead.x = currentHead.x;	// Set old head x to current head x
-	oldHead.y = currentHead.y;	// Set old head y to current head y
+	previousHead.x = currentHead.x;	// Set old head x to current head x
+	previousHead.y = currentHead.y;	// Set old head y to current head y
 
 	snakeMoved = true;
 
@@ -234,16 +234,16 @@ Direction_t Snake::getLastDirection(void) {
 
 void Snake::moveBody() {
 	if (size > 0) {
-		bodyLast.x = body[0].x;
-		bodyLast.y = body[0].y;
+		tail.x = body[0].x;
+		tail.y = body[0].y;
 
 		for (int i{ 0 }; i < size - 1; ++i) {
 			body[i].x = body[i + 1].x;
 			body[i].y = body[i + 1].y;
 		}
 
-		body[size - 1].x = oldHead.x;
-		body[size - 1].y = oldHead.y;
+		body[size - 1].x = previousHead.x;
+		body[size - 1].y = previousHead.y;
 	}
 }
 
