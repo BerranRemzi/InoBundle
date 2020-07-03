@@ -1,47 +1,12 @@
 #pragma once
-#include <stdint.h>
+
+#include "Utility.h"
 #include "Arduino.h"
-
-#define LED_ON 0xFF
-#define LED_OFF 0x00
-
-#define SCREEN_WIDTH 	8
-#define SCREEN_HEIGHT 	8
-
-#define OUT_OF_SCREEN 	-1
 
 #define SNAKE_START_SIZE 2
 
-enum Sound_t {
-	SILENCE,
-	SIZE_UP,
-	DEAD,
-	MOVE
-};
-
-enum Direction_t {
-	DIR_STOPPED,
-	DIR_UP,
-	DIR_DOWN,
-	DIR_RIGHT,
-	DIR_LEFT
-};
-
-enum Axis_t {
-	AXIS_X,
-	AXIS_Y
-};
-
-typedef struct Position_t {
-	int8_t x;
-	int8_t y;
-};
-
-extern void setLed(int x, int y, uint8_t brightness);
-
 class Snake {
 public:
-	Position_t body[SCREEN_WIDTH * SCREEN_HEIGHT];
 	Position_t tail;
 	Position_t currentHead;
 	Position_t previousHead;

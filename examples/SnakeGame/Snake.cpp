@@ -1,11 +1,6 @@
 #include "Snake.h"
-#include "Keyboard.h"
 
-uint8_t levelTicks[] = {
-	50, //slow 		50 x 10 = 500ms
-	25, //medium	25 x 10 = 250ms
-	15  //fast		15 x 10 = 150ms
-};
+extern Position_t matrix[SCREEN_WIDTH * SCREEN_HEIGHT];
 
 Snake::Snake() {
 	setup();
@@ -13,11 +8,11 @@ Snake::Snake() {
 
 void Snake::setup() {
 	for (int i{ 0 }; i < SCREEN_WIDTH * SCREEN_HEIGHT; ++i) {
-		body[i] = { OUT_OF_SCREEN, OUT_OF_SCREEN };
+		matrix[i] = { OUT_OF_SCREEN, OUT_OF_SCREEN };
 	}
 
 	newGame();
-	totalTicks = levelTicks[2]; // medium level 250ms
+	totalTicks = TICK_MEDIUM; // medium level 250ms
 }
 void Snake::newGame(void) {
 	// Start from position (0, 3) and direction is "right"
@@ -43,8 +38,8 @@ void Snake::reset() {
 		speed--;
 	}
 
-	sound = DEAD;
-	// Clear the whole screen
+	sound = SNAKE_DEAD;
+	// Clear the whole matrix
 	for (int x{ 0 }; x < SCREEN_WIDTH; ++x) {
 		for (int y{ 0 }; y < SCREEN_HEIGHT; ++y) {
 			setLed(x, y, LED_OFF);
@@ -56,14 +51,14 @@ void Snake::render() {
 	// Clear old snake head
 	setLed(previousHead.x, previousHead.y, LED_OFF);
 
-	// Clear old last part of the snake body if exists
+	// Clear old last part of the snake matrix if exists
 	if (size > 0)
 		setLed(tail.x, tail.y, LED_OFF);
 
-	// Print snake body
+	// Print snake matrix
 	for (int i{ 0 }; i < SCREEN_WIDTH * SCREEN_HEIGHT; ++i) {
 		if (isInScreen(i)) {
-			setLed(body[i].x, body[i].y, LED_ON);
+			setLed(matrix[i].x, matrix[i].y, LED_ON);
 		}
 	}
 
@@ -113,7 +108,7 @@ void Snake::update() {
 		isFoodGenerated = false;
 		generateFood();
 		extendSnake();
-		sound = SIZE_UP;
+		sound = SNAKE_SIZE_UP;
 	}
 	else if (snakeMoved) {
 		moveBody();
@@ -121,12 +116,12 @@ void Snake::update() {
 
 
 	for (int i = 0; i < size; ++i) {
-		// If head is collided with body
-		if (currentHead.x == body[i].x && currentHead.y == body[i].y) {
+		// If head is collided with matrix
+		if (currentHead.x == matrix[i].x && currentHead.y == matrix[i].y) {
 			reset();
 		}
 	}
-	// Print to screen
+	// Print to matrix
 	render();
 	//isFoodGenerated = false;
 }
@@ -135,15 +130,15 @@ void Snake::generateFood() {
 	if (isFoodGenerated == true) {
 		return;
 	}
-	// TODO: Fix food appearing inside of body or head,
+	// TODO: Fix food appearing inside of matrix or head,
 	// if it appears inside the head, size doesn't grow
 	putFood();
 	for (int i{ 0 }; i < 16; ++i) {
 		for (int j{ 0 }; j < SCREEN_WIDTH * SCREEN_HEIGHT; ++j) {
-			if (food.x == body[j].x && food.y == body[j].y) {
+			if (food.x == matrix[j].x && food.y == matrix[j].y) {
 				putFood();
 			}
-			else if (currentHead.x == body[j].x && currentHead.y == body[j].y) {
+			else if (currentHead.x == matrix[j].x && currentHead.y == matrix[j].y) {
 				putFood();
 			}
 			else {
@@ -160,8 +155,8 @@ void Snake::putFood() {
 }
 
 void Snake::extendSnake() {
-	body[size].x = previousHead.x;
-	body[size].y = previousHead.y;
+	matrix[size].x = previousHead.x;
+	matrix[size].y = previousHead.y;
 
 	++size;
 }
@@ -176,33 +171,33 @@ bool Snake::moveSnake() {
 
 	snakeMoved = true;
 
-	sound = MOVE;
+	sound = SNAKE_MOVE;
 	//}
 
 	if (direction == DIR_UP) {//if (true == ((direction >> 0) & 1U)) {
 		--currentHead.y;
-		// If snake head is out of the screen, teleport it to mirrored position
+		// If snake head is out of the matrix, teleport it to mirrored position
 		if (currentHead.y < 0)
 			currentHead.y = SCREEN_HEIGHT - 1;
 	}
 	else if (direction == DIR_DOWN) {//else if (true == ((direction >> 1) & 1U)) {
 
 		++currentHead.y;
-		// If snake head is out of the screen, teleport it to mirrored position
+		// If snake head is out of the matrix, teleport it to mirrored position
 		if (currentHead.y == SCREEN_HEIGHT)
 			currentHead.y = 0;
 	}
 	else if (direction == DIR_RIGHT) {//else if (true == ((direction >> 2) & 1U)) {
 		direction = DIR_RIGHT;
 		++currentHead.x;
-		// If snake head is out of the screen, teleport it to mirrored position
+		// If snake head is out of the matrix, teleport it to mirrored position
 		if (currentHead.x == SCREEN_WIDTH)
 			currentHead.x = 0;
 	}
 	else if (direction == DIR_LEFT) { //else if (true == ((direction >> 3) & 1U)) {
 		direction = DIR_LEFT;
 		--currentHead.x;
-		// If snake head is out of the screen, teleport it to mirrored position
+		// If snake head is out of the matrix, teleport it to mirrored position
 		if (currentHead.x < 0)
 			currentHead.x = SCREEN_WIDTH - 1;
 	}
@@ -234,16 +229,16 @@ Direction_t Snake::getLastDirection(void) {
 
 void Snake::moveBody() {
 	if (size > 0) {
-		tail.x = body[0].x;
-		tail.y = body[0].y;
+		tail.x = matrix[0].x;
+		tail.y = matrix[0].y;
 
 		for (int i{ 0 }; i < size - 1; ++i) {
-			body[i].x = body[i + 1].x;
-			body[i].y = body[i + 1].y;
+			matrix[i].x = matrix[i + 1].x;
+			matrix[i].y = matrix[i + 1].y;
 		}
 
-		body[size - 1].x = previousHead.x;
-		body[size - 1].y = previousHead.y;
+		matrix[size - 1].x = previousHead.x;
+		matrix[size - 1].y = previousHead.y;
 	}
 }
 
@@ -251,21 +246,21 @@ bool Snake::isInScreen(int i) {
 	bool value{ true };
 
 	/*
-	if ((x[i] < 0 || x[i] >= SCREEN_WIDTH) ||
-		(y[i] < 0 || y[i] >= SCREEN_HEIGHT)) {
+	if ((x[i] < 0 || x[i] >= matrix_WIDTH) ||
+		(y[i] < 0 || y[i] >= matrix_HEIGHT)) {
 		value = false;
 	}
 	*/
 
-	if (body[i].x == OUT_OF_SCREEN || body[i].y == OUT_OF_SCREEN)
+	if (matrix[i].x == OUT_OF_SCREEN || matrix[i].y == OUT_OF_SCREEN)
 		value = false;
 
 	return value;
 }
 
 Sound_t Snake::playSound() {
-	if (sound > SILENCE) {
-		sound = SILENCE;
+	if (sound > SNAKE_SILENCE) {
+		sound = SNAKE_SILENCE;
 	}
 
 	return sound;
