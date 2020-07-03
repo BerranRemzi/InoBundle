@@ -1,5 +1,9 @@
 #include "Brick.h"
 
+bool checkBit(uint8_t _data, uint8_t _pos){
+	return (_data >> _pos) & 1;
+}
+
 Brick::Brick() {
 	reset();
 }
@@ -23,19 +27,7 @@ void Brick::update() {
 	}
 	cycle = 0;
 
-	//if (KB_IsPressed(VK_DOWN))
-	//	direction = DIR_DOWN;
-	//if (KB_IsPressed(VK_LEFT))
-	//	direction = DIR_LEFT;
-	//if (KB_IsPressed(VK_RIGHT))
-	//	direction = DIR_RIGHT;
-	if (GetAsyncKeyState(VK_LEFT))
-		direction = DIR_LEFT;
-	if (GetAsyncKeyState(VK_RIGHT))
-		direction = DIR_RIGHT;
-	if (GetAsyncKeyState(VK_DOWN))
-		direction = DIR_DOWN;
-
+	direction = KB_GetLastDirection();
 	MoveBrick();
 	PlaceBrick();
 
@@ -46,25 +38,25 @@ void Brick::render() {
 	// Delete last part of the brick
 	if (direction == DIR_LEFT) {
 		for (int i{ SCREEN_HEIGHT - 1 }; i > -1; --i)
-			//if (checkBit(screen[brickHeight], i)) {
-			//	setLed(i, brickHeight, LED_OFF);
-			//}
+			if (checkBit(screen[brickHeight], i)) {
+				AB_SetLed(i, brickHeight, LED_OFF);
+			}
 			screen[brickHeight] <<= 1;
 	}
 	else if (direction == DIR_RIGHT) {
 		for (int i{ 0 }; i < SCREEN_HEIGHT; ++i)
-			//if (checkBit(screen[brickHeight], i)) {
-			//	setLed(SCREEN_HEIGHT - 1 - i, brickHeight, LED_OFF);
-			//}
+			if (checkBit(screen[brickHeight], i)) {
+				AB_SetLed(SCREEN_HEIGHT - 1 - i, brickHeight, LED_OFF);
+			}
 			screen[brickHeight] >>= 1;
 	}
 
 	// Print brick
 	for (int i{ 0 }; i < SCREEN_HEIGHT; ++i) {
 		for (int j{ 0 }; j < SCREEN_HEIGHT; ++j) {
-			//if (checkBit(screen[i], j)) {
-			//	setLed(SCREEN_HEIGHT - 1 - j, i, LED_ON);
-			//}
+			if (checkBit(screen[i], j)) {
+				AB_SetLed(SCREEN_HEIGHT - 1 - j, i, LED_ON);
+			}
 		}
 	}
 }

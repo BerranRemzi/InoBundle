@@ -15,6 +15,15 @@ const uint8_t keyMapSize = sizeof(keyMap);
 
 static uint16_t keyData  = 0x0000;
 
+void KB_Setup(void){
+    pinMode(VK_UP, INPUT_PULLUP);
+	pinMode(VK_DOWN, INPUT_PULLUP);
+	pinMode(VK_LEFT, INPUT_PULLUP);
+	pinMode(VK_RIGHT, INPUT_PULLUP);
+    
+    /* TODO: add buttons A, B, C, and D  */
+}
+
 bool KB_IsPressed(uint8_t _pin){
     bool returnValue = false;
 
@@ -41,4 +50,26 @@ void KB_ReadAll(void){
 
 void KB_Reset(void){
     keyData = 0x0000;
+}
+
+Direction_t KB_GetLastDirection(void) {
+	static Direction_t lastDirection = DIR_RIGHT;
+
+	if (KB_IsPressed(VK_UP) && DIR_UP != lastDirection) {
+		lastDirection = DIR_UP;
+	}
+
+	if (KB_IsPressed(VK_DOWN) && DIR_DOWN != lastDirection) {
+		lastDirection = DIR_DOWN;
+	}
+
+	if (KB_IsPressed(VK_RIGHT) && DIR_RIGHT != lastDirection) {
+		lastDirection = DIR_RIGHT;
+	}
+
+	if (KB_IsPressed(VK_LEFT) && DIR_LEFT != lastDirection) {
+		lastDirection = DIR_LEFT;
+	}
+	KB_Reset();
+	return lastDirection;
 }

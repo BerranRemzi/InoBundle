@@ -28,13 +28,16 @@
 #define LedControl_h
 
 #include <avr/pgmspace.h>
-
-#if (ARDUINO >= 100)
-#include <Arduino.h>
-#else
-#include <WProgram.h>
-#endif
 #include <SPI.h>
+#include "Keyboard.h"
+
+#if ARDUINO
+
+#define SPI_CS_PIN  10
+
+#endif
+
+
 
 /*
  * Segments to be switched on for characters and digits on
@@ -190,6 +193,13 @@ class LedControl {
 
         void updateScreen(uint8_t _input[][8], uint8_t _size);
 };
+void AB_InitPins(void);
+void AB_InitScreen(void);
+void AB_Setup(void);
+
+void AB_SetLed(uint8_t x, uint8_t y, uint8_t brightness);
+uint8_t AB_GetLed(uint8_t x, uint8_t y);
+void AB_UpdateScreen(void);
 
 #endif	//LedControl.h
 

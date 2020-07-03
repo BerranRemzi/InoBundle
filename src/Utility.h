@@ -1,8 +1,8 @@
 #pragma once
 
-#include <bitset>
+//#include <bitset>
 #include <stdint.h>
-#include "Keyboard.h"
+//#include "Keyboard.h"
 
 #define LED_ON			0xFF
 #define LED_OFF			0x00
@@ -45,4 +45,4 @@ typedef struct Position_t {
 
 static Position_t matrix[SCREEN_WIDTH * SCREEN_HEIGHT];
 
-extern void setLed(int x, int y, uint8_t brightness);
+//extern void setLed(int x, int y, uint8_t brightness);

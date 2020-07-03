@@ -276,3 +276,78 @@ void LedControl::updateScreen(uint8_t _input[][8], uint8_t _size){
     digitalWrite(chipSelectPin, HIGH);
   }*/
 }
+
+uint8_t screen[8][8];
+
+
+void AB_InitPins(void){
+
+    // start the SPI library:
+    SPI.begin();
+    pinMode(SPI_CS_PIN, OUTPUT);
+    digitalWrite(SPI_CS_PIN, HIGH);
+
+
+}
+
+void AB_InitScreen(void){
+    //spiTransfer(addr, OP_SHUTDOWN,1);
+    digitalWrite(SPI_CS_PIN,LOW);
+    SPI.transfer(OP_SHUTDOWN);
+    SPI.transfer(1);
+    digitalWrite(SPI_CS_PIN,HIGH);
+    delay(1);
+
+    //spiTransfer(addr, OP_INTENSITY,intensity);
+    digitalWrite(SPI_CS_PIN,LOW);
+    SPI.transfer(OP_INTENSITY);
+    SPI.transfer(1);
+    digitalWrite(SPI_CS_PIN,HIGH);
+    delay(1);
+
+    //lc.clearDisplay(0);
+    for(int i=0;i<8;i++) {
+        digitalWrite(SPI_CS_PIN,LOW);
+        SPI.transfer(i);
+        SPI.transfer(0x00);
+        digitalWrite(SPI_CS_PIN,HIGH);
+        delay(1);
+    }
+    
+}
+
+void AB_Setup(void){
+    randomSeed(analogRead(0));
+    KB_Setup();
+    AB_InitPins();
+    AB_InitScreen();
+}
+
+void AB_SetLed(uint8_t x, uint8_t y, uint8_t brightness) {
+	screen[y][x] = brightness;
+}
+
+uint8_t AB_GetLed(uint8_t x, uint8_t y){
+	return screen[y][x];
+}
+
+void AB_UpdateScreen(){
+  uint8_t data = 0x00;
+  for(uint8_t y = 0; y<8;y++){
+
+	data = 0x00;
+	for(uint8_t x = 0; x < 8; x++){
+		if(screen[x][y] > 0){
+			data |= 1 << x;
+		}
+	}
+	    // take the chip select low to select the device:
+    digitalWrite(SPI_CS_PIN, LOW);
+
+    SPI.transfer(y+1);  // Send row number
+    SPI.transfer(data); // Send register location  
+
+    // take the chip select high to de-select:
+    digitalWrite(SPI_CS_PIN, HIGH);
+  }
+}

@@ -1,9 +1,11 @@
 #pragma once
 
-#include "Utility.h"
 #include "Arduino.h"
+#include "Utility.h"
+#include "Keyboard.h"
+#include "ArcadeBundle.h"
 
-#define BRICK_DEFAULT 0b1110'0000
+#define BRICK_DEFAULT 0B11100000
 
 class Brick {
 public:
@@ -18,6 +20,7 @@ public:
 
 	void update();
 	void render();
+	Direction_t getLastDirection(void);
 
 	void MoveBrick();
 	void PlaceBrick();
