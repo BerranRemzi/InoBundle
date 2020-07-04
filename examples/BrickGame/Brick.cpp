@@ -27,15 +27,40 @@ void Brick::update() {
 	}
 	cycle = 0;
 
-	direction = KB_GetLastDirection();
-	MoveBrick();
+	if(DIR_DOWN == KB_GetLastDirection()){
+		CollisionDetection();
+	}
+	
 	PlaceBrick();
+	MoveBrick();
 
 	render();
 }
 
+void Brick::CollisionDetection(){
+
+}
+
 void Brick::render() {
+	for(uint8_t y = 0; y< 8;y++){
+		for(uint8_t x = 0; x<8;x++){
+			if(checkBit(screen[0],x)){
+				AB_SetLed(7-x, 7-y, LED_ON);
+			}else{
+				AB_SetLed(7-x, 7-y, LED_OFF);
+			}
+		}
+	}
+}
+
+bool  Brick::isOnScreen(){
+	return (brickOnScreenLength > 0);
+}
+
+void Brick::MoveBrick() {
+
 	// Delete last part of the brick
+	#if 0
 	if (direction == DIR_LEFT) {
 		for (int i{ SCREEN_HEIGHT - 1 }; i > -1; --i)
 			if (checkBit(screen[brickHeight], i)) {
@@ -59,12 +84,30 @@ void Brick::render() {
 			}
 		}
 	}
-}
+	#endif
 
 
-void Brick::MoveBrick() {
-	//if (direction == DIR_LEFT)
-	//if (direction == DIR_RIGHT)
+	if(direction == DIR_RIGHT){
+		screen[0] >>= 1;
+		if(brickDefaultLenght - brickOnScreenLength > 0){
+			screen[0] |= 0x80;
+			brickOnScreenLength++;
+		}
+		if(screen[0] == 0x00){
+			direction = DIR_LEFT;
+			brickOnScreenLength = 0;
+		}
+	}else if(direction == DIR_LEFT){
+		screen[0] <<= 1;
+		if(brickDefaultLenght - brickOnScreenLength > 0){
+			screen[0] |= 0x01;
+			brickOnScreenLength++;
+		}
+		if(screen[0] == 0x00){
+			direction = DIR_RIGHT;
+			brickOnScreenLength = 0;
+		}
+	}
 }
 
 void Brick::PlaceBrick() {

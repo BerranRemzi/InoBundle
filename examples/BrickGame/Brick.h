@@ -13,6 +13,9 @@ public:
 	uint8_t brickHeight{ SCREEN_HEIGHT - 1 };
 	Direction_t direction{ DIR_RIGHT };
 	uint8_t totalTicks;
+	Position_t pos;
+	const uint8_t brickDefaultLenght = 3; 
+	uint8_t brickOnScreenLength = 0;
 public:
 	Brick();
 
@@ -20,8 +23,8 @@ public:
 
 	void update();
 	void render();
-	Direction_t getLastDirection(void);
-
+	bool isOnScreen();
+	void CollisionDetection();
 	void MoveBrick();
 	void PlaceBrick();
 };
