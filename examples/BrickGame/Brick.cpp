@@ -1,7 +1,7 @@
 #include "Brick.h"
 
 bool checkBit(uint8_t _data, uint8_t _pos){
-	return (_data >> _pos) & 1;
+	return ((_data >> _pos) & 1U);
 }
 
 Brick::Brick() {
@@ -13,11 +13,15 @@ void Brick::reset() {
 		screen[i] = 0;
 
 	brickHeight = SCREEN_HEIGHT - 1;
-	screen[brickHeight] = BRICK_DEFAULT;
+	//screen[brickHeight] = BRICK_DEFAULT;
 
 	totalTicks = TICK_MEDIUM;	// medium level 250ms
+	brickOnScreenLength = 0;
+	direction = DIR_RIGHT;
 }
-
+void Brick::startNewGame(){
+	brickOnScreenLength = 0;
+}
 
 void Brick::update() {
 	static uint8_t cycle = totalTicks;
@@ -27,27 +31,38 @@ void Brick::update() {
 	}
 	cycle = 0;
 
-	if(DIR_DOWN == KB_GetLastDirection()){
+	if(KB_IsPressed(VK_DOWN)){
+		KB_Reset();
 		CollisionDetection();
 	}
 	
-	PlaceBrick();
+	//PlaceBrick();
 	MoveBrick();
 
 	render();
 }
 
 void Brick::CollisionDetection(){
-
+	if(brickHeight<SCREEN_HEIGHT){
+		brickHeight--;
+		brickOnScreenLength = 0;
+		/*if(direction==DIR_RIGHT){
+			direction==DIR_LEFT;
+		}else{
+			direction==DIR_RIGHT;
+		}*/
+	}else{
+		reset();
+	}
 }
 
 void Brick::render() {
 	for(uint8_t y = 0; y< 8;y++){
 		for(uint8_t x = 0; x<8;x++){
-			if(checkBit(screen[0],x)){
-				AB_SetLed(7-x, 7-y, LED_ON);
+			if(checkBit(screen[y], x)){
+				AB_SetLed(x, y, LED_ON);
 			}else{
-				AB_SetLed(7-x, 7-y, LED_OFF);
+				AB_SetLed(x, y, LED_OFF);
 			}
 		}
 	}
@@ -88,22 +103,22 @@ void Brick::MoveBrick() {
 
 
 	if(direction == DIR_RIGHT){
-		screen[0] >>= 1;
+		screen[brickHeight] >>= 1;
 		if(brickDefaultLenght - brickOnScreenLength > 0){
-			screen[0] |= 0x80;
+			screen[brickHeight] |= 0x80;
 			brickOnScreenLength++;
 		}
-		if(screen[0] == 0x00){
+		if(screen[brickHeight] == 0x00){
 			direction = DIR_LEFT;
 			brickOnScreenLength = 0;
 		}
 	}else if(direction == DIR_LEFT){
-		screen[0] <<= 1;
+		screen[brickHeight] <<= 1;
 		if(brickDefaultLenght - brickOnScreenLength > 0){
-			screen[0] |= 0x01;
+			screen[brickHeight] |= 0x01;
 			brickOnScreenLength++;
 		}
-		if(screen[0] == 0x00){
+		if(screen[brickHeight] == 0x00){
 			direction = DIR_RIGHT;
 			brickOnScreenLength = 0;
 		}

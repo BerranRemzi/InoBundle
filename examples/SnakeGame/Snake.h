@@ -2,6 +2,8 @@
 
 #include "Utility.h"
 #include "Arduino.h"
+#include "Keyboard.h"
+#include "ArcadeBundle.h"
 
 #define SNAKE_START_SIZE 2
 

@@ -43,70 +43,8 @@
 #define OP_SHUTDOWN    12
 #define OP_DISPLAYTEST 15
 
-LedControl::LedControl(int dataPin, int clkPin, int csPin, int numDevices) {
-    SPI_MOSI=dataPin;
-    SPI_CLK=clkPin;
-    SPI_CS=csPin;
-    if(numDevices<=0 || numDevices>8 )
-        numDevices=8;
-    maxDevices=numDevices;
-    pinMode(SPI_MOSI,OUTPUT);
-    pinMode(SPI_CLK,OUTPUT);
-    pinMode(SPI_CS,OUTPUT);
-    digitalWrite(SPI_CS,HIGH);
-    SPI_MOSI=dataPin;
-    for(int i=0;i<64;i++) 
-        status[i]=0x00;
-    for(int i=0;i<maxDevices;i++) {
-        spiTransfer(i,OP_DISPLAYTEST,0);
-        //scanlimit is set to max on startup
-        setScanLimit(i,7);
-        //decode is done in source
-        spiTransfer(i,OP_DECODEMODE,0);
-        clearDisplay(i);
-        //we go into shutdown-mode on startup
-        shutdown(i,true);
-    }
-}
-
 LedControl::LedControl(int csPin, int numDevices) {
-    SPI_CS=csPin;
-    if(numDevices<=0 || numDevices>8 )
-        numDevices=8;
-    maxDevices=numDevices;
-
-    // start the SPI library:
-    SPI.begin();
-    softSPI = false;
-
-    pinMode(SPI_CS,OUTPUT);
-    digitalWrite(SPI_CS,HIGH);
-    
-    for(int i=0;i<64;i++) 
-        status[i]=0x00;
-    for(int i=0;i<maxDevices;i++) {
-        spiTransfer(i,OP_DISPLAYTEST,0);
-        //scanlimit is set to max on startup
-        setScanLimit(i,7);
-        //decode is done in source
-        spiTransfer(i,OP_DECODEMODE,0);
-        clearDisplay(i);
-        //we go into shutdown-mode on startup
-        shutdown(i,true);
-    }
-}
-
-int LedControl::getDeviceCount() {
-    return maxDevices;
-}
-
-void LedControl::shutdown(int addr, bool b) {
-    if(addr<0 || addr>=maxDevices)
-        return;
-    if(b)
-        spiTransfer(addr, OP_SHUTDOWN,0);
-    else
-        spiTransfer(addr, OP_SHUTDOWN,1);
+   
 }
 
 void LedControl::setScanLimit(int addr, int limit) {
@@ -114,44 +52,6 @@ void LedControl::setScanLimit(int addr, int limit) {
         return;
     if(limit>=0 && limit<8)
         spiTransfer(addr, OP_SCANLIMIT,limit);
-}
-
-void LedControl::setIntensity(int addr, int intensity) {
-    if(addr<0 || addr>=maxDevices)
-        return;
-    if(intensity>=0 && intensity<16)	
-        spiTransfer(addr, OP_INTENSITY,intensity);
-}
-
-void LedControl::clearDisplay(int addr) {
-    int offset;
-
-    if(addr<0 || addr>=maxDevices)
-        return;
-    offset=addr*8;
-    for(int i=0;i<8;i++) {
-        status[offset+i]=0;
-        spiTransfer(addr, i+1,status[offset+i]);
-    }
-}
-
-void LedControl::setLed(int addr, int row, int column, boolean state) {
-    int offset;
-    byte val=0x00;
-
-    if(addr<0 || addr>=maxDevices)
-        return;
-    if(row<0 || row>7 || column<0 || column>7)
-        return;
-    offset=addr*8;
-    val=B10000000 >> column;
-    if(state)
-        status[offset+row]=status[offset+row]|val;
-    else {
-        val=~val;
-        status[offset+row]=status[offset+row]&val;
-    }
-    spiTransfer(addr, row+1,status[offset+row]);
 }
 
 void LedControl::setRow(int addr, int row, byte value) {
@@ -216,69 +116,7 @@ void LedControl::setChar(int addr, int digit, char value, boolean dp) {
     spiTransfer(addr, digit+1,v);
 }
 
-void LedControl::spiTransfer(int addr, volatile byte opcode, volatile byte data) {
-    //Create an array with the data to shift out
-    int offset=addr*2;
-    int maxbytes=maxDevices*2;
-
-    for(int i=0;i<maxbytes;i++)
-        spidata[i]=(byte)0;
-    //put our device data into the array
-    spidata[offset+1]=opcode;
-    spidata[offset]=data;
-    //enable the line 
-    digitalWrite(SPI_CS,LOW);
-    if(true == softSPI){
-        //Now shift out the data 
-        for(int i=maxbytes;i>0;i--){
-            shiftOut(SPI_MOSI,SPI_CLK,MSBFIRST,spidata[i-1]);
-        }
-    }else{
-        for(int i=maxbytes;i>0;i--){
-            //shiftOut(SPI_MOSI,SPI_CLK,MSBFIRST,spidata[i-1]);
-            SPI.transfer(spidata[i-1]);
-        }
-    }
-    //latch the data onto the display
-    digitalWrite(SPI_CS,HIGH);
-}    
-
-void LedControl::updateScreen(uint8_t _input[][8], uint8_t _size){
-
-  uint8_t data = 0x00;
-  for(uint8_t y = 0; y<8;y++){
-
-	data = 0x00;
-	for(uint8_t x = 0; x < 8; x++){
-		if(_input[x][y] > 0){
-			data |= 1 << x;
-		}
-	}
-	    // take the chip select low to select the device:
-    digitalWrite(SPI_CS, LOW);
-
-    SPI.transfer(y+1);  // Send row number
-    SPI.transfer(data); // Send register location  
-
-    // take the chip select high to de-select:
-    digitalWrite(SPI_CS, HIGH);
-  }
-  
-  /*
-  for(int i = 0; i<8; i++){
-    // take the chip select low to select the device:
-    digitalWrite(chipSelectPin, LOW);
-
-    SPI.transfer(i+1);  // Send row number
-    SPI.transfer(0x55); // Send register location  
-
-    // take the chip select high to de-select:
-    digitalWrite(chipSelectPin, HIGH);
-  }*/
-}
-
-uint8_t screen[8][8];
-
+uint8_t AB_screen[8][8];
 
 void AB_InitPins(void){
 
@@ -286,34 +124,12 @@ void AB_InitPins(void){
     SPI.begin();
     pinMode(SPI_CS_PIN, OUTPUT);
     digitalWrite(SPI_CS_PIN, HIGH);
-
-
 }
 
 void AB_InitScreen(void){
-    //spiTransfer(addr, OP_SHUTDOWN,1);
-    digitalWrite(SPI_CS_PIN,LOW);
-    SPI.transfer(OP_SHUTDOWN);
-    SPI.transfer(1);
-    digitalWrite(SPI_CS_PIN,HIGH);
-    delay(1);
-
-    //spiTransfer(addr, OP_INTENSITY,intensity);
-    digitalWrite(SPI_CS_PIN,LOW);
-    SPI.transfer(OP_INTENSITY);
-    SPI.transfer(1);
-    digitalWrite(SPI_CS_PIN,HIGH);
-    delay(1);
-
-    //lc.clearDisplay(0);
-    for(int i=0;i<8;i++) {
-        digitalWrite(SPI_CS_PIN,LOW);
-        SPI.transfer(i);
-        SPI.transfer(0x00);
-        digitalWrite(SPI_CS_PIN,HIGH);
-        delay(1);
-    }
-    
+    AB_Shutdown(false);
+    AB_SetIntensity(1);
+    AB_clearDisplay();
 }
 
 void AB_Setup(void){
@@ -324,11 +140,11 @@ void AB_Setup(void){
 }
 
 void AB_SetLed(uint8_t x, uint8_t y, uint8_t brightness) {
-	screen[y][x] = brightness;
+	AB_screen[y][x] = brightness;
 }
 
 uint8_t AB_GetLed(uint8_t x, uint8_t y){
-	return screen[y][x];
+	return AB_screen[y][x];
 }
 
 void AB_UpdateScreen(){
@@ -337,17 +153,36 @@ void AB_UpdateScreen(){
 
 	data = 0x00;
 	for(uint8_t x = 0; x < 8; x++){
-		if(screen[x][y] > 0){
+		if(AB_screen[x][y] > 0){
 			data |= 1 << x;
 		}
 	}
-	    // take the chip select low to select the device:
-    digitalWrite(SPI_CS_PIN, LOW);
-
-    SPI.transfer(y+1);  // Send row number
-    SPI.transfer(data); // Send register location  
-
-    // take the chip select high to de-select:
-    digitalWrite(SPI_CS_PIN, HIGH);
+    AB_SpiTransfer(y+1,data);
   }
 }
+
+void AB_Shutdown(bool b) {
+    AB_SpiTransfer(OP_SHUTDOWN,!b);
+}
+
+void  AB_SetIntensity( uint8_t intensity) {
+    if(intensity>=0 && intensity<16){
+        AB_SpiTransfer(OP_INTENSITY,intensity);
+    }  
+}
+
+void AB_clearDisplay() {
+    for(int i=0;i<8;i++) {
+        AB_SpiTransfer(i+1,0x00);
+    }
+}
+
+void AB_SpiTransfer(volatile byte opcode, volatile byte data) {
+    //enable the line 
+    digitalWrite(SPI_CS_PIN,LOW);
+
+    SPI.transfer(opcode);
+    SPI.transfer(data);
+    //latch the data onto the display
+    digitalWrite(SPI_CS_PIN,HIGH);
+}    

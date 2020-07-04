@@ -42,31 +42,31 @@ void Snake::reset() {
 	// Clear the whole matrix
 	for (int x{ 0 }; x < SCREEN_WIDTH; ++x) {
 		for (int y{ 0 }; y < SCREEN_HEIGHT; ++y) {
-			setLed(x, y, LED_OFF);
+			AB_SetLed(x, y, LED_OFF);
 		}
 	}
 }
 
 void Snake::render() {
 	// Clear old snake head
-	setLed(previousHead.x, previousHead.y, LED_OFF);
+	AB_SetLed(previousHead.x, previousHead.y, LED_OFF);
 
 	// Clear old last part of the snake matrix if exists
 	if (size > 0)
-		setLed(tail.x, tail.y, LED_OFF);
+		AB_SetLed(tail.x, tail.y, LED_OFF);
 
 	// Print snake matrix
 	for (int i{ 0 }; i < SCREEN_WIDTH * SCREEN_HEIGHT; ++i) {
 		if (isInScreen(i)) {
-			setLed(matrix[i].x, matrix[i].y, LED_ON);
+			AB_SetLed(matrix[i].x, matrix[i].y, LED_ON);
 		}
 	}
 
 	// Print snake head
-	setLed(currentHead.x, currentHead.y, LED_ON);
+	AB_SetLed(currentHead.x, currentHead.y, LED_ON);
 
 	// Print food
-	setLed(food.x, food.y, LED_ON);
+	AB_SetLed(food.x, food.y, LED_ON);
 }
 
 void Snake::update() {

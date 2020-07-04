@@ -10,6 +10,7 @@
 void Task_Keyboard(void);
 void Task_Brick(void);
 void Task_Screen(void);
+void Task_Debug(void);
 
 Task_t TaskStruct[4];
 
@@ -42,9 +43,11 @@ void setup() {
 	//xTaskCreate(&Task_Tetris, 150);
 	//xTaskCreate(&Task_Square, 150);
 	xTaskCreate(&Task_Screen, 10);
+	xTaskCreate(&Task_Debug, 500);
 }
 
 void loop() {	
+	//AB_UpdateScreen();
 	xLoop();  //xOS task
 }
 
@@ -59,4 +62,10 @@ void Task_Screen(void){
 
 void Task_Keyboard(void){
 	KB_ReadAll();
+}
+
+void Task_Debug(void){
+	static uint8_t state = LED_OFF;
+	state = ~state;
+	AB_SetLed(0, 0, state);
 }

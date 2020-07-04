@@ -40,32 +40,10 @@ Snake snake;
 /* we always wait a bit between updates of the display */
 unsigned long delaytime = 100;
 
-
-static uint8_t screen[8][8];
-
-void setLed(int x, int y, uint8_t brightness) {
-	screen[y][x] = brightness;
-}
-
 byte KeyboardByte(void);
 
 void setup() {
-	/*
-	The MAX72XX is in power-saving mode on startup,
-	we have to do a wakeup call
-	*/
-	lc.shutdown(0, false);
-	/* Set the brightness to a medium values */
-	lc.setIntensity(0, 1); //min = 1, max = 16
-	/* and clear the display */
-	lc.clearDisplay(0);
-
-	randomSeed(analogRead(0));
-	
-	pinMode(VK_UP, INPUT_PULLUP);
-	pinMode(VK_DOWN, INPUT_PULLUP);
-	pinMode(VK_LEFT, INPUT_PULLUP);
-	pinMode(VK_RIGHT, INPUT_PULLUP);
+	AB_Setup();
 
 	xInit(TaskStruct);      //Struct with function parameters
 	
@@ -86,9 +64,10 @@ void Task_Snake(void){
 	// Game logic
 	snake.update();
 }
-
+//extern uint8_t AB_screen[8][8];
 void Task_Screen(void){
-	lc.updateScreen(&screen[0], 64);
+	//lc.updateScreen(&AB_screen[0], 64);
+	AB_UpdateScreen();
 }
 
 void Task_Keyboard(void){

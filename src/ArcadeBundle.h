@@ -31,13 +31,7 @@
 #include <SPI.h>
 #include "Keyboard.h"
 
-#if ARDUINO
-
 #define SPI_CS_PIN  10
-
-#endif
-
-
 
 /*
  * Segments to be switched on for characters and digits on
@@ -91,25 +85,7 @@ class LedControl {
          * csPin		pin for selecting the device 
          * numDevices	maximum number of devices that can be controled
          */
-        LedControl(int dataPin, int clkPin, int csPin, int numDevices=1);
-        
         LedControl(int csPin, int numDevices=1);
-
-        /*
-         * Gets the number of devices attached to this LedControl.
-         * Returns :
-         * int	the number of devices on this LedControl
-         */
-        int getDeviceCount();
-
-        /* 
-         * Set the shutdown (power saving) mode for the device
-         * Params :
-         * addr	The address of the display to control
-         * status	If true the device goes into power-down mode. Set to false
-         *		for normal operation.
-         */
-        void shutdown(int addr, bool status);
 
         /* 
          * Set the number of digits (or rows) to be displayed.
@@ -120,21 +96,6 @@ class LedControl {
          * limit	number of digits to be displayed (1..8)
          */
         void setScanLimit(int addr, int limit);
-
-        /* 
-         * Set the brightness of the display.
-         * Params:
-         * addr		the address of the display to control
-         * intensity	the brightness of the display. (0..15)
-         */
-        void setIntensity(int addr, int intensity);
-
-        /* 
-         * Switch all Leds on the display off. 
-         * Params:
-         * addr	address of the display to control
-         */
-        void clearDisplay(int addr);
 
         /* 
          * Set the status of a single Led.
@@ -190,9 +151,8 @@ class LedControl {
          * dp	sets the decimal point.
          */
         void setChar(int addr, int digit, char value, boolean dp);
-
-        void updateScreen(uint8_t _input[][8], uint8_t _size);
 };
+
 void AB_InitPins(void);
 void AB_InitScreen(void);
 void AB_Setup(void);
@@ -201,7 +161,9 @@ void AB_SetLed(uint8_t x, uint8_t y, uint8_t brightness);
 uint8_t AB_GetLed(uint8_t x, uint8_t y);
 void AB_UpdateScreen(void);
 
+void AB_Shutdown(bool);
+void AB_SetIntensity(uint8_t);
+void AB_clearDisplay(void);
+void AB_SpiTransfer(volatile byte opcode, volatile byte data);
+
 #endif	//LedControl.h
-
-
-
