@@ -12,9 +12,9 @@
 enum {
 	GAME_SNAKE,
 	GAME_BRICK,
-	GAME_INVADER,
-	GAME_TETRIS,
-	GAME_SQUARE,
+	//GAME_INVADER, //not implemented yet
+	//GAME_TETRIS,  //not implemented yet
+	//GAME_SQUARE,  //not implemented yet
 	GAME_DEMO,
 	GAME_COUNT
 };
@@ -32,12 +32,12 @@ Brick brick;
 //Square square;		//not implemented yet
 //Demo demo;			//not implemented yet
 
-uint8_t game = GAME_DEMO;
+uint8_t game = GAME_BRICK;
 
 void setup() {
 	AB_Setup();
 
-	xInit(TaskStruct);      //Struct with function parameters
+	xInit(TaskStruct); 	//Struct with function parameters
 	
 	xTaskCreate(&Task_Keyboard, 10);
 	xTaskCreate(&Task_Game, 10);
@@ -45,7 +45,6 @@ void setup() {
 }
 
 void loop() {	
-	//AB_UpdateScreen();
 	xLoop();  //xOS task
 }
 
@@ -54,9 +53,9 @@ void Task_Game(void){
 	switch(game){
 		case GAME_SNAKE: snake.update(); break;
 		case GAME_BRICK: brick.update(); break;
-		//case GAME_INVADER: invader.update(); break;
-		//case GAME_TETRIS: tetris.update(); break;
-		//case GAME_SQUARE: square.update(); break;
+		//case GAME_INVADER: invader.update(); break; 	//not implemented yet
+		//case GAME_TETRIS: tetris.update(); break; 	//not implemented yet
+		//case GAME_SQUARE: square.update(); break; 	//not implemented yet
 		case GAME_DEMO: Demo();/*demo.update();*/ break; // todo: convert to class
 		default: 
 			game = GAME_BRICK;

@@ -31,18 +31,32 @@ void Brick::update() {
 	}
 	cycle = 0;
 
-	if (KB_IsKeyToggled(VK_DOWN) && KB_IsKeyDown(VK_DOWN)){
-		//KB_Reset();
-		CollisionDetection();
-	}
-	
-	//PlaceBrick();
-	MoveBrick();
 
-	render();
+	if(state == GameState::RUN){
+		if (KB_IsKeyToggled(VK_DOWN) && KB_IsKeyDown(VK_DOWN)){
+			//KB_Reset();
+			bool isDetected = CollisionDetection();
+			if(isDetected){
+				state = GameState::ANIMATION;
+			}
+		}
+		//PlaceBrick();
+		MoveBrick();
+
+		render();
+	}else if(state == GameState::ANIMATION){
+		bool isReady = true;//AB_ClearAnimation();
+		if(isReady){
+			state = GameState::RESTART;
+		}
+	}else  if(state == GameState::RESTART){
+		reset();
+		state = GameState::RUN;
+	}
 }
 
-void Brick::CollisionDetection(){
+bool Brick::CollisionDetection(){
+	bool returnValue = false;
 	if(brickHeight > 0){
 		brickHeight--;
 		brickOnScreenLength = 0;
@@ -51,9 +65,13 @@ void Brick::CollisionDetection(){
 		}else{
 			direction==DIR_RIGHT;
 		}*/
+		returnValue = false;
 	}else{
-		reset();
+		
+		//reset();
+		returnValue = true;
 	}
+	return returnValue;
 }
 
 void Brick::render() {

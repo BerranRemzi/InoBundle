@@ -9,6 +9,7 @@
 
 class Brick {
 private:
+	GameState state = GameState::RUN;
 	uint8_t screen[8];
 	int8_t brickHeight{ SCREEN_HEIGHT - 1 };
 	Direction_t direction{ DIR_RIGHT };
@@ -24,7 +25,7 @@ public:
 	void update();
 	void render();
 	bool isOnScreen();
-	void CollisionDetection();
+	bool CollisionDetection();
 	void MoveBrick();
 	void PlaceBrick();
 };

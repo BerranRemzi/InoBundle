@@ -43,6 +43,14 @@ typedef struct Position_t {
 	int8_t y;
 };
 
+enum class GameState {
+	PAUSE,
+	RUN,
+	BLINK,
+	ANIMATION,
+	RESTART
+};
+
 static Position_t matrix[SCREEN_WIDTH * SCREEN_HEIGHT];
 
 //extern void setLed(int x, int y, uint8_t brightness);
