@@ -6,8 +6,7 @@
 #include <ctype.h>                      // Provides toupper
 #include "Emulator.h"
 #include "Arduino.h"
-#include "SnakeGame.ino"
-//#include "BrickGame.ino"
+#include "InoBundle.ino"
 
 
 using namespace std;
