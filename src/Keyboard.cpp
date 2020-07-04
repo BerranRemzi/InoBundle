@@ -24,7 +24,20 @@ void KB_Setup(void){
     /* TODO: add buttons A, B, C, and D  */
 }
 
-bool KB_IsPressed(uint8_t _pin){
+bool KB_IsKeyUp(uint8_t _pin){
+    bool returnValue = false;
+
+    for(uint8_t k = 0; k < keyMapSize;k++){
+        if(keyMap[k] == _pin){
+            returnValue = (keyData >> k) & 1U;
+            break;
+        }
+    }
+
+    return !returnValue;
+}
+
+bool KB_IsKeyDown(uint8_t _pin){
     bool returnValue = false;
 
     for(uint8_t k = 0; k < keyMapSize;k++){
@@ -35,6 +48,16 @@ bool KB_IsPressed(uint8_t _pin){
     }
 
     return returnValue;
+}
+
+bool KB_IsKeyToggled(uint8_t _pin){
+    bool returnValue = false;
+
+    return returnValue;
+}
+
+bool KB_IsKeyDownLong(uint8_t _pin, uint16_t _tick){
+    return 0;
 }
 
 void KB_ReadAll(void){
@@ -55,19 +78,19 @@ void KB_Reset(void){
 Direction_t KB_GetLastDirection(void) {
 	static Direction_t lastDirection = DIR_RIGHT;
 
-	if (KB_IsPressed(VK_UP) && DIR_UP != lastDirection) {
+	if (KB_IsKeyDown(VK_UP) && DIR_UP != lastDirection) {
 		lastDirection = DIR_UP;
 	}
 
-	if (KB_IsPressed(VK_DOWN) && DIR_DOWN != lastDirection) {
+	if (KB_IsKeyDown(VK_DOWN) && DIR_DOWN != lastDirection) {
 		lastDirection = DIR_DOWN;
 	}
 
-	if (KB_IsPressed(VK_RIGHT) && DIR_RIGHT != lastDirection) {
+	if (KB_IsKeyDown(VK_RIGHT) && DIR_RIGHT != lastDirection) {
 		lastDirection = DIR_RIGHT;
 	}
 
-	if (KB_IsPressed(VK_LEFT) && DIR_LEFT != lastDirection) {
+	if (KB_IsKeyDown(VK_LEFT) && DIR_LEFT != lastDirection) {
 		lastDirection = DIR_LEFT;
 	}
 	KB_Reset();

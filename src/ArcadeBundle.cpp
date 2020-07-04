@@ -139,6 +139,16 @@ void AB_Setup(void){
     AB_InitScreen();
 }
 
+void AB_SetRow(uint8_t y, uint8_t value) {
+    for(int x=0; x < 8; x++){
+        if((value >> x) & 1U){
+            AB_screen[y][x] = LED_ON;
+        }else{
+            AB_screen[y][x] = LED_OFF;
+        }
+    }
+}
+
 void AB_SetLed(uint8_t x, uint8_t y, uint8_t brightness) {
 	AB_screen[y][x] = brightness;
 }

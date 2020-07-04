@@ -157,6 +157,7 @@ void AB_InitPins(void);
 void AB_InitScreen(void);
 void AB_Setup(void);
 
+void AB_SetRow(uint8_t y, uint8_t value);
 void AB_SetLed(uint8_t x, uint8_t y, uint8_t brightness);
 uint8_t AB_GetLed(uint8_t x, uint8_t y);
 void AB_UpdateScreen(void);

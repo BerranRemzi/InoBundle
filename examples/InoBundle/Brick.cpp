@@ -31,8 +31,8 @@ void Brick::update() {
 	}
 	cycle = 0;
 
-	if(KB_IsPressed(VK_DOWN)){
-		KB_Reset();
+	if (KB_IsKeyToggled(VK_DOWN) && KB_IsKeyDown(VK_DOWN)){
+		//KB_Reset();
 		CollisionDetection();
 	}
 	
@@ -43,7 +43,7 @@ void Brick::update() {
 }
 
 void Brick::CollisionDetection(){
-	if(brickHeight<SCREEN_HEIGHT){
+	if(brickHeight > 0){
 		brickHeight--;
 		brickOnScreenLength = 0;
 		/*if(direction==DIR_RIGHT){

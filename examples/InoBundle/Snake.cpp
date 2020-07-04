@@ -208,19 +208,19 @@ bool Snake::moveSnake() {
 Direction_t Snake::getLastDirection(void) {
 
 
-	if (KB_IsPressed(VK_UP) && DIR_UP != lastDirection) {
+	if (KB_IsKeyDown(VK_UP) && DIR_UP != lastDirection) {
 		lastDirection = DIR_UP;
 	}
 
-	if (KB_IsPressed(VK_DOWN) && DIR_DOWN != lastDirection) {
+	if (KB_IsKeyDown(VK_DOWN) && DIR_DOWN != lastDirection) {
 		lastDirection = DIR_DOWN;
 	}
 
-	if (KB_IsPressed(VK_RIGHT) && DIR_RIGHT != lastDirection) {
+	if (KB_IsKeyDown(VK_RIGHT) && DIR_RIGHT != lastDirection) {
 		lastDirection = DIR_RIGHT;
 	}
 
-	if (KB_IsPressed(VK_LEFT) && DIR_LEFT != lastDirection) {
+	if (KB_IsKeyDown(VK_LEFT) && DIR_LEFT != lastDirection) {
 		lastDirection = DIR_LEFT;
 	}
 	KB_Reset();
