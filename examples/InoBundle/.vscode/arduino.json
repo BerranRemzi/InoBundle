@@ -3,5 +3,5 @@
     "configuration": "cpu=atmega328old",
     "port": "COM4",
     "sketch": "InoBundle.ino",
-    "output": "../../../ArduinoOutput"
+    "output": "./build"
 }
