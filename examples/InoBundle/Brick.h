@@ -13,7 +13,7 @@ private:
 	uint8_t screen[8];
 	int8_t brickHeight{ SCREEN_HEIGHT - 1 };
 	Direction_t direction{ DIR_RIGHT };
-	uint8_t totalTicks = TICK_MEDIUM;
+	uint8_t totalTicks = TICK_FAST;
 	Position_t pos;
 	const uint8_t brickDefaultLenght = 3; 
 	uint8_t brickOnScreenLength = 0;

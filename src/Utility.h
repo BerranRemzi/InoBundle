@@ -15,7 +15,7 @@
 enum Tick_t {
 	TICK_SLOW = 50,			//slow 		50 x 10 = 500ms
 	TICK_MEDIUM = 25,		//medium	25 x 10 = 250ms
-	TICK_FAST = 15			//fast		15 x 10 = 150ms
+	TICK_FAST = 10			//fast		15 x 10 = 150ms
 };
 
 enum Sound_t {

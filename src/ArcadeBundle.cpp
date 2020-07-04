@@ -185,6 +185,12 @@ void AB_clearDisplay() {
     for(int i=0;i<8;i++) {
         AB_SpiTransfer(i+1,0x00);
     }
+
+    for(uint8_t y = 0; y<8;y++){
+        for(uint8_t x = 0; x < 8; x++){
+           AB_screen[x][y] = LED_OFF;
+        }
+    }
 }
 
 void AB_SpiTransfer(volatile byte opcode, volatile byte data) {

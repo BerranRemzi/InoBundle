@@ -9,7 +9,7 @@
 #include "Keyboard.h"
 #include "xOS.h"
 
-enum {
+enum Game_t{
 	GAME_SNAKE,
 	GAME_BRICK,
 	//GAME_INVADER, //not implemented yet
@@ -58,7 +58,8 @@ void Task_Game(void){
 		//case GAME_SQUARE: square.update(); break; 	//not implemented yet
 		case GAME_DEMO: Demo();/*demo.update();*/ break; // todo: convert to class
 		default: 
-			game = GAME_BRICK;
+			/* on invalid number should start first game */
+			game = GAME_SNAKE; 
 		break;
 	}
 }
@@ -69,8 +70,9 @@ void Task_Screen(void){
 
 void Task_Keyboard(void){
 	KB_ReadAll();
-	/* wait for 100ticks = 1000ms */
+		/* wait for 100ticks = 1000ms */
 	if(KB_IsKeyDownLong(VK_UP, 100)){
+		AB_clearDisplay();
 		game++;
 	}
 }

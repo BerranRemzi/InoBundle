@@ -46,7 +46,7 @@ void Brick::update() {
 
 	if(state == GameState::RUN){
 		if (KB_IsKeyToggled(VK_DOWN) && KB_IsKeyDown(VK_DOWN)){
-			//KB_Reset();
+			
 			bool isDetected = CollisionDetection();
 			if(isDetected){
 				state = GameState::ANIMATION;

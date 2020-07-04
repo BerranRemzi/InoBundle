@@ -1,19 +1,27 @@
 #include "Keyboard.h"
 
-const uint8_t keyMap[] = {
-    VK_UP,
-    VK_DOWN,
-    VK_RIGHT,
-    VK_LEFT,
-    'W',
-    'S',
-    'D',
-    'A'
+typedef struct KeyMap_t{
+    uint8_t pin;
+    bool lastState;
+    uint16_t counter;
+    bool isToggled;
 };
 
-const uint8_t keyMapSize = sizeof(keyMap);
 
-static uint16_t keyData  = 0x0000;
+KeyMap_t keyMap[8] = {
+    {VK_UP      },
+    {VK_DOWN    },
+    {VK_RIGHT   },
+    {VK_LEFT    },
+    {'W'},
+    {'S'},
+    {'D'},
+    {'A'}
+};
+
+const uint8_t keyMapSize = 8;
+
+static uint16_t keyData  = 0U;
 
 void KB_Setup(void){
     pinMode(VK_UP, INPUT_PULLUP);
@@ -28,7 +36,7 @@ bool KB_IsKeyUp(uint8_t _pin){
     bool returnValue = false;
 
     for(uint8_t k = 0; k < keyMapSize;k++){
-        if(keyMap[k] == _pin){
+        if(keyMap[k].pin == _pin){
             returnValue = (keyData >> k) & 1U;
             break;
         }
@@ -41,8 +49,9 @@ bool KB_IsKeyDown(uint8_t _pin){
     bool returnValue = false;
 
     for(uint8_t k = 0; k < keyMapSize;k++){
-        if(keyMap[k] == _pin){
+        if(keyMap[k].pin == _pin){
             returnValue = (keyData >> k) & 1U;
+            //keyData &= ~(1U << k);
             break;
         }
     }
@@ -52,22 +61,53 @@ bool KB_IsKeyDown(uint8_t _pin){
 
 bool KB_IsKeyToggled(uint8_t _pin){
     bool returnValue = false;
+    
+    for(uint8_t k = 0; k < keyMapSize;k++){
+        if(keyMap[k].pin == _pin){
+            returnValue = keyMap[k].isToggled;
+            keyMap[k].isToggled = false;
+            break;
+        }
+    }
 
     return returnValue;
 }
 
 bool KB_IsKeyDownLong(uint8_t _pin, uint16_t _tick){
-    return 0;
+    bool returnValue = false;
+
+    for(uint8_t k = 0; k < keyMapSize;k++){
+        if(keyMap[k].pin == _pin){
+            if(keyMap[k].counter > _tick){
+                returnValue = true;
+                keyMap[k].counter = 0;
+            }
+            break;
+        }
+    }
+
+    return returnValue;
 }
 
 void KB_ReadAll(void){
+    bool currentState = false;
     for(uint8_t k = 0; k < keyMapSize;k++){
 
-        if(!digitalRead(keyMap[k])){
+        currentState = !digitalRead(keyMap[k].pin);
+
+        if(currentState){
             keyData |= 1U << k;
+            keyMap[k].counter++;
         }else{
             //keyData &= ~(1U << k);
+            keyMap[k].counter = 0;
         }
+
+        if(currentState != keyMap[k].lastState){
+            keyMap[k].isToggled = true;
+        }
+
+        keyMap[k].lastState = currentState;
     }
 }
 
