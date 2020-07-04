@@ -48,7 +48,8 @@ enum class GameState {
 	RUN,
 	BLINK,
 	ANIMATION,
-	RESTART
+	RESTART,
+	WAIT
 };
 
 static Position_t matrix[SCREEN_WIDTH * SCREEN_HEIGHT];

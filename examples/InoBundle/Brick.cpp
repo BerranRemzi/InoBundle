@@ -23,14 +23,26 @@ void Brick::startNewGame(){
 	brickOnScreenLength = 0;
 }
 
-void Brick::update() {
+bool Brick::isReady(){
+	bool returnValue = false;
+
 	static uint8_t cycle = totalTicks;
 	if (cycle < totalTicks) {
 		cycle++;
-		return;
+		returnValue = false;
+	}else{
+		cycle = 0;
+		returnValue = true;
 	}
-	cycle = 0;
+	return returnValue;
+}
 
+void Brick::update() {
+	if(isReady() && state == GameState::WAIT){
+		state = GameState::RUN;
+	}else if(state == GameState::RUN){
+		state = GameState::WAIT;
+	}
 
 	if(state == GameState::RUN){
 		if (KB_IsKeyToggled(VK_DOWN) && KB_IsKeyDown(VK_DOWN)){

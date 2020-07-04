@@ -26,6 +26,7 @@ public:
 	void render();
 	bool isOnScreen();
 	bool CollisionDetection();
+	bool isReady();
 	void MoveBrick();
 	void PlaceBrick();
 };
