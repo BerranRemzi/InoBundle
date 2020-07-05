@@ -162,6 +162,10 @@ void AB_SetLed(uint8_t x, uint8_t y, uint8_t brightness);
 uint8_t AB_GetLed(uint8_t x, uint8_t y);
 void AB_UpdateScreen(void);
 
+void AB_DisplayTest(void);
+void AB_SetScanLimit(uint8_t _limit);
+void AB_DecodeMode(void);
+
 void AB_Shutdown(bool);
 void AB_SetIntensity(uint8_t);
 void AB_clearDisplay(void);

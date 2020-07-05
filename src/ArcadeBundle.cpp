@@ -28,20 +28,22 @@
 #include "ArcadeBundle.h"
 
 //the opcodes for the MAX7221 and MAX7219
-#define OP_NOOP   0
-#define OP_DIGIT0 1
-#define OP_DIGIT1 2
-#define OP_DIGIT2 3
-#define OP_DIGIT3 4
-#define OP_DIGIT4 5
-#define OP_DIGIT5 6
-#define OP_DIGIT6 7
-#define OP_DIGIT7 8
-#define OP_DECODEMODE  9
-#define OP_INTENSITY   10
-#define OP_SCANLIMIT   11
-#define OP_SHUTDOWN    12
-#define OP_DISPLAYTEST 15
+enum OP_CODE{
+    OP_NOOP, 
+    OP_DIGIT0, 
+    OP_DIGIT1, 
+    OP_DIGIT2, 
+    OP_DIGIT3, 
+    OP_DIGIT4,
+    OP_DIGIT5,
+    OP_DIGIT6, 
+    OP_DIGIT7, 
+    OP_DECODEMODE, 
+    OP_INTENSITY,   
+    OP_SCANLIMIT,  
+    OP_SHUTDOWN,    
+    OP_DISPLAYTEST = 15
+};
 
 LedControl::LedControl(int csPin, int numDevices) {
    
@@ -127,6 +129,10 @@ void AB_InitPins(void){
 }
 
 void AB_InitScreen(void){
+    AB_DisplayTest();
+    AB_SetScanLimit(7);
+    AB_DecodeMode();
+    AB_Shutdown(true);
     AB_Shutdown(false);
     AB_SetIntensity(1);
     AB_clearDisplay();
@@ -157,6 +163,21 @@ uint8_t AB_GetLed(uint8_t x, uint8_t y){
 	return AB_screen[y][x];
 }
 
+void AB_DisplayTest(void){
+    AB_SpiTransfer(OP_DISPLAYTEST, 0);
+}
+
+void AB_SetScanLimit(uint8_t _limit){
+    if((_limit >= 0) && (_limit < 8)){
+        AB_SpiTransfer(OP_SCANLIMIT, _limit);
+    }
+}
+
+void AB_DecodeMode(void){
+    //decode is done in source
+    AB_SpiTransfer(OP_DECODEMODE, 0);
+}
+
 void AB_UpdateScreen(){
   uint8_t data = 0x00;
   for(uint8_t y = 0; y<8;y++){
@@ -167,23 +188,24 @@ void AB_UpdateScreen(){
 			data |= 1 << x;
 		}
 	}
-    AB_SpiTransfer(y+1,data);
+    AB_SpiTransfer(OP_DIGIT0 + y, data);
   }
 }
 
 void AB_Shutdown(bool b) {
-    AB_SpiTransfer(OP_SHUTDOWN,!b);
+    AB_SpiTransfer(OP_SHUTDOWN, !b);
 }
 
 void  AB_SetIntensity( uint8_t intensity) {
     if(intensity>=0 && intensity<16){
-        AB_SpiTransfer(OP_INTENSITY,intensity);
-    }  
+        AB_SpiTransfer(OP_INTENSITY, intensity);
+    }
+
 }
 
 void AB_clearDisplay() {
     for(int i=0;i<8;i++) {
-        AB_SpiTransfer(i+1,0x00);
+        AB_SpiTransfer(OP_DIGIT0+i,LED_OFF);
     }
 
     for(uint8_t y = 0; y<8;y++){
