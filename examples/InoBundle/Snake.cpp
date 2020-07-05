@@ -1,7 +1,5 @@
 #include "Snake.h"
 
-extern Position_t matrix[SCREEN_WIDTH * SCREEN_HEIGHT];
-
 Snake::Snake() {
 	setup();
 }
@@ -21,7 +19,7 @@ void Snake::newGame(void) {
 
 	size = SNAKE_START_SIZE;
 
-	direction = DIR_RIGHT;
+	direction = Direction_t::RIGHT;
 	lastDirection = direction;
 	food = { OUT_OF_SCREEN, OUT_OF_SCREEN };
 	isFoodGenerated = false;
@@ -38,7 +36,7 @@ void Snake::reset() {
 		speed--;
 	}
 
-	sound = SNAKE_DEAD;
+	sound = Sound_t::SNAKE_DEAD;
 	// Clear the whole matrix
 	for (int x{ 0 }; x < SCREEN_WIDTH; ++x) {
 		for (int y{ 0 }; y < SCREEN_HEIGHT; ++y) {
@@ -80,19 +78,19 @@ void Snake::update() {
 
 	Direction_t _direction = getLastDirection();
 
-	if (_direction != DIR_STOPPED) {
+	if (_direction != Direction_t::STOPPED) {
 		// TODO: Don't overwrite direction, if the "_direction" is
 		// opposite of the "direction"
-		if (DIR_UP != direction && DIR_DOWN == _direction) {
+		if (Direction_t::UP != direction && Direction_t::DOWN == _direction) {
 			direction = _direction;
 		}
-		if (DIR_DOWN != direction && DIR_UP == _direction) {
+		if (Direction_t::DOWN != direction && Direction_t::UP == _direction) {
 			direction = _direction;
 		}
-		if (DIR_RIGHT != direction && DIR_LEFT == _direction) {
+		if (Direction_t::RIGHT != direction && Direction_t::LEFT == _direction) {
 			direction = _direction;
 		}
-		if (DIR_LEFT != direction && DIR_RIGHT == _direction) {
+		if (Direction_t::LEFT != direction && Direction_t::RIGHT == _direction) {
 			direction = _direction;
 		}
 		_direction = direction;
@@ -108,7 +106,7 @@ void Snake::update() {
 		isFoodGenerated = false;
 		generateFood();
 		extendSnake();
-		sound = SNAKE_SIZE_UP;
+		sound = Sound_t::SNAKE_SIZE_UP;
 	}
 	else if (snakeMoved) {
 		moveBody();
@@ -171,31 +169,31 @@ bool Snake::moveSnake() {
 
 	snakeMoved = true;
 
-	sound = SNAKE_MOVE;
+	sound = Sound_t::SNAKE_MOVE;
 	//}
 
-	if (direction == DIR_UP) {//if (true == ((direction >> 0) & 1U)) {
+	if (direction == Direction_t::UP) {//if (true == ((direction >> 0) & 1U)) {
 		--currentHead.y;
 		// If snake head is out of the matrix, teleport it to mirrored position
 		if (currentHead.y < 0)
 			currentHead.y = SCREEN_HEIGHT - 1;
 	}
-	else if (direction == DIR_DOWN) {//else if (true == ((direction >> 1) & 1U)) {
+	else if (direction == Direction_t::DOWN) {//else if (true == ((direction >> 1) & 1U)) {
 
 		++currentHead.y;
 		// If snake head is out of the matrix, teleport it to mirrored position
 		if (currentHead.y == SCREEN_HEIGHT)
 			currentHead.y = 0;
 	}
-	else if (direction == DIR_RIGHT) {//else if (true == ((direction >> 2) & 1U)) {
-		direction = DIR_RIGHT;
+	else if (direction == Direction_t::RIGHT) {//else if (true == ((direction >> 2) & 1U)) {
+		direction = Direction_t::RIGHT;
 		++currentHead.x;
 		// If snake head is out of the matrix, teleport it to mirrored position
 		if (currentHead.x == SCREEN_WIDTH)
 			currentHead.x = 0;
 	}
-	else if (direction == DIR_LEFT) { //else if (true == ((direction >> 3) & 1U)) {
-		direction = DIR_LEFT;
+	else if (direction == Direction_t::LEFT) { //else if (true == ((direction >> 3) & 1U)) {
+		direction = Direction_t::LEFT;
 		--currentHead.x;
 		// If snake head is out of the matrix, teleport it to mirrored position
 		if (currentHead.x < 0)
@@ -208,20 +206,20 @@ bool Snake::moveSnake() {
 Direction_t Snake::getLastDirection(void) {
 
 
-	if (KB_IsKeyDown(VK_UP) && DIR_UP != lastDirection) {
-		lastDirection = DIR_UP;
+	if (KB_IsKeyDown(VK_UP) && Direction_t::UP != lastDirection) {
+		lastDirection = Direction_t::UP;
 	}
 
-	if (KB_IsKeyDown(VK_DOWN) && DIR_DOWN != lastDirection) {
-		lastDirection = DIR_DOWN;
+	if (KB_IsKeyDown(VK_DOWN) && Direction_t::DOWN != lastDirection) {
+		lastDirection = Direction_t::DOWN;
 	}
 
-	if (KB_IsKeyDown(VK_RIGHT) && DIR_RIGHT != lastDirection) {
-		lastDirection = DIR_RIGHT;
+	if (KB_IsKeyDown(VK_RIGHT) && Direction_t::RIGHT != lastDirection) {
+		lastDirection = Direction_t::RIGHT;
 	}
 
-	if (KB_IsKeyDown(VK_LEFT) && DIR_LEFT != lastDirection) {
-		lastDirection = DIR_LEFT;
+	if (KB_IsKeyDown(VK_LEFT) && Direction_t::LEFT != lastDirection) {
+		lastDirection = Direction_t::LEFT;
 	}
 	KB_Reset();
 	return lastDirection;
@@ -259,8 +257,8 @@ bool Snake::isInScreen(int i) {
 }
 
 Sound_t Snake::playSound() {
-	if (sound > SNAKE_SILENCE) {
-		sound = SNAKE_SILENCE;
+	if (sound > Sound_t::SNAKE_SILENCE) {
+		sound = Sound_t::SNAKE_SILENCE;
 	}
 
 	return sound;

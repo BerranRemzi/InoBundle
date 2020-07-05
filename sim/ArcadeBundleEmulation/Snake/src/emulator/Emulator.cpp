@@ -43,6 +43,30 @@ void AB_UpdateScreen() {
 	refreshScreen(AB_screen, 64);
 }
 
+bool AB_ClearAnimation() {
+	bool isFinished = true;
+
+	for (int y = 7; y > 0; --y) {
+		for (int x = 0; x < 8; ++x) {
+			AB_screen[y][x] = AB_screen[y - 1][x];
+			AB_screen[y - 1][x] = LED_OFF;
+		}
+	}
+
+	for (int i = 0; i < 8; ++i) {
+		for (int j = 0; j < 8; ++j) {
+			if (AB_screen[i][j])
+				isFinished = false;
+		}
+	}
+
+	return isFinished;
+}
+
+void AB_ClearDisplay() {
+
+}
+
 /*
  * Retrieves the number of milliseconds that have elapsed since
  * the system was started, up to 49.7 days.

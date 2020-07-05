@@ -9,13 +9,13 @@
 
 class Brick {
 private:
-	GameState state = GameState::RUN;
+	GameState state = GameState::GAME_RUN;
 	uint8_t screen[8];
 	int8_t brickHeight{ SCREEN_HEIGHT - 1 };
-	Direction_t direction{ DIR_RIGHT };
+	Direction_t direction{ Direction_t::RIGHT };
 	uint8_t totalTicks = TICK_FAST;
 	Position_t pos;
-	const uint8_t brickDefaultLenght = 3; 
+	const uint8_t brickDefaultLenght = 3;
 	uint8_t brickOnScreenLength = 0;
 public:
 	Brick();

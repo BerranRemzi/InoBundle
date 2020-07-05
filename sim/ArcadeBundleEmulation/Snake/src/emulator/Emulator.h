@@ -16,6 +16,8 @@ void AB_SetLed(uint8_t, uint8_t, uint8_t);
 void AB_Setup();
 void AB_UpdateScreen();
 void AB_SetRow(uint8_t, uint8_t);
+bool AB_ClearAnimation();
+void AB_ClearDisplay();
 
 extern "C" {
 	uint32_t millis(void);

@@ -20,7 +20,7 @@ public:
 	uint8_t speed{ 0 };
 	uint8_t totalTicks;
 	bool isFoodGenerated = false;
-	Direction_t lastDirection = DIR_STOPPED;
+	Direction_t lastDirection = Direction_t::STOPPED;
 public:
 	Snake();
 	void setup();

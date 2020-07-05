@@ -18,38 +18,39 @@ enum Tick_t {
 	TICK_FAST = 10			//fast		15 x 10 = 150ms
 };
 
-enum Sound_t {
+enum class Sound_t {
 	SNAKE_SILENCE,
 	SNAKE_SIZE_UP,
 	SNAKE_DEAD,
 	SNAKE_MOVE
 };
 
-enum Direction_t {
-	DIR_STOPPED,
-	DIR_UP,
-	DIR_DOWN,
-	DIR_RIGHT,
-	DIR_LEFT
+enum class Direction_t {
+	STOPPED,
+	UP,
+	DOWN,
+	RIGHT,
+	LEFT
 };
 
-enum Axis_t {
+enum class Axis_t {
 	AXIS_X,
 	AXIS_Y
 };
 
-typedef struct Position_t {
+struct Position_t {
 	int8_t x;
 	int8_t y;
 };
 
 enum class GameState {
 	PAUSE,
-	RUN,
+	GAME_RUN,
+	GAME_WAIT,
+	ANIM_RUN,
+	ANIM_WAIT,
 	BLINK,
-	ANIMATION,
-	RESTART,
-	WAIT
+	RESTART
 };
 
 static Position_t matrix[SCREEN_WIDTH * SCREEN_HEIGHT];

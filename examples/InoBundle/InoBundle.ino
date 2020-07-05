@@ -72,7 +72,7 @@ void Task_Keyboard(void){
 	KB_ReadAll();
 		/* wait for 100ticks = 1000ms */
 	if(KB_IsKeyDownLong(VK_UP, 100)){
-		AB_clearDisplay();
+		AB_ClearDisplay();
 		game++;
 	}
 }

@@ -116,22 +116,22 @@ void KB_Reset(void){
 }
 
 Direction_t KB_GetLastDirection(void) {
-	static Direction_t lastDirection = DIR_RIGHT;
+	static Direction_t lastDirection = Direction_t::RIGHT;
 
-	if (KB_IsKeyDown(VK_UP) && DIR_UP != lastDirection) {
-		lastDirection = DIR_UP;
+	if (KB_IsKeyDown(VK_UP) && Direction_t::UP != lastDirection) {
+		lastDirection = Direction_t::UP;
 	}
 
-	if (KB_IsKeyDown(VK_DOWN) && DIR_DOWN != lastDirection) {
-		lastDirection = DIR_DOWN;
+	if (KB_IsKeyDown(VK_DOWN) && Direction_t::DOWN != lastDirection) {
+		lastDirection = Direction_t::DOWN;
 	}
 
-	if (KB_IsKeyDown(VK_RIGHT) && DIR_RIGHT != lastDirection) {
-		lastDirection = DIR_RIGHT;
+	if (KB_IsKeyDown(VK_RIGHT) && Direction_t::RIGHT != lastDirection) {
+		lastDirection = Direction_t::RIGHT;
 	}
 
-	if (KB_IsKeyDown(VK_LEFT) && DIR_LEFT != lastDirection) {
-		lastDirection = DIR_LEFT;
+	if (KB_IsKeyDown(VK_LEFT) && Direction_t::LEFT != lastDirection) {
+		lastDirection = Direction_t::LEFT;
 	}
 	KB_Reset();
 	return lastDirection;
