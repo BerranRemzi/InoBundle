@@ -46,15 +46,15 @@ void AB_UpdateScreen() {
 bool AB_ClearAnimation() {
 	bool isFinished = true;
 
-	for (int y = 7; y > 0; --y) {
-		for (int x = 0; x < 8; ++x) {
+	for (uint8_t y = 7; y > 0; --y) {
+		for (uint8_t x = 0; x < 8; ++x) {
 			AB_screen[y][x] = AB_screen[y - 1][x];
 			AB_screen[y - 1][x] = LED_OFF;
 		}
 	}
 
-	for (int i = 0; i < 8; ++i) {
-		for (int j = 0; j < 8; ++j) {
+	for (uint8_t i = 0; i < 8; ++i) {
+		for (uint8_t j = 0; j < 8; ++j) {
 			if (AB_screen[i][j])
 				isFinished = false;
 		}
@@ -64,7 +64,11 @@ bool AB_ClearAnimation() {
 }
 
 void AB_ClearDisplay() {
-
+	for (uint8_t y = 0; y < 8; y++) {
+		for (uint8_t x = 0; x < 8; x++) {
+			AB_screen[x][y] = LED_OFF;
+		}
+	}
 }
 
 /*
