@@ -15,7 +15,7 @@ private:
 	Direction_t direction{ Direction_t::RIGHT };
 	uint8_t totalTicks = TICK_FAST;
 	Position_t pos;
-	const uint8_t brickDefaultLenght = 3;
+	uint8_t brickDefaultLenght = 4;
 	uint8_t brickOnScreenLength = 0;
 public:
 	Brick();

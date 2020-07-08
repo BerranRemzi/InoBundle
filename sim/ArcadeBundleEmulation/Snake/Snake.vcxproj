@@ -48,6 +48,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(SolutionDir)Snake/src/graphics;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -62,6 +63,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>$(SolutionDir)Snake/src/graphics;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -70,18 +72,8 @@
     <ClCompile Include="..\..\..\examples\InoBundle\Snake.cpp" />
     <ClCompile Include="..\..\..\src\Keyboard.cpp" />
     <ClCompile Include="..\..\..\src\xOS.c" />
-    <ClCompile Include="src\graphics\bgiout.cxx" />
-    <ClCompile Include="src\graphics\dibutil.cxx" />
-    <ClCompile Include="src\graphics\drawing.cxx" />
     <ClCompile Include="src\emulator\Emulator.cpp" />
-    <ClCompile Include="src\graphics\file.cxx" />
-    <ClCompile Include="src\graphics\misc.cxx" />
-    <ClCompile Include="src\graphics\mouse.cxx" />
-    <ClCompile Include="src\graphics\palette.cxx" />
     <ClCompile Include="src\main.cxx" />
-    <ClCompile Include="src\graphics\text.cxx" />
-    <ClCompile Include="src\graphics\winbgi.cxx" />
-    <ClCompile Include="src\graphics\winthread.cxx" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\examples\InoBundle\Brick.h" />

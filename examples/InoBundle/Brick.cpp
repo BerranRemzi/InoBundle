@@ -13,11 +13,10 @@ void Brick::reset() {
 		screen[i] = 0;
 
 	brickHeight = SCREEN_HEIGHT - 1;
-	//screen[brickHeight] = BRICK_DEFAULT;
-
 	totalTicks = TICK_MEDIUM;	// medium level 250ms
 	brickOnScreenLength = 0;
 	direction = Direction_t::RIGHT;
+	brickDefaultLenght = 3;
 }
 void Brick::startNewGame() {
 	brickOnScreenLength = 0;
@@ -45,16 +44,18 @@ void Brick::update() {
 	case GameState::PAUSE:
 		break;
 	case GameState::GAME_RUN:
+		totalTicks = TICK_FAST;
 		state = GameState::GAME_WAIT;
 
-		if (KB_IsKeyToggled(VK_DOWN) && KB_IsKeyDown(VK_DOWN)) {
-
+		if ((KB_IsKeyToggled(VK_DOWN) && KB_IsKeyDown(VK_DOWN))
+		||(KB_IsKeyToggled(VK_UP) && KB_IsKeyDown(VK_UP))) {
 			bool isDetected = CollisionDetection();
 			if (isDetected) {
 				state = GameState::ANIM_RUN;
 				break;
 			}
 		}
+		
 		MoveBrick();
 		render();
 		break;
@@ -63,12 +64,14 @@ void Brick::update() {
 			state = GameState::GAME_RUN;
 		break;
 	case GameState::ANIM_RUN:
+		totalTicks = 2;
 		state = GameState::ANIM_WAIT;
 
 		ready = AB_ClearAnimation();
 		if (ready) {
 			state = GameState::RESTART;
 		}
+		//render();
 		break;
 	case GameState::ANIM_WAIT:
 		if (ready)
@@ -78,27 +81,52 @@ void Brick::update() {
 		break;
 	case GameState::RESTART:
 		reset();
+		render();
+		//KB_Reset();
 		state = GameState::GAME_RUN;
 		break;
 	}
-
 }
 
 bool Brick::CollisionDetection() {
 	bool returnValue = false;
+
+
+
 	if (brickHeight > 0) {
+		
+		if(brickHeight < 7 ){
+			/* trim brick based on previous row */
+			screen[brickHeight] &= screen[brickHeight+1];
+
+			/* get lenght of brick after trimming */
+			brickDefaultLenght = 0;
+			for(uint8_t i =0; i < 8; i++){
+				if(checkBit(screen[brickHeight+1], i) == true){
+					brickDefaultLenght++;
+				}
+			}
+			if(brickDefaultLenght==0){
+				brickHeight = 0;
+			}
+		}
+		
+		/* switch to next row */
 		brickHeight--;
+
 		brickOnScreenLength = 0;
-		/*if(direction==Direction_t::RIGHT){
-			direction==Direction_t::LEFT;
+
+		/* change brick direction to opposite side */
+		if(direction == Direction_t::RIGHT){
+			direction = Direction_t::LEFT;
 		}else{
-			direction==Direction_t::RIGHT;
-		}*/
+			direction = Direction_t::RIGHT;
+		}
+
 		returnValue = false;
 	}
 	else {
-
-		//reset();
+		reset();
 		returnValue = true;
 	}
 	return returnValue;
@@ -122,34 +150,6 @@ bool  Brick::isOnScreen() {
 }
 
 void Brick::MoveBrick() {
-
-	// Delete last part of the brick
-#if 0
-	if (direction == Direction_t::LEFT) {
-		for (int i{ SCREEN_HEIGHT - 1 }; i > -1; --i)
-			if (checkBit(screen[brickHeight], i)) {
-				AB_SetLed(i, brickHeight, LED_OFF);
-			}
-		screen[brickHeight] <<= 1;
-	}
-	else if (direction == Direction_t::RIGHT) {
-		for (int i{ 0 }; i < SCREEN_HEIGHT; ++i)
-			if (checkBit(screen[brickHeight], i)) {
-				AB_SetLed(SCREEN_HEIGHT - 1 - i, brickHeight, LED_OFF);
-			}
-		screen[brickHeight] >>= 1;
-	}
-
-	// Print brick
-	for (int i{ 0 }; i < SCREEN_HEIGHT; ++i) {
-		for (int j{ 0 }; j < SCREEN_HEIGHT; ++j) {
-			if (checkBit(screen[i], j)) {
-				AB_SetLed(SCREEN_HEIGHT - 1 - j, i, LED_ON);
-			}
-		}
-	}
-#endif
-
 
 	if (direction == Direction_t::RIGHT) {
 		screen[brickHeight] >>= 1;
@@ -176,8 +176,5 @@ void Brick::MoveBrick() {
 }
 
 void Brick::PlaceBrick() {
-	if (direction == Direction_t::DOWN) {
-		++brickHeight;
-		screen[brickHeight] = BRICK_DEFAULT;
-	}
+
 }

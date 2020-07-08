@@ -135,7 +135,7 @@ void AB_InitScreen(void){
     AB_Shutdown(true);
     AB_Shutdown(false);
     AB_SetIntensity(1);
-    AB_clearDisplay();
+    AB_ClearDisplay();
 }
 
 void AB_Setup(void){
@@ -203,7 +203,7 @@ void  AB_SetIntensity( uint8_t intensity) {
 
 }
 
-void AB_clearDisplay() {
+void AB_ClearDisplay() {
     for(int i=0;i<8;i++) {
         AB_SpiTransfer(OP_DIGIT0+i,LED_OFF);
     }
@@ -224,3 +224,23 @@ void AB_SpiTransfer(volatile byte opcode, volatile byte data) {
     //latch the data onto the display
     digitalWrite(SPI_CS_PIN,HIGH);
 }    
+
+bool AB_ClearAnimation(void){
+    bool isScreenEmpty = true;
+
+    for(int8_t x = SCREEN_WIDTH-1; x >=0; x--){
+        for(int8_t y = 0; y<SCREEN_HEIGHT;y++){    
+            if(AB_screen[x][y] == LED_ON){
+                
+                if(x < (SCREEN_WIDTH-1)){
+                    AB_screen[x+1][y] = AB_screen[x][y]; 
+                }
+                AB_screen[x][y] = LED_OFF;
+                isScreenEmpty = false;
+                return isScreenEmpty;
+            }
+        }
+    }
+
+    return isScreenEmpty;
+}

@@ -3,7 +3,7 @@
 typedef struct KeyMap_t{
     uint8_t pin;
     bool lastState;
-    uint16_t counter;
+    int16_t counter;
     bool isToggled;
 };
 
@@ -88,6 +88,7 @@ bool KB_IsKeyDownLong(uint8_t _pin, uint16_t _tick){
 
     return returnValue;
 }
+#define DEBOUNCE_TICK 2
 
 void KB_ReadAll(void){
     bool currentState = false;
@@ -95,19 +96,29 @@ void KB_ReadAll(void){
 
         currentState = !digitalRead(keyMap[k].pin);
 
-        if(currentState){
-            keyData |= 1U << k;
-            keyMap[k].counter++;
+        if(currentState){           
+            if(keyMap[k].counter < DEBOUNCE_TICK){
+                keyMap[k].counter++;
+            }
         }else{
-            //keyData &= ~(1U << k);
-            keyMap[k].counter = 0;
+            if(keyMap[k].counter > 0){
+               keyMap[k].counter--;
+            }
         }
 
-        if(currentState != keyMap[k].lastState){
-            keyMap[k].isToggled = true;
+        if(keyMap[k].counter == 0){
+            keyData &= ~(1U << k);
+        }
+        if(keyMap[k].counter == DEBOUNCE_TICK){
+            keyData |= 1U << k;
         }
 
-        keyMap[k].lastState = currentState;
+        if(keyMap[k].counter == 0 || keyMap[k].counter == DEBOUNCE_TICK){
+            if(currentState != keyMap[k].lastState){
+                keyMap[k].isToggled = true;
+            }
+            keyMap[k].lastState = currentState;
+        }
     }
 }
 

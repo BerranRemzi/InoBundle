@@ -27,40 +27,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\graphics\bgiout.cxx">
-      <Filter>bgi</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\dibutil.cxx">
-      <Filter>bgi</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\drawing.cxx">
-      <Filter>bgi</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\file.cxx">
-      <Filter>bgi</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\mouse.cxx">
-      <Filter>bgi</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\palette.cxx">
-      <Filter>bgi</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\text.cxx">
-      <Filter>bgi</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\winbgi.cxx">
-      <Filter>bgi</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\winthread.cxx">
-      <Filter>bgi</Filter>
-    </ClCompile>
     <ClCompile Include="src\main.cxx">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\emulator\Emulator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\misc.cxx">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\xOS.c">

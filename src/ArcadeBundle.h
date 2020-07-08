@@ -168,7 +168,8 @@ void AB_DecodeMode(void);
 
 void AB_Shutdown(bool);
 void AB_SetIntensity(uint8_t);
-void AB_clearDisplay(void);
+void AB_ClearDisplay(void);
 void AB_SpiTransfer(volatile byte opcode, volatile byte data);
+bool AB_ClearAnimation(void);
 
 #endif	//LedControl.h
