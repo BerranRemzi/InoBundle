@@ -48,36 +48,15 @@
     <ClCompile Include="..\..\..\examples\InoBundle\Demo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\ArcadeBundle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\graphics\dibutil.h">
-      <Filter>bgi\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\graphics.h">
-      <Filter>bgi\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\winbgi.h">
-      <Filter>bgi\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\winbgim.h">
-      <Filter>bgi\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\winbgitypes.h">
-      <Filter>bgi\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\emulator\Emulator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\emulator\Arduino.h">
-      <Filter>Arduino\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\emulator\DualFunctionButton.h">
-      <Filter>Arduino\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics\dibapi.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\emulator\ArcadeBundle.h">
       <Filter>Arduino\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\xOS.h">
@@ -96,6 +75,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\examples\InoBundle\Demo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ArcadeBundle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ArcadeBundle_Types.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

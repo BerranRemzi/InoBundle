@@ -9,6 +9,8 @@
 // http://www.cs.colorado.edu/~main/bgi
 //
 
+#pragma once
+#include "pch.h"
 
 #include <windows.h>        // Provides Win32 API
 #include <windowsx.h>       // Provides GDI helper macros

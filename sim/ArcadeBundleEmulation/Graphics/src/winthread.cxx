@@ -8,7 +8,8 @@
 // University of Colorado at Boulder, Spring 2003
 // http://www.cs.colorado.edu/~main/bgi
 //
-
+#pragma once
+#include "pch.h"
 #include <windows.h>            // Provides the Win32 API
 #include <windowsx.h>           // Provides message cracker macros (p. 96)
 #include "winbgi.h"             // External API routines
@@ -69,7 +70,7 @@ DWORD WINAPI BGI__ThreadInitWindow( LPVOID pThreadData )
 
     hWindow = CreateWindowEx( 0,                    // Extended window styles
                               _T( "BGILibrary" ),   // What kind of window
-                              pWndData->title.c_str( ),  // Title at top of the window
+                             (LPCWSTR) pWndData->title.c_str( ),  // Title at top of the window
 			      pWndData->title.size( )
 			      ? (WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_DLGFRAME)
 			      : (WS_POPUP|WS_DLGFRAME),

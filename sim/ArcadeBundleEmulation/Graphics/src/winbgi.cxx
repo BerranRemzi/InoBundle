@@ -8,7 +8,8 @@
 // University of Colorado at Boulder, Spring 2003
 // http://www.cs.colorado.edu/~main/bgi
 //
-
+#pragma once
+#include "pch.h"
 #include <windows.h>            // Provides the Win32 API
 #include <windowsx.h>           // Provides message cracker macros (p. 96)
 #include <stdio.h>              // Provides sprintf
@@ -52,7 +53,7 @@ BOOL registerWindowClass() {
 // This function unregisters the window class so that it can be registered
 // again if using LoadLibrary and FreeLibrary
 void unregisterWindowClass() {
-	UnregisterClass("BGILibrary", BGI__hInstance);
+	UnregisterClass((LPCWSTR)"BGILibrary", BGI__hInstance);
 }
 
 
@@ -100,13 +101,13 @@ void showerrorbox(const char* msg) {
 			0,                                      // Minimum size of buffer
 			NULL);
 
-		MessageBox(NULL, (LPCTSTR)lpMsgBuf, "Error", MB_OK | MB_ICONERROR);
+		MessageBox(NULL, (LPCTSTR)lpMsgBuf, (LPCWSTR)"Error", MB_OK | MB_ICONERROR);
 
 		// Free the buffer
 		LocalFree(lpMsgBuf);
 	}
 	else
-		MessageBox(NULL, msg, "Error", MB_OK | MB_ICONERROR);
+		MessageBox(NULL, (LPCWSTR)msg, (LPCWSTR)"Error", MB_OK | MB_ICONERROR);
 }
 
 
@@ -440,7 +441,7 @@ int getch() {
 // this is always "EGAVGA"
 //
 char* getdrivername() {
-	return "EGAVGA";
+	return (char*)"EGAVGA";
 }
 
 
@@ -467,7 +468,7 @@ char* getmodename(int mode_number) {
 	static char mode[20];
 	WindowData* pWndData = BGI__GetWindowDataPtr();
 
-	sprintf(mode, "%d*%d VGAHI", pWndData->width, pWndData->height);
+	sprintf_s(mode, "%d*%d VGAHI", pWndData->width, pWndData->height);
 	return mode;
 }
 
@@ -533,7 +534,7 @@ void getmoderange(int graphdriver, int* lomode, int* himode) {
 // This code is returned by graphresult()
 //
 char* grapherrormsg(int errorcode) {
-	static char* msg[16] = { "No error", "Graphics not installed",
+	static const char* msg[16] = { "No error", "Graphics not installed",
 		"Graphics hardware not detected", "Device driver not found",
 		"Invalid device driver file", "Insufficient memory to load driver",
 		"Out of memory in scan fill", "Out of memory in flood fill",
@@ -545,7 +546,7 @@ char* grapherrormsg(int errorcode) {
 	if ((errorcode < -16) || (errorcode > 0))
 		return NULL;
 	else
-		return msg[-errorcode];
+		return (char*)msg[-errorcode];
 }
 
 

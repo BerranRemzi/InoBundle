@@ -44,11 +44,11 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)Snake/src/arduino;$(SolutionDir)Snake/src/emulator;$(SolutionDir)Snake/src/graphics;$(SolutionDir)Snake/src;$(SolutionDir)../../src;$(SolutionDir)../../examples/InoBundle;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Snake/src/arduino;$(SolutionDir)Snake/src/emulator;$(SolutionDir)Snake/src/graphics;$(SolutionDir)Snake/src;$(SolutionDir)../../src;$(SolutionDir)Graphics\src;$(SolutionDir)../../examples\InoBundle</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)Snake/src/graphics;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)Debug\Graphics.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -57,19 +57,20 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Snake/src/arduino;$(SolutionDir)Snake/src/emulator;$(SolutionDir)Snake/src/graphics;$(SolutionDir)Snake/src;$(SolutionDir)../../src;$(SolutionDir)../../examples/InoBundle;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Snake/src/arduino;$(SolutionDir)Snake/src/emulator;$(SolutionDir)Snake/src/graphics;$(SolutionDir)Snake/src;$(SolutionDir)../../src;$(SolutionDir)Graphics\src;$(SolutionDir)../../examples\InoBundle</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>$(SolutionDir)Snake/src/graphics;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)Release;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\examples\InoBundle\Brick.cpp" />
     <ClCompile Include="..\..\..\examples\InoBundle\Demo.cpp" />
     <ClCompile Include="..\..\..\examples\InoBundle\Snake.cpp" />
+    <ClCompile Include="..\..\..\src\ArcadeBundle.cpp" />
     <ClCompile Include="..\..\..\src\Keyboard.cpp" />
     <ClCompile Include="..\..\..\src\xOS.c" />
     <ClCompile Include="src\emulator\Emulator.cpp" />
@@ -79,22 +80,21 @@
     <ClInclude Include="..\..\..\examples\InoBundle\Brick.h" />
     <ClInclude Include="..\..\..\examples\InoBundle\Demo.h" />
     <ClInclude Include="..\..\..\examples\InoBundle\Snake.h" />
+    <ClInclude Include="..\..\..\src\ArcadeBundle.h" />
+    <ClInclude Include="..\..\..\src\ArcadeBundle_Types.h" />
     <ClInclude Include="..\..\..\src\Keyboard.h" />
     <ClInclude Include="..\..\..\src\Utility.h" />
     <ClInclude Include="..\..\..\src\xOS.h" />
     <ClInclude Include="src\emulator\Arduino.h" />
-    <ClInclude Include="src\graphics\dibapi.h" />
-    <ClInclude Include="src\graphics\dibutil.h" />
-    <ClInclude Include="src\emulator\DualFunctionButton.h" />
     <ClInclude Include="src\emulator\Emulator.h" />
-    <ClInclude Include="src\graphics\graphics.h" />
-    <ClInclude Include="src\emulator\ArcadeBundle.h" />
-    <ClInclude Include="src\graphics\winbgi.h" />
-    <ClInclude Include="src\graphics\winbgim.h" />
-    <ClInclude Include="src\graphics\winbgitypes.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\examples\InoBundle\InoBundle.ino" />
+    <None Include="..\..\..\examples\InoBundle\InoBundle.ino">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

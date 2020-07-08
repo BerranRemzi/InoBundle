@@ -15,7 +15,12 @@
 *   Includes and conditional defines (needed for g++)
 *
 *****************************************************************************/
+
+#pragma once
+#include "pch.h"
+
 #define _USE_MATH_DEFINES   // Actually use the definitions in math.h
+
 #include <windows.h>        // Provides the Win32 API
 #include <windowsx.h>       // Provides GDI helper macros
 #include <math.h>           // For mathematical functions
@@ -959,7 +964,7 @@ static LPPICTURE readipicture(const char* filename)
 
     // Open the file. Page 943 Win32 Superbible
     hFile = CreateFile(
-        filename,        // Name of the jpg, gif, or bmp
+        (LPCWSTR)filename,        // Name of the jpg, gif, or bmp
         GENERIC_READ,    // Open for reading
         FILE_SHARE_READ, // Allow others to read, too
         NULL,            // Security attributes
@@ -1062,7 +1067,7 @@ void readimagefile(
     }
 
     if (filename == NULL)
-	pPicture = readipicture(fn);
+	pPicture = readipicture((const char*)fn);
     else
 	pPicture = readipicture(filename);
     if (pPicture)
@@ -1106,8 +1111,8 @@ void writeimagefile(
 	ofn.nMaxFile = MAX_PATH+1;
 	ofn.Flags = OFN_PATHMUSTEXIST | OFN_HIDEREADONLY | OFN_NOREADONLYRETURN | OFN_OVERWRITEPROMPT;
 	if (!GetSaveFileName(&ofn)) return;
-	if (strlen(fn) < 4 || (fn[strlen(fn)-4] != '.' && strlen(fn) < MAX_PATH-4))
-	    strcat(fn, ".BMP");
+	if (strlen((const char*)fn) < 4 || (fn[strlen((const char*)fn)-4] != '.' && strlen((const char*)fn) < MAX_PATH-4))
+	    strcat((char*)fn, ".BMP");
     }
 
     // Preliminary computations
@@ -1142,7 +1147,7 @@ void writeimagefile(
     // Get the equivalent DIB and write it to the file
     hDIB = BitmapToDIB(hBitmap, NULL);
     if (filename == NULL)
-	SaveDIB(hDIB, fn);
+	SaveDIB(hDIB, (const char*)fn);
     else
 	SaveDIB(hDIB, filename);
     
@@ -1230,7 +1235,7 @@ void printimage(
     // Set up a DOCINFO structure.
     memset(&di, 0, sizeof(DOCINFO));
     di.cbSize = sizeof(DOCINFO);
-    di.lpszDocName = "Windows BGI";
+    di.lpszDocName = (LPCWSTR)"Windows BGI";
 
     // StartDoc, print stuff, EndDoc
     if (StartDoc(pd_Printer.hDC, &di) != SP_ERROR)
@@ -1240,7 +1245,7 @@ void printimage(
 	titlelen = strlen(title);
 	if (titlelen > 0)
 	{
-	    TextOut(pd_Printer.hDC, int(pixels_per_inch_x*border_left_inches), int(pixels_per_inch_y*border_top_inches), title, titlelen);
+	    TextOut(pd_Printer.hDC, int(pixels_per_inch_x*border_left_inches), int(pixels_per_inch_y*border_top_inches), (LPCWSTR)title, titlelen);
 	    border_top_inches += 0.25;
 	}
         if (GetDeviceCaps(pd_Printer.hDC, RASTERCAPS) & RC_BITBLT)

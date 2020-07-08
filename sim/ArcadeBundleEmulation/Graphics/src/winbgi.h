@@ -1,3 +1,4 @@
+#pragma once
 // The winbgim library, Version 6.0, August 9, 2004
 // Written by:
 //      Grant Macklem (Grant.Macklem@colorado.edu)

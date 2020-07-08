@@ -1,3 +1,4 @@
+#pragma once
 /*    PortTool v2.2     dibapi.h          */
 
 /*

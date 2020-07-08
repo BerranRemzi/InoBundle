@@ -11,9 +11,6 @@
 void setup(void);
 void loop(void);
 
-
-//uint32_t millis();
-
 class SoftwareSerial {
 public:
 	void begin(uint32_t _baud) {
@@ -26,20 +23,6 @@ public:
 		print(_input);
 		print("\n");
 	}
-};
-
-class DualFunctionButton {
-public:
-	DualFunctionButton(int _buttonPin, long _longPressDebounceDelay, char _inputMode) {
-		buttonPin = _buttonPin;
-	};
-	bool shortPress() {
-		return GetAsyncKeyState(buttonPin);
-	}
-	bool longPress() {
-		return 0;
-	}
-	int buttonPin = -1;
 };
 
 static SoftwareSerial Serial;

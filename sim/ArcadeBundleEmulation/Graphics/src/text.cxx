@@ -10,7 +10,8 @@
 //
 // This file contains the code necessary to draw/modify text
 //
-
+#pragma once
+#include "pch.h"
 #include <windows.h>        // Provides the Win32 API
 #include <windowsx.h>       // Provides GDI helper macros
 #include <iostream>
@@ -26,7 +27,7 @@
 *   Also, the exported definition of bgiout.
 *
 *****************************************************************************/
-std::ostringstream bgiout;
+extern std::ostringstream bgiout;
 static int font_weight[] =
 {
     FW_BOLD,    // DefaultFont
@@ -55,7 +56,7 @@ static int font_family[] =
     VARIABLE_PITCH|FF_DONTCARE,  // EuropeanFont
     VARIABLE_PITCH|FF_DONTCARE   // BoldFont
 };
-static char* font_name[] =
+static const char* font_name[] =
 {
     "Console",          // DefaultFont
     "Times New Roman",  // TriplexFont
@@ -168,7 +169,7 @@ static void set_font(WindowData* pWndData)
 	CLIP_DEFAULT_PRECIS,
 	DEFAULT_QUALITY,
 	font_family[pWndData->textInfo.font],
-	font_name[pWndData->textInfo.font]
+    (LPCWSTR)font_name[pWndData->textInfo.font]
 	);
 
     // assign the fonts to each of the hdcs
@@ -351,7 +352,7 @@ void outstreamxy(int x, int y, std::ostringstream& out)
 	{
 	    if (line.length( ) > 0)
 	    	outtext((char *) line.c_str( ));
-	    y += textheight("X");
+	    y += textheight((char*)"X");
 	    x = startx;
 	    line.clear( );
 	    moveto(x,y);

@@ -25,6 +25,9 @@
 // Copyright (C) 1991-1996 Microsoft Corporation. All rights reserved.
 //**********************************************************************
 
+#pragma once
+#include "pch.h"
+
 #define     STRICT      // enable strict type checking
 
 #include <windows.h>
@@ -363,7 +366,7 @@ WORD DIBNumColors(LPSTR lpDIB)
 HPALETTE CreateDIBPalette(HDIB hDIB)
 {
     LPLOGPALETTE        lpPal;          // pointer to a logical palette
-    HANDLE              hLogPal;        // handle to a logical palette
+    HANDLE              hLogPal = NULL; // handle to a logical palette
     HPALETTE            hPal = NULL;    // handle to a palette
     int                 i, wNumColors;  // loop index, number of colors in color table
     LPSTR               lpbi;           // pointer to packed-DIB
@@ -1135,7 +1138,7 @@ HDIB ChangeDIBFormat(HDIB hDIB, WORD wBitCount, DWORD dwCompression)
 HDIB ChangeBitmapFormat(HBITMAP hBitmap, WORD wBitCount, DWORD dwCompression,
         HPALETTE hPal)
 {
-    HDC                hDC;          // Screen DC
+    HDC                hDC = GetDC(NULL);          // Screen DC
     HDIB               hNewDIB=NULL; // Handle to new DIB
     BITMAP             Bitmap;       // BITMAP data structure
     BITMAPINFOHEADER   bi;           // Bitmap info. header

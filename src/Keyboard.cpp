@@ -1,6 +1,6 @@
 #include "Keyboard.h"
 
-typedef struct KeyMap_t{
+struct KeyMap_t{
     uint8_t pin;
     bool lastState;
     int16_t counter;
@@ -96,10 +96,8 @@ void KB_ReadAll(void){
 
         currentState = !digitalRead(keyMap[k].pin);
 
-        if(currentState){           
-            if(keyMap[k].counter < DEBOUNCE_TICK){
-                keyMap[k].counter++;
-            }
+        if(currentState){
+            keyMap[k].counter++;
         }else{
             if(keyMap[k].counter > 0){
                keyMap[k].counter--;
