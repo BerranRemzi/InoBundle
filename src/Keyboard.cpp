@@ -97,6 +97,7 @@ void KB_ReadAll(void){
         currentState = !digitalRead(keyMap[k].pin);
 
         if(currentState){
+            if (keyMap[k].counter < DEBOUNCE_TICK)
             keyMap[k].counter++;
         }else{
             if(keyMap[k].counter > 0){

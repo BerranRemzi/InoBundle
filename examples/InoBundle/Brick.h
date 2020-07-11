@@ -7,6 +7,12 @@
 
 #define BRICK_DEFAULT 0B11100000
 
+enum class BrickState {
+	MOVING,
+	CHECK_NEW_LINE,
+	GOTO_RESTART
+};
+
 class Brick {
 private:
 	GameState state = GameState::GAME_RUN;
@@ -15,8 +21,9 @@ private:
 	Direction_t direction{ Direction_t::RIGHT };
 	uint8_t totalTicks = TICK_FAST;
 	Position_t pos;
-	uint8_t brickDefaultLenght = 4;
-	uint8_t brickOnScreenLength = 0;
+	uint8_t brickLenght = 5;
+	uint8_t bricksOnScreen = 0;
+	BrickState brickState = BrickState::MOVING;
 public:
 	Brick();
 
@@ -26,7 +33,10 @@ public:
 	void render();
 	bool isOnScreen();
 	bool CollisionDetection();
+	BrickState PlaceBrick(bool _collision);
 	bool isReady();
 	void MoveBrick();
-	void PlaceBrick();
+	void GotoOppositeDirection();
+	uint8_t GetBrickLength(uint8_t _row);
+	void MoveToNextRow();
 };
