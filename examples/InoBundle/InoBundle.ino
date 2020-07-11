@@ -32,7 +32,7 @@ Brick brick;
 //Square square;		//not implemented yet
 //Demo demo;			//not implemented yet
 
-uint8_t game = GAME_BRICK;
+uint8_t game = GAME_SNAKE;
 
 void setup() {
 	AB_Setup();

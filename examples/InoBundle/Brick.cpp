@@ -41,7 +41,7 @@ void Brick::update() {
 	case GameState::PAUSE:
 		break;
 	case GameState::GAME_RUN:
-		totalTicks = TICK_FAST;
+		totalTicks = TICK_MEDIUM;
 		state = GameState::GAME_WAIT;
 
 		if ((KB_IsKeyToggled(VK_DOWN) && KB_IsKeyDown(VK_DOWN))

@@ -14,6 +14,7 @@ public:
 	Position_t previousHead;
 	Position_t food;
 
+	GameState state = GameState::GAME_RUN;
 	int8_t size{ 0 };
 	Direction_t direction;
 	Sound_t sound;
@@ -26,6 +27,7 @@ public:
 	void setup();
 	void newGame(void);
 	void reset();
+	bool isReady();
 
 	void render();
 	void update();
