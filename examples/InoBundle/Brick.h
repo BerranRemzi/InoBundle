@@ -32,7 +32,6 @@ public:
 	void update();
 	void render();
 	bool isOnScreen();
-	bool CollisionDetection();
 	BrickState PlaceBrick(bool _collision);
 	bool isReady();
 	void MoveBrick();

@@ -1,8 +1,10 @@
 #pragma once
 
-//#include <bitset>
 #include <stdint.h>
-//#include "Keyboard.h"
+
+inline bool checkBit(uint8_t _data, uint8_t _pos) {
+	return ((_data >> _pos) & 1U);
+}
 
 #define LED_ON			0xFF
 #define LED_OFF			0x00
@@ -54,5 +56,3 @@ enum class GameState {
 };
 
 static Position_t matrix[SCREEN_WIDTH * SCREEN_HEIGHT];
-
-//extern void setLed(int x, int y, uint8_t brightness);
