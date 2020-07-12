@@ -58,19 +58,18 @@ void Task_Screen(void){
 
 void Task_Keyboard(void){
 	KB_ReadAll();
-		/* wait for 100ticks = 1000ms */
-	if(KB_IsKeyDownLong(VK_UP, 100)){
+	if(KB_IsKeyDownLong(VK_UP, 100)){	/* wait for 100ticks = 1000ms */
 		AB_ClearDisplay();
 		free(game);
-		switch(++currGame) {
+		switch(++currGame %= 3) {	// "3" is the number of games + demo
 			case GAME_SNAKE:
 				game = new Snake();
 				break;
 			case GAME_BRICK:
 				game = new Brick();
 				break;
-			default:
-				game = new Snake();
+			case GAME_DEMO:
+				game = new Demo();
 				break;
 		}
 	}
