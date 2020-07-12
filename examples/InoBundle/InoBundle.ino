@@ -61,7 +61,7 @@ void Task_Keyboard(void){
 	if(KB_IsKeyDownLong(VK_UP, 100)){	/* wait for 100ticks = 1000ms */
 		AB_ClearDisplay();
 		free(game);
-		switch(++currGame %= 3) {	// "3" is the number of games + demo
+		switch(++currGame) {	
 			case GAME_SNAKE:
 				game = new Snake();
 				break;
@@ -70,6 +70,10 @@ void Task_Keyboard(void){
 				break;
 			case GAME_DEMO:
 				game = new Demo();
+				break;
+			default:
+				game = new Snake();
+				currGame = 0;
 				break;
 		}
 	}
