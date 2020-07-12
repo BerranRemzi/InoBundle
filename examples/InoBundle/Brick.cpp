@@ -1,6 +1,7 @@
 #include "Brick.h"
 
 Brick::Brick() {
+	timer = new Timer(0);
 	reset();
 }
 
@@ -9,29 +10,14 @@ void Brick::reset() {
 		screen[i] = 0;
 
 	brickHeight = SCREEN_HEIGHT - 1;
-	totalTicks = TICK_FAST;	// medium level 250ms
+	timer->setTick(TICK_FAST);
 	bricksOnScreen = 0;
 	direction = Direction_t::RIGHT;
 	brickLenght = 3;
 }
 
-bool Brick::isReady() {
-	bool returnValue = false;
-
-	static uint8_t cycle = totalTicks;
-	if (cycle < totalTicks) {
-		cycle++;
-		returnValue = false;
-	}
-	else {
-		cycle = 0;
-		returnValue = true;
-	}
-	return returnValue;
-}
-
 void Brick::update() {
-	bool ready = isReady();
+	bool ready = timer->tick();
 	bool isDetected = false;
 
 	switch (state) {
@@ -59,7 +45,7 @@ void Brick::update() {
 			state = GameState::GAME_RUN;
 		break;
 	case GameState::ANIM_RUN:
-		totalTicks = 2;
+		timer->setTick(TICK_ANIM);
 		state = GameState::ANIM_WAIT;
 
 		ready = AB_ClearAnimation();

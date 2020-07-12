@@ -28,6 +28,7 @@ void AB_HAL_UpdateScreen() {
  * the system was started, up to 49.7 days.
  */
 uint32_t millis(void) {
+	delay(10);
 	return (uint32_t)GetTickCount64();
 }
 

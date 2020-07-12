@@ -20,15 +20,14 @@ public:
 	Direction_t direction;
 	Sound_t sound;
 	uint8_t speed{ 0 };
-	uint8_t totalTicks;
 	bool isFoodGenerated = false;
 	Direction_t lastDirection = Direction_t::STOPPED;
+	Timer* timer;
 public:
 	Snake();
 	void setup();
 	void newGame(void);
 	void reset();
-	bool isReady();
 
 	void render();
 	void update() override;
