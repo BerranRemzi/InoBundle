@@ -24,7 +24,7 @@ private:
 	Direction_t direction{ Direction_t::RIGHT };
 	Timer* timer;
 	Position_t pos;
-	uint8_t brickLenght = 5;
+	uint8_t brickLength = 5;
 	uint8_t bricksOnScreen = 0;
 	BrickState brickState = BrickState::MOVING;
 

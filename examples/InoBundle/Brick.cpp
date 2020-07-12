@@ -13,7 +13,7 @@ void Brick::reset() {
 	timer->setTick(TICK_FAST);
 	bricksOnScreen = 0;
 	direction = Direction_t::RIGHT;
-	brickLenght = 3;
+	brickLength = 3;
 }
 
 void Brick::update() {
@@ -81,8 +81,8 @@ BrickState Brick::PlaceBrick(bool _collision) {
 			if (brickHeight < 7) {
 				/* trim brick based on previous row */
 				screen[brickHeight] &= screen[brickHeight + 1];
-				/* get lenght of brick after trimming */
-				brickLenght = GetBrickLength(brickHeight);
+				/* get length of brick after trimming */
+				brickLength = GetBrickLength(brickHeight);
 			}
 
 			/* switch to next row */
@@ -92,7 +92,7 @@ BrickState Brick::PlaceBrick(bool _collision) {
 			GotoOppositeDirection();
 		}
 
-		if (brickHeight == OUT_OF_SCREEN || brickLenght == 0) {
+		if (brickHeight == OUT_OF_SCREEN || brickLength == 0) {
 			brickState = BrickState::GOTO_RESTART;
 		}
 		else {
@@ -158,7 +158,7 @@ void Brick::MoveBrick() {
 
 	if (direction == Direction_t::RIGHT) {
 		screen[brickHeight] >>= 1;
-		if (brickLenght - bricksOnScreen > 0) {
+		if (brickLength - bricksOnScreen > 0) {
 			screen[brickHeight] |= 0x80;
 			bricksOnScreen++;
 		}
@@ -169,7 +169,7 @@ void Brick::MoveBrick() {
 	}
 	else if (direction == Direction_t::LEFT) {
 		screen[brickHeight] <<= 1;
-		if (brickLenght - bricksOnScreen > 0) {
+		if (brickLength - bricksOnScreen > 0) {
 			screen[brickHeight] |= 0x01;
 			bricksOnScreen++;
 		}
