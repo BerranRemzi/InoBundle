@@ -41,10 +41,9 @@ void AB_HAL_Shutdown(bool b) {
 }
 
 void AB_HAL_UpdateScreen(void){
-  uint8_t data = 0x00;
-  for(uint8_t y = 0; y<8;y++){
+  for(uint8_t y = 0; y < 8;y++){
 
-	data = 0x00;
+	uint8_t data = 0x00;
 	for(uint8_t x = 0; x < 8; x++){
 		if(AB_screen[x][y] > 0){
 			data |= 1 << x;
@@ -64,13 +63,13 @@ void AB_HAL_DisplayTest(void){
 }
 
 void AB_HAL_SetScanLimit(uint8_t _limit){
-    if((_limit >= 0) && (_limit < 8)){
+    if(_limit < 8){
         AB_HAL_SpiTransfer(OP_SCANLIMIT, _limit);
     }
 }
 
 void  AB_HAL_SetIntensity( uint8_t intensity) {
-    if(intensity>=0 && intensity<16){
+    if(intensity < 16){
         AB_HAL_SpiTransfer(OP_INTENSITY, intensity);
     }
 

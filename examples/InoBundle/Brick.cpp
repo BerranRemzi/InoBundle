@@ -14,9 +14,6 @@ void Brick::reset() {
 	direction = Direction_t::RIGHT;
 	brickLenght = 3;
 }
-void Brick::startNewGame() {
-	bricksOnScreen = 0;
-}
 
 bool Brick::isReady() {
 	bool returnValue = false;
@@ -170,10 +167,6 @@ void Brick::render() {
 			}
 		}
 	}
-}
-
-bool  Brick::isOnScreen() {
-	return (bricksOnScreen > 0);
 }
 
 void Brick::MoveBrick() {

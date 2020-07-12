@@ -91,10 +91,9 @@ bool KB_IsKeyDownLong(uint8_t _pin, uint16_t _tick){
 #define DEBOUNCE_TICK 2
 
 void KB_ReadAll(void){
-    bool currentState = false;
     for(uint8_t k = 0; k < keyMapSize;k++){
 
-        currentState = !digitalRead(keyMap[k].pin);
+        bool currentState = !digitalRead(keyMap[k].pin);
 
         if(currentState){
             if (keyMap[k].counter < DEBOUNCE_TICK)

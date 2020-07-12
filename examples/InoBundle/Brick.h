@@ -5,8 +5,6 @@
 #include "Keyboard.h"
 #include "ArcadeBundle.h"
 
-#define BRICK_DEFAULT 0B11100000
-
 enum class BrickState {
 	MOVING,
 	CHECK_NEW_LINE,
@@ -14,6 +12,10 @@ enum class BrickState {
 };
 
 class Brick {
+public:
+	Brick();
+	void update();
+
 private:
 	GameState state = GameState::GAME_RUN;
 	uint8_t screen[8];
@@ -24,14 +26,9 @@ private:
 	uint8_t brickLenght = 5;
 	uint8_t bricksOnScreen = 0;
 	BrickState brickState = BrickState::MOVING;
-public:
-	Brick();
 
 	void reset();
-	void startNewGame();
-	void update();
 	void render();
-	bool isOnScreen();
 	BrickState PlaceBrick(bool _collision);
 	bool isReady();
 	void MoveBrick();

@@ -66,23 +66,22 @@ void AB_ClearDisplay(void){
 }
 
 bool AB_ClearAnimation(void){
-    bool isScreenEmpty = true;
 
-    for(int8_t x = SCREEN_WIDTH-1; x >=0; x--){
-        for(int8_t y = 0; y<SCREEN_HEIGHT;y++){    
+    for(int8_t x = SCREEN_WIDTH - 1; x >= 0; x--){
+        for(int8_t y = 0; y < SCREEN_HEIGHT;y++){    
             if(AB_screen[x][y] == LED_ON){
                 
                 if(x < (SCREEN_WIDTH-1)){
                     AB_screen[x+1][y] = AB_screen[x][y]; 
                 }
                 AB_screen[x][y] = LED_OFF;
-                isScreenEmpty = false;
-                return isScreenEmpty;
+				/* return false if some of leds was ON */
+                return false;
             }
         }
     }
-
-    return isScreenEmpty;
+	/* return true if all leds are OFF*/
+    return true;
 }
 
 void AB_UpdateScreen(void){

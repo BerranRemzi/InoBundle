@@ -93,11 +93,11 @@ void Snake::update() {
 		if (Direction_t::LEFT != direction && Direction_t::RIGHT == _direction) {
 			direction = _direction;
 		}
-		_direction = direction;
+		//_direction = direction;
 	}
 
 
-	bool snakeMoved = moveSnake();
+	moveSnake();
 
 
 
@@ -108,7 +108,7 @@ void Snake::update() {
 		extendSnake();
 		sound = Sound_t::SNAKE_SIZE_UP;
 	}
-	else if (snakeMoved) {
+	else{
 		moveBody();
 	}
 
@@ -159,15 +159,15 @@ void Snake::extendSnake() {
 	++size;
 }
 
-bool Snake::moveSnake() {
-	bool snakeMoved = false;
+void Snake::moveSnake() {
+	//bool snakeMoved = false;
 
 	// If snake is going to move
 	//if (direction > 0) {
 	previousHead.x = currentHead.x;	// Set old head x to current head x
 	previousHead.y = currentHead.y;	// Set old head y to current head y
 
-	snakeMoved = true;
+	//snakeMoved = true;
 
 	sound = Sound_t::SNAKE_MOVE;
 	//}
@@ -200,7 +200,7 @@ bool Snake::moveSnake() {
 			currentHead.x = SCREEN_WIDTH - 1;
 	}
 
-	return snakeMoved;
+	//return snakeMoved;
 }
 
 Direction_t Snake::getLastDirection(void) {

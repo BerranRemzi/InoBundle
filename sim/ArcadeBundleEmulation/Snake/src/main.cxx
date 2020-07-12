@@ -18,7 +18,7 @@ const double SCREEN_SIZE = 60.2 * 1.05;
 const double DOT_OFFSET = (SCREEN_SIZE - (DOT_DISTANCE * (MATRIX_SIZE - 1))) / 2.0;
 double multiplier = 5.0;
 
-void draw_dot(int x, int y, int color);
+void draw_dot(int _x, int _y, int _color);
 
 int APIENTRY WinMain
 (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {

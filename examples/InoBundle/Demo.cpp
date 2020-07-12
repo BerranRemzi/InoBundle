@@ -5,20 +5,16 @@ void Demo(void){
   static bool fill = true;
   static uint8_t data[8];
 
-  bool led;
   int8_t counter = 0;
-  uint8_t randomX;
-  uint8_t randomY;
-  
+
   for(uint8_t t = 0; t < 16; t++){
     
-    randomX = random(8);
-    randomY = random(8);
+    uint8_t randomX = random(8);
+    uint8_t randomY = random(8);
 
-    led = (data[randomY] & 1 << randomX);
+    bool led = (data[randomY] & 1 << randomX);
 
     if(false == led && true == fill ){
-      //lc.setLed(0, randomX, randomY, HIGH);
       data[randomY] |= 1 << randomX;
       AB_SetRow(randomY, data[randomY]);
       break;

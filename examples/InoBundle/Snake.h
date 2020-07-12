@@ -8,7 +8,12 @@
 #define SNAKE_START_SIZE 2
 
 class Snake {
+
 public:
+	Snake();
+	void update();
+
+private:
 	Position_t tail;
 	Position_t currentHead;
 	Position_t previousHead;
@@ -21,21 +26,17 @@ public:
 	uint8_t totalTicks;
 	bool isFoodGenerated = false;
 	Direction_t lastDirection = Direction_t::STOPPED;
-public:
-	Snake();
-	void setup();
-	void newGame(void);
-	void reset();
-
-	void render();
-	void update();
 
 	void generateFood();
 	void putFood();
 	void extendSnake();
-	bool moveSnake();
+	void moveSnake();
 	void moveBody();
 	bool isInScreen(int i);
 	Sound_t playSound();
 	Direction_t getLastDirection(void);
+	void setup();
+	void newGame(void);
+	void reset();
+	void render();
 };
