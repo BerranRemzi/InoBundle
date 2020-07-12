@@ -83,6 +83,9 @@
     <ClInclude Include="..\..\..\src\ArcadeBundle_Types.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\examples\InoBundle\InoBundle.ino" />

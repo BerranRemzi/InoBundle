@@ -88,6 +88,7 @@
     <ClInclude Include="..\..\..\examples\InoBundle\Snake.h" />
     <ClInclude Include="..\..\..\src\ArcadeBundle.h" />
     <ClInclude Include="..\..\..\src\ArcadeBundle_Types.h" />
+    <ClInclude Include="..\..\..\src\Game.h" />
     <ClInclude Include="..\..\..\src\Keyboard.h" />
     <ClInclude Include="..\..\..\src\Utility.h" />
     <ClInclude Include="..\..\..\src\xOS.h" />

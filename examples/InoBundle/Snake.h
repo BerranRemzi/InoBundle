@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Game.h"
 #include "Utility.h"
 #include "Arduino.h"
 #include "Keyboard.h"
@@ -7,7 +8,7 @@
 
 #define SNAKE_START_SIZE 2
 
-class Snake {
+class Snake : public Game {
 public:
 	Position_t tail;
 	Position_t currentHead;
@@ -30,7 +31,7 @@ public:
 	bool isReady();
 
 	void render();
-	void update();
+	void update() override;
 
 	void generateFood();
 	void putFood();

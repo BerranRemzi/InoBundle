@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Game.h"
 #include "Arduino.h"
 #include "Utility.h"
 #include "Keyboard.h"
@@ -11,10 +12,10 @@ enum class BrickState {
 	GOTO_RESTART
 };
 
-class Brick {
+class Brick : public Game {
 public:
 	Brick();
-	void update();
+	void update() override;
 
 private:
 	GameState state = GameState::GAME_RUN;
