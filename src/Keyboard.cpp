@@ -1,9 +1,9 @@
 #include "Keyboard.h"
 
-struct KeyMap_t{
+struct KeyMap_t {
     uint8_t pin;
     bool lastState;
-    int16_t counter;
+    uint16_t counter;
     bool isToggled;
 };
 
@@ -21,23 +21,24 @@ KeyMap_t keyMap[8] = {
 
 const uint8_t keyMapSize = 8;
 
-static uint16_t keyData  = 0U;
+static uint16_t keyDownData = 0U;
+static uint16_t keyPressData = 0U;
 
-void KB_Setup(void){
+void KB_Setup(void) {
     pinMode(VK_UP, INPUT_PULLUP);
-	pinMode(VK_DOWN, INPUT_PULLUP);
-	pinMode(VK_LEFT, INPUT_PULLUP);
-	pinMode(VK_RIGHT, INPUT_PULLUP);
-    
+    pinMode(VK_DOWN, INPUT_PULLUP);
+    pinMode(VK_LEFT, INPUT_PULLUP);
+    pinMode(VK_RIGHT, INPUT_PULLUP);
+
     /* TODO: add buttons A, B, C, and D  */
 }
 
-bool KB_IsKeyUp(uint8_t _pin){
+bool KB_IsKeyUp(uint8_t _pin) {
     bool returnValue = false;
 
-    for(uint8_t k = 0; k < keyMapSize;k++){
-        if(keyMap[k].pin == _pin){
-            returnValue = (keyData >> k) & 1U;
+    for (uint8_t k = 0; k < keyMapSize; k++) {
+        if (keyMap[k].pin == _pin) {
+            returnValue = (keyDownData >> k) & 1U;
             break;
         }
     }
@@ -45,13 +46,12 @@ bool KB_IsKeyUp(uint8_t _pin){
     return !returnValue;
 }
 
-bool KB_IsKeyDown(uint8_t _pin){
+bool KB_IsKeyDown(uint8_t _pin) {
     bool returnValue = false;
 
-    for(uint8_t k = 0; k < keyMapSize;k++){
-        if(keyMap[k].pin == _pin){
-            returnValue = (keyData >> k) & 1U;
-            //keyData &= ~(1U << k);
+    for (uint8_t k = 0; k < keyMapSize; k++) {
+        if (keyMap[k].pin == _pin) {
+            returnValue = (keyDownData >> k) & 1U;
             break;
         }
     }
@@ -59,11 +59,24 @@ bool KB_IsKeyDown(uint8_t _pin){
     return returnValue;
 }
 
-bool KB_IsKeyToggled(uint8_t _pin){
+bool KB_IsKeyPressed(uint8_t _pin) {
     bool returnValue = false;
-    
-    for(uint8_t k = 0; k < keyMapSize;k++){
-        if(keyMap[k].pin == _pin){
+
+    for (uint8_t k = 0; k < keyMapSize; k++) {
+        if (keyMap[k].pin == _pin) {
+            returnValue = (keyPressData >> k) & 1U;
+            break;
+        }
+    }
+
+    return returnValue;
+}
+
+bool KB_IsKeyToggled(uint8_t _pin) {
+    bool returnValue = false;
+
+    for (uint8_t k = 0; k < keyMapSize; k++) {
+        if (keyMap[k].pin == _pin) {
             returnValue = keyMap[k].isToggled;
             keyMap[k].isToggled = false;
             break;
@@ -73,12 +86,12 @@ bool KB_IsKeyToggled(uint8_t _pin){
     return returnValue;
 }
 
-bool KB_IsKeyDownLong(uint8_t _pin, uint16_t _tick){
+bool KB_IsKeyDownLong(uint8_t _pin, uint16_t _tick) {
     bool returnValue = false;
 
-    for(uint8_t k = 0; k < keyMapSize;k++){
-        if(keyMap[k].pin == _pin){
-            if(keyMap[k].counter > _tick){
+    for (uint8_t k = 0; k < keyMapSize; k++) {
+        if (keyMap[k].pin == _pin) {
+            if (keyMap[k].counter > _tick) {
                 returnValue = true;
                 keyMap[k].counter = 0;
             }
@@ -88,31 +101,31 @@ bool KB_IsKeyDownLong(uint8_t _pin, uint16_t _tick){
 
     return returnValue;
 }
-#define DEBOUNCE_TICK 2
 
-void KB_ReadAll(void){
-    for(uint8_t k = 0; k < keyMapSize;k++){
+
+void KB_ReadAll(void) {
+    for (uint8_t k = 0; k < keyMapSize; k++) {
 
         bool currentState = !digitalRead(keyMap[k].pin);
 
-        if(currentState){
-            if (keyMap[k].counter < DEBOUNCE_TICK)
+        if (currentState) {
             keyMap[k].counter++;
-        }else{
-            if(keyMap[k].counter > 0){
-               keyMap[k].counter--;
-            }
+        }
+        else {
+            keyMap[k].counter = 0;
         }
 
-        if(keyMap[k].counter == 0){
-            keyData &= ~(1U << k);
-        }
-        if(keyMap[k].counter == DEBOUNCE_TICK){
-            keyData |= 1U << k;
+        if (keyMap[k].counter >= DEBOUNCE_TICK) {
+            keyDownData |= 1U << k;
+            keyPressData |= 1U << k;
         }
 
-        if(keyMap[k].counter == 0 || keyMap[k].counter == DEBOUNCE_TICK){
-            if(currentState != keyMap[k].lastState){
+        if (keyMap[k].counter == 0) {
+            keyDownData &= ~(1U << k);
+        }
+
+        if (keyMap[k].counter == 0 || keyMap[k].counter == DEBOUNCE_TICK) {
+            if (currentState != keyMap[k].lastState) {
                 keyMap[k].isToggled = true;
             }
             keyMap[k].lastState = currentState;
@@ -120,28 +133,28 @@ void KB_ReadAll(void){
     }
 }
 
-void KB_Reset(void){
-    keyData = 0x0000;
+void KB_Reset(void) {
+    keyPressData = 0x0000;
 }
 
 Direction_t KB_GetLastDirection(void) {
-	static Direction_t lastDirection = Direction_t::RIGHT;
+    static Direction_t lastDirection = Direction_t::RIGHT;
 
-	if (KB_IsKeyDown(VK_UP) && Direction_t::UP != lastDirection) {
-		lastDirection = Direction_t::UP;
-	}
+    if (KB_IsKeyPressed(VK_UP) && Direction_t::UP != lastDirection) {
+        lastDirection = Direction_t::UP;
+    }
 
-	if (KB_IsKeyDown(VK_DOWN) && Direction_t::DOWN != lastDirection) {
-		lastDirection = Direction_t::DOWN;
-	}
+    if (KB_IsKeyPressed(VK_DOWN) && Direction_t::DOWN != lastDirection) {
+        lastDirection = Direction_t::DOWN;
+    }
 
-	if (KB_IsKeyDown(VK_RIGHT) && Direction_t::RIGHT != lastDirection) {
-		lastDirection = Direction_t::RIGHT;
-	}
+    if (KB_IsKeyPressed(VK_RIGHT) && Direction_t::RIGHT != lastDirection) {
+        lastDirection = Direction_t::RIGHT;
+    }
 
-	if (KB_IsKeyDown(VK_LEFT) && Direction_t::LEFT != lastDirection) {
-		lastDirection = Direction_t::LEFT;
-	}
-	KB_Reset();
-	return lastDirection;
+    if (KB_IsKeyPressed(VK_LEFT) && Direction_t::LEFT != lastDirection) {
+        lastDirection = Direction_t::LEFT;
+    }
+    KB_Reset();
+    return lastDirection;
 }

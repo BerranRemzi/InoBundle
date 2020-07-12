@@ -35,7 +35,7 @@ public:
 	void generateFood();
 	void putFood();
 	void extendSnake();
-	bool moveSnake();
+	void moveSnake();
 	void moveBody();
 	bool isInScreen(int i);
 	Sound_t playSound();

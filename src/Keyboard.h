@@ -12,11 +12,19 @@
 #define VK_X		-1
 #define VK_Y		-1
 
+#define DEBOUNCE_TICK 2
+
+#else
+
+#define DEBOUNCE_TICK 1
+
 #endif
+
 void KB_Setup(void);
 
 bool KB_IsKeyUp(uint8_t _pin);
 bool KB_IsKeyDown(uint8_t _pin);
+bool KB_IsKeyPressed(uint8_t _pin);
 bool KB_IsKeyToggled(uint8_t _pin);
 bool KB_IsKeyDownLong(uint8_t _pin, uint16_t _tick);
 
