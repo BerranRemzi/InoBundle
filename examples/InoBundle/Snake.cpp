@@ -67,61 +67,108 @@ void Snake::render() {
 	AB_SetLed(food.x, food.y, LED_ON);
 }
 
-void Snake::update() {
+bool Snake::isReady() {
+	bool returnValue = false;
+
 	static uint8_t cycle = totalTicks;
 	if (cycle < totalTicks) {
-		generateFood();
 		cycle++;
-		return;
+		returnValue = false;
 	}
-	cycle = 0;
+	else {
+		cycle = 0;
+		returnValue = true;
+	}
+	return returnValue;
+}
 
-	Direction_t _direction = getLastDirection();
+void Snake::update() {
+	bool ready = isReady();
 
-	if (_direction != Direction_t::STOPPED) {
-		// TODO: Don't overwrite direction, if the "_direction" is
-		// opposite of the "direction"
-		if (Direction_t::UP != direction && Direction_t::DOWN == _direction) {
-			direction = _direction;
+	switch (state) {
+	case GameState::PAUSE:
+		break;
+	case GameState::GAME_RUN:
+	{
+		totalTicks = TICK_MEDIUM;
+		state = GameState::GAME_WAIT;
+
+		Direction_t _direction = getLastDirection();
+
+		if (_direction != Direction_t::STOPPED) {
+			// TODO: Don't overwrite direction, if the "_direction" is
+			// opposite of the "direction"
+			if (Direction_t::UP != direction && Direction_t::DOWN == _direction) {
+				direction = _direction;
+			}
+			if (Direction_t::DOWN != direction && Direction_t::UP == _direction) {
+				direction = _direction;
+			}
+			if (Direction_t::RIGHT != direction && Direction_t::LEFT == _direction) {
+				direction = _direction;
+			}
+			if (Direction_t::LEFT != direction && Direction_t::RIGHT == _direction) {
+				direction = _direction;
+			}
+			_direction = direction;
 		}
-		if (Direction_t::DOWN != direction && Direction_t::UP == _direction) {
-			direction = _direction;
+
+
+		bool snakeMoved = moveSnake();
+
+
+
+		// If head is collided with food
+		if (food.x == currentHead.x && food.y == currentHead.y) {
+			isFoodGenerated = false;
+			generateFood();
+			extendSnake();
+			sound = Sound_t::SNAKE_SIZE_UP;
 		}
-		if (Direction_t::RIGHT != direction && Direction_t::LEFT == _direction) {
-			direction = _direction;
+		else if (snakeMoved) {
+			moveBody();
 		}
-		if (Direction_t::LEFT != direction && Direction_t::RIGHT == _direction) {
-			direction = _direction;
+
+
+		for (int i = 0; i < size; ++i) {
+			// If head is collided with matrix
+			if (currentHead.x == matrix[i].x && currentHead.y == matrix[i].y) {
+				state = GameState::ANIM_RUN;
+			}
 		}
-		//_direction = direction;
+		// Print to matrix
+		render();
+	}
+	break;
+	case GameState::GAME_WAIT:
+		if (ready)
+			state = GameState::GAME_RUN;
+		break;
+	case GameState::ANIM_RUN:
+		totalTicks = 2;
+		state = GameState::ANIM_WAIT;
+
+		ready = AB_ClearAnimation();
+		if (ready) {
+			state = GameState::RESTART;
+		}
+		break;
+	case GameState::ANIM_WAIT:
+		if (ready)
+			state = GameState::ANIM_RUN;
+		break;
+	case GameState::BLINK:
+		break;
+	case GameState::RESTART:
+		reset();
+		render();
+		state = GameState::GAME_RUN;
+		break;
+	default:
+		break;
 	}
 
 
-	moveSnake();
-
-
-
-	// If head is collided with food
-	if (food.x == currentHead.x && food.y == currentHead.y) {
-		isFoodGenerated = false;
-		generateFood();
-		extendSnake();
-		sound = Sound_t::SNAKE_SIZE_UP;
-	}
-	else{
-		moveBody();
-	}
-
-
-	for (int i = 0; i < size; ++i) {
-		// If head is collided with matrix
-		if (currentHead.x == matrix[i].x && currentHead.y == matrix[i].y) {
-			reset();
-		}
-	}
-	// Print to matrix
-	render();
-	//isFoodGenerated = false;
 }
 
 void Snake::generateFood() {
@@ -159,40 +206,38 @@ void Snake::extendSnake() {
 	++size;
 }
 
-void Snake::moveSnake() {
-	//bool snakeMoved = false;
+bool Snake::moveSnake() {
+	bool snakeMoved = false;
 
 	// If snake is going to move
-	//if (direction > 0) {
 	previousHead.x = currentHead.x;	// Set old head x to current head x
 	previousHead.y = currentHead.y;	// Set old head y to current head y
 
-	//snakeMoved = true;
+	snakeMoved = true;
 
 	sound = Sound_t::SNAKE_MOVE;
-	//}
 
-	if (direction == Direction_t::UP) {//if (true == ((direction >> 0) & 1U)) {
+	if (direction == Direction_t::UP) {
 		--currentHead.y;
 		// If snake head is out of the matrix, teleport it to mirrored position
 		if (currentHead.y < 0)
 			currentHead.y = SCREEN_HEIGHT - 1;
 	}
-	else if (direction == Direction_t::DOWN) {//else if (true == ((direction >> 1) & 1U)) {
+	else if (direction == Direction_t::DOWN) {
 
 		++currentHead.y;
 		// If snake head is out of the matrix, teleport it to mirrored position
 		if (currentHead.y == SCREEN_HEIGHT)
 			currentHead.y = 0;
 	}
-	else if (direction == Direction_t::RIGHT) {//else if (true == ((direction >> 2) & 1U)) {
+	else if (direction == Direction_t::RIGHT) {
 		direction = Direction_t::RIGHT;
 		++currentHead.x;
 		// If snake head is out of the matrix, teleport it to mirrored position
 		if (currentHead.x == SCREEN_WIDTH)
 			currentHead.x = 0;
 	}
-	else if (direction == Direction_t::LEFT) { //else if (true == ((direction >> 3) & 1U)) {
+	else if (direction == Direction_t::LEFT) {
 		direction = Direction_t::LEFT;
 		--currentHead.x;
 		// If snake head is out of the matrix, teleport it to mirrored position
@@ -200,7 +245,7 @@ void Snake::moveSnake() {
 			currentHead.x = SCREEN_WIDTH - 1;
 	}
 
-	//return snakeMoved;
+	return snakeMoved;
 }
 
 Direction_t Snake::getLastDirection(void) {
@@ -242,13 +287,6 @@ void Snake::moveBody() {
 
 bool Snake::isInScreen(int i) {
 	bool value{ true };
-
-	/*
-	if ((x[i] < 0 || x[i] >= matrix_WIDTH) ||
-		(y[i] < 0 || y[i] >= matrix_HEIGHT)) {
-		value = false;
-	}
-	*/
 
 	if (matrix[i].x == OUT_OF_SCREEN || matrix[i].y == OUT_OF_SCREEN)
 		value = false;
