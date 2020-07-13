@@ -1,7 +1,7 @@
 /*
  *    LedControl.h - A library for controling Leds with a MAX7219/MAX7221
  *    Copyright (c) 2007 Eberhard Fahle
- * 
+ *
  *    Permission is hereby granted, free of charge, to any person
  *    obtaining a copy of this software and associated documentation
  *    files (the "Software"), to deal in the Software without
@@ -10,10 +10,10 @@
  *    copies of the Software, and to permit persons to whom the
  *    Software is furnished to do so, subject to the following
  *    conditions:
- * 
- *    This permission notice shall be included in all copies or 
+ *
+ *    This permission notice shall be included in all copies or
  *    substantial portions of the Software.
- * 
+ *
  *    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *    EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  *    OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -24,8 +24,7 @@
  *    OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef LedControl_h
-#define LedControl_h
+#pragma once
 
 #include "ArcadeBundle_Types.h"
 #include "Keyboard.h"
@@ -64,4 +63,12 @@ void AB_ClearDisplay(void);
 //void AB_SpiTransfer(volatile byte opcode, volatile byte data);
 bool AB_ClearAnimation(void);
 
-#endif	//LedControl.h
+class Timer {
+private:
+	uint8_t totalTicks;
+	uint8_t cycle;
+public:
+	Timer(uint8_t _totalTicks);
+	bool tick();
+	void setTick(uint8_t tick);
+};

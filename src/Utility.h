@@ -17,7 +17,8 @@ inline bool checkBit(uint8_t _data, uint8_t _pos) {
 enum Tick_t {
 	TICK_SLOW = 50,			//slow 		50 x 10 = 500ms
 	TICK_MEDIUM = 25,		//medium	25 x 10 = 250ms
-	TICK_FAST = 5			//fast		15 x 10 = 150ms
+	TICK_FAST = 5,			//fast		15 x 10 = 150ms
+	TICK_ANIM = 2
 };
 
 enum class Sound_t {

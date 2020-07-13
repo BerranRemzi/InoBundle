@@ -25,14 +25,14 @@ void Task_Screen(void);
 
 Task_t TaskStruct[4];
 
-Snake snake;
-Brick brick;
+Game* game = new Snake();
+//Brick brick;
 //Invader invader;		//not implemented yet
 //Tetris tetris;		//not implemented yet
 //Square square;		//not implemented yet
 //Demo demo;			//not implemented yet
 
-uint8_t game = GAME_BRICK;
+uint8_t currGame = GAME_SNAKE;
 
 void setup() {
 	AB_Setup();
@@ -49,19 +49,7 @@ void loop() {
 }
 
 void Task_Game(void){
-	// Game logic
-	switch(game){
-		case GAME_SNAKE: snake.update(); break;
-		case GAME_BRICK: brick.update(); break;
-		//case GAME_INVADER: invader.update(); break; 	//not implemented yet
-		//case GAME_TETRIS: tetris.update(); break; 	//not implemented yet
-		//case GAME_SQUARE: square.update(); break; 	//not implemented yet
-		case GAME_DEMO: Demo();/*demo.update();*/ break; // todo: convert to class
-		default: 
-			/* on invalid number should start first game */
-			game = GAME_SNAKE; 
-		break;
-	}
+	game->update();
 }
 
 void Task_Screen(void){
@@ -70,9 +58,23 @@ void Task_Screen(void){
 
 void Task_Keyboard(void){
 	KB_ReadAll();
-		/* wait for 100ticks = 1000ms */
-	if(KB_IsKeyDownLong(VK_UP, 100)){
+	if(KB_IsKeyDownLong(VK_UP, 100)){	/* wait for 100ticks = 1000ms */
 		AB_ClearDisplay();
-		game++;
+		free(game);
+		switch(++currGame) {	
+			case GAME_SNAKE:
+				game = new Snake();
+				break;
+			case GAME_BRICK:
+				game = new Brick();
+				break;
+			case GAME_DEMO:
+				game = new Demo();
+				break;
+			default:
+				game = new Snake();
+				currGame = 0;
+				break;
+		}
 	}
 }
