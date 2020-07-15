@@ -65,10 +65,12 @@ bool AB_ClearAnimation(void);
 
 class Timer {
 private:
+    bool returnValue = false;
 	uint8_t totalTicks;
 	uint8_t cycle;
 public:
 	Timer(uint8_t _totalTicks);
-	bool tick();
-	void setTick(uint8_t tick);
+	void tick();
+	void setTick(uint8_t _tick);
+    bool Timer::isReady();
 };

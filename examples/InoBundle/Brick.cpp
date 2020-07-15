@@ -17,7 +17,8 @@ void Brick::reset() {
 }
 
 void Brick::update() {
-	bool ready = timer->tick();
+	timer->tick();
+	bool ready = timer->isReady();
 	bool isDetected = false;
 
 	switch (state) {

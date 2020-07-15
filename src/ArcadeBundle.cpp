@@ -89,23 +89,27 @@ void AB_UpdateScreen(void) {
 	AB_HAL_UpdateScreen();
 }
 
-Timer::Timer(uint8_t _totalTicks) : totalTicks(_totalTicks), cycle(totalTicks) {}
+Timer::Timer(uint8_t _totalTicks) : totalTicks(_totalTicks), cycle(0) {}
 
-bool Timer::tick() {
-	bool returnValue = false;
-
+void Timer::tick() {
 	if (cycle < totalTicks) {
 		cycle++;
-		returnValue = false;
 	}
 	else {
 		cycle = 0;
 		returnValue = true;
 	}
-
-	return returnValue;
 }
 
-void Timer::setTick(uint8_t tick) {
-	totalTicks = tick;
+bool Timer::isReady() {
+	if (true == returnValue) {
+		returnValue = false;
+		return true;
+	}
+
+	return false;
+}
+
+void Timer::setTick(uint8_t _tick) {
+	totalTicks = _tick;
 }

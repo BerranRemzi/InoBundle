@@ -68,7 +68,8 @@ void Snake::render() {
 }
 
 void Snake::update() {
-	bool ready = timer->tick();
+	timer->tick();
+	bool ready = timer->isReady();
 
 	switch (state) {
 	case GameState::PAUSE:
