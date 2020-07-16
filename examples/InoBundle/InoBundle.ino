@@ -58,7 +58,7 @@ void Task_Screen(void) {
 
 void Task_Keyboard(void) {
   KB_ReadAll();
-  if (KB_IsKeyDownLong(VK_UP, 100)) {	/* wait for 100ticks = 1000ms */
+  if (KB_IsKeyDownLong(VK_UP, 100) || KB_IsKeyDownLong(VK_Y, 100)) {	/* wait for 100ticks = 1000ms */
     AB_ClearDisplay();
     free(game);
     switch (++currGame) {

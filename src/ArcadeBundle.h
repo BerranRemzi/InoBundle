@@ -69,8 +69,8 @@ private:
 	uint8_t totalTicks;
 	uint8_t cycle;
 public:
-	Timer(uint8_t _totalTicks);
-	void tick();
+    explicit Timer(uint8_t _totalTicks);
+	void tick(void);
 	void setTick(uint8_t _tick);
-    bool Timer::isReady();
+    bool isReady(void);
 };

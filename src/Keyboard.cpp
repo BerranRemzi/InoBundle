@@ -13,10 +13,10 @@ KeyMap_t keyMap[8] = {
     {VK_DOWN    },
     {VK_RIGHT   },
     {VK_LEFT    },
-    {'W'},
-    {'S'},
-    {'D'},
-    {'A'}
+    {VK_A},
+    {VK_B},
+    {VK_X},
+    {VK_Y}
 };
 
 const uint8_t keyMapSize = 8;
@@ -25,12 +25,9 @@ static uint16_t keyDownData = 0U;
 static uint16_t keyPressData = 0U;
 
 void KB_Setup(void) {
-    pinMode(VK_UP, INPUT_PULLUP);
-    pinMode(VK_DOWN, INPUT_PULLUP);
-    pinMode(VK_LEFT, INPUT_PULLUP);
-    pinMode(VK_RIGHT, INPUT_PULLUP);
-
-    /* TODO: add buttons A, B, C, and D  */
+    for (uint8_t k = 0; k < keyMapSize; k++) {
+        pinMode(keyMap[k].pin, INPUT_PULLUP);
+    }
 }
 
 bool KB_IsKeyUp(uint8_t _pin) {

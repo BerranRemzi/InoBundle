@@ -35,7 +35,7 @@ void AB_InitScreen(void) {
 }
 
 void AB_Setup(void) {
-    randomSeed(analogRead(0));
+    randomSeed(analogRead(7));
     KB_Setup();
     AB_InitScreen();
 }
@@ -94,7 +94,7 @@ void AB_UpdateScreen(void) {
 
 Timer::Timer(uint8_t _totalTicks) : totalTicks(_totalTicks), cycle(0) {}
 
-void Timer::tick() {
+void Timer::tick(void) {
     if (cycle < totalTicks) {
         cycle++;
     }
@@ -104,7 +104,7 @@ void Timer::tick() {
     }
 }
 
-bool Timer::isReady() {
+bool Timer::isReady(void) {
     if (true == returnValue) {
         returnValue = false;
         return true;

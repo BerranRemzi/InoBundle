@@ -7,14 +7,19 @@
 #define VK_DOWN		2
 #define VK_RIGHT	3
 #define VK_LEFT		4
-#define VK_A		-1
-#define VK_B		-1
-#define VK_X		-1
-#define VK_Y		-1
+#define VK_A		A0
+#define VK_B		A1
+#define VK_X		A2
+#define VK_Y		A3
 
 #define DEBOUNCE_TICK 2
 
 #else
+
+#define VK_A		'S'
+#define VK_B		'B'
+#define VK_X		'A'
+#define VK_Y		'W'
 
 #define DEBOUNCE_TICK 1
 

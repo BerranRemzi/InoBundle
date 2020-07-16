@@ -28,7 +28,7 @@ void Brick::update() {
 		state = GameState::GAME_WAIT;
 
 		if ((KB_IsKeyToggled(VK_DOWN) && KB_IsKeyDown(VK_DOWN))
-			|| (KB_IsKeyToggled(VK_UP) && KB_IsKeyDown(VK_UP))) {
+			|| (KB_IsKeyToggled(VK_A) && KB_IsKeyDown(VK_A))) {
 			isDetected = true;
 		}
 

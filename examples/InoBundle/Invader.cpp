@@ -84,7 +84,7 @@ void Invader::update() {
             direction = Direction_t::LEFT;
         }
 
-        if (KB_IsKeyToggled(VK_UP) && KB_IsKeyDown(VK_UP)) {
+        if (KB_IsKeyToggled(VK_A) && KB_IsKeyDown(VK_A)) {
             fire = true;
         }
 
