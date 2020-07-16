@@ -7,8 +7,8 @@ Invader::Invader() {
 }
 
 void Invader::setup() {
-    for (int i{ 0 }; i < SCREEN_WIDTH * SCREEN_HEIGHT; ++i) {
-        matrix[i] = { OUT_OF_SCREEN, OUT_OF_SCREEN };
+    for (uint8_t i = 0; i < (SCREEN_WIDTH * SCREEN_HEIGHT); ++i) {
+        invader[i] = { OUT_OF_SCREEN, OUT_OF_SCREEN };
     }
 
     newGame();
@@ -53,7 +53,7 @@ void Invader::render() {
 
 }
 
-void Invader::DrawObject(Position_t *_object, uint8_t _size) {
+void Invader::DrawObject(Position_t* _object, uint8_t _size) {
     for (uint8_t i = 0; i < _size; ++i) {
         if (isInScreen(_object, i)) {
             AB_SetLed(_object[i].x, _object[i].y, LED_ON);
@@ -138,8 +138,8 @@ void Invader::update() {
 void Invader::CollisionBulletInvader() {
     for (uint8_t b = 0; b < SCREEN_HEIGHT - ROCKET_HEIGHT; b++) {
         for (uint8_t i = 0; i < SCREEN_HEIGHT * SCREEN_WIDTH; i++) {
-            if ((invader[i].y == bullet[b].y)  && (invader[i].x == bullet[b].x)) {
-                invader[i] = {OUT_OF_SCREEN, OUT_OF_SCREEN };
+            if ((invader[i].y == bullet[b].y) && (invader[i].x == bullet[b].x)) {
+                invader[i] = { OUT_OF_SCREEN, OUT_OF_SCREEN };
                 bullet[b] = { OUT_OF_SCREEN, OUT_OF_SCREEN };
             }
         }
@@ -147,6 +147,14 @@ void Invader::CollisionBulletInvader() {
 }
 
 bool Invader::CollisionRocketInvader() {
+ 
+    for (uint8_t b = 0; b < 4; b++) {
+        for (uint8_t i = 0; i < SCREEN_HEIGHT * SCREEN_WIDTH; i++) {
+            if ((invader[i].y == rocketBody[b].y) && (invader[i].x == rocketBody[b].x)) {
+                return true;
+            }
+        }
+    }
     return false;
 }
 
@@ -159,8 +167,8 @@ void Invader::DrawRocket(void) {
 }
 
 void Invader::DrawFire(bool _fire) {
-    for (uint8_t i = SCREEN_HEIGHT - ROCKET_HEIGHT-1; i > 0; i--) {
-        bullet[i] = bullet[i-1];
+    for (uint8_t i = SCREEN_HEIGHT - ROCKET_HEIGHT - 1; i > 0; i--) {
+        bullet[i] = bullet[i - 1];
         bullet[i].y--;
     }
 
@@ -173,21 +181,23 @@ void Invader::DrawFire(bool _fire) {
 }
 
 void Invader::DrawInvader(bool _input) {
-    if (_input>0) {
+    if (true == _input) {
         // Move all invader down
-        for (uint8_t i = 0; i < (SCREEN_HEIGHT * SCREEN_WIDTH) - SCREEN_HEIGHT; i++) {
+        for (uint8_t i = 0; i < (SCREEN_HEIGHT * SCREEN_WIDTH); i++) {
             if (isInScreen(invader, i)) {
-                //invader[i].y++;
-                invader[i + SCREEN_HEIGHT] = invader[i];
-                invader[i + SCREEN_HEIGHT].y++;
+                invader[i].y++;
             }
         }
-        /*for (uint8_t x = 0; x < SCREEN_WIDTH; x++) {
-            invader[x].x = x;
-            invader[x].y = 0;
-        }*/
+        uint8_t newInvaders = 0;
+        for (uint8_t i = 0; i < (SCREEN_HEIGHT * SCREEN_WIDTH); i++) {
+            if (false == isInScreen(invader, i) && newInvaders < SCREEN_WIDTH) {
+                invader[i].x = newInvaders;
+                invader[i].y = 0;
+                newInvaders++;
+            }
+        }
     }
-    
+
 }
 
 void Invader::ResetInvader(void) {
@@ -228,10 +238,16 @@ void Invader::MoveRocket(Direction_t _direction) {
 }
 
 bool Invader::isInScreen(Position_t* _object, uint8_t _pos) {
-    bool value{ true };
+    bool value = false;
 
-    if (_object[_pos].x == OUT_OF_SCREEN || _object[_pos].y == OUT_OF_SCREEN)
-        value = false;
+    if (_object[_pos].x >= 0 && _object[_pos].x < SCREEN_WIDTH 
+        && _object[_pos].y >= 0 && _object[_pos].y < SCREEN_HEIGHT)
+    {
+        value = true;
+    }
+    else {
+        _object[_pos] = { OUT_OF_SCREEN, OUT_OF_SCREEN };
+    }
 
     return value;
 }
