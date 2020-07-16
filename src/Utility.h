@@ -57,4 +57,4 @@ enum class GameState {
 	RESTART
 };
 
-static Position_t matrix[SCREEN_WIDTH * SCREEN_HEIGHT];
+extern Position_t matrix[SCREEN_WIDTH * SCREEN_HEIGHT];

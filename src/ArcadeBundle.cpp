@@ -28,88 +28,91 @@
 #include "ArcadeBundle.h"
 
 uint8_t AB_screen[8][8];
+Position_t matrix[SCREEN_WIDTH * SCREEN_HEIGHT];
 
 void AB_InitScreen(void) {
-	AB_HAL_Init();
+    AB_HAL_Init();
 }
 
 void AB_Setup(void) {
-	randomSeed(analogRead(0));
-	KB_Setup();
-	AB_InitScreen();
+    randomSeed(analogRead(0));
+    KB_Setup();
+    AB_InitScreen();
 }
 
 void AB_SetRow(uint8_t y, uint8_t value) {
-	for (int x = 0; x < 8; x++) {
-		if ((value >> x) & 1U) {
-			AB_screen[y][x] = LED_ON;
-		}
-		else {
-			AB_screen[y][x] = LED_OFF;
-		}
-	}
+    for (int x = 0; x < 8; x++) {
+        if ((value >> x) & 1U) {
+            AB_screen[y][x] = LED_ON;
+        }
+        else {
+            AB_screen[y][x] = LED_OFF;
+        }
+    }
 }
 
 void AB_SetLed(uint8_t x, uint8_t y, uint8_t brightness) {
-	AB_screen[y][x] = brightness;
+    if (y < SCREEN_HEIGHT && x < SCREEN_WIDTH) {
+        AB_screen[y][x] = brightness;
+    }
 }
 
 uint8_t AB_GetLed(uint8_t x, uint8_t y) {
-	return AB_screen[y][x];
+    return AB_screen[y][x];
 }
 
 void AB_ClearDisplay(void) {
-	for (uint8_t y = 0; y < 8; y++) {
-		for (uint8_t x = 0; x < 8; x++) {
-			AB_screen[x][y] = LED_OFF;
-		}
-	}
+    for (uint8_t y = 0; y < 8; y++) {
+        for (uint8_t x = 0; x < 8; x++) {
+            AB_screen[x][y] = LED_OFF;
+        }
+    }
 }
 
 bool AB_ClearAnimation(void) {
 
-	for (int8_t x = SCREEN_WIDTH - 1; x >= 0; x--) {
-		for (int8_t y = 0; y < SCREEN_HEIGHT; y++) {
-			if (AB_screen[x][y] == LED_ON) {
+    for (int8_t x = SCREEN_WIDTH - 1; x >= 0; x--) {
+        for (int8_t y = 0; y < SCREEN_HEIGHT; y++) {
+            if (AB_screen[x][y] == LED_ON) {
 
-				if (x < (SCREEN_WIDTH - 1)) {
-					AB_screen[x + 1][y] = AB_screen[x][y];
-				}
-				AB_screen[x][y] = LED_OFF;
-				/* return false if some of leds was ON */
-				return false;
-			}
-		}
-	}
-	/* return true if all leds are OFF*/
-	return true;
+                if (x < (SCREEN_WIDTH - 1)) {
+                    AB_screen[x + 1][y] = AB_screen[x][y];
+                }
+                AB_screen[x][y] = LED_OFF;
+                /* return false if some of leds was ON */
+                return false;
+            }
+        }
+    }
+    /* return true if all leds are OFF*/
+    return true;
 }
 
 void AB_UpdateScreen(void) {
-	AB_HAL_UpdateScreen();
+    AB_HAL_UpdateScreen();
 }
 
 Timer::Timer(uint8_t _totalTicks) : totalTicks(_totalTicks), cycle(0) {}
 
 void Timer::tick() {
-	if (cycle < totalTicks) {
-		cycle++;
-	}
-	else {
-		cycle = 0;
-		returnValue = true;
-	}
+    if (cycle < totalTicks) {
+        cycle++;
+    }
+    else {
+        cycle = 0;
+        returnValue = true;
+    }
 }
 
 bool Timer::isReady() {
-	if (true == returnValue) {
-		returnValue = false;
-		return true;
-	}
+    if (true == returnValue) {
+        returnValue = false;
+        return true;
+    }
 
-	return false;
+    return false;
 }
 
 void Timer::setTick(uint8_t _tick) {
-	totalTicks = _tick;
+    totalTicks = _tick;
 }
