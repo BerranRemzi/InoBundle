@@ -4,6 +4,7 @@
 #include "Snake.h"
 #include "Brick.h"
 #include "Invader.h"
+#include "Flappy.h"
 #include "Demo.h"
 
 #include "Keyboard.h"
@@ -12,7 +13,8 @@
 enum Game_t {
   GAME_SNAKE,
   GAME_BRICK,
-  GAME_INVADER,   //not implemented yet
+  GAME_INVADER,   
+  GAME_FLAPPY,
   //GAME_TETRIS,  //not implemented yet
   //GAME_SQUARE,  //not implemented yet
   GAME_DEMO,
@@ -58,7 +60,7 @@ void Task_Screen(void) {
 
 void Task_Keyboard(void) {
   KB_ReadAll();
-  if (KB_IsKeyDownLong(VK_UP, 100) || KB_IsKeyDownLong(VK_Y, 100)) {	/* wait for 100ticks = 1000ms */
+  if (KB_IsKeyDownLong(VK_UP, 200) || KB_IsKeyDownLong(VK_Y, 100)) {	/* wait for 100ticks = 1000ms */
     AB_ClearDisplay();
     free(game);
     switch (++currGame) {
@@ -70,6 +72,9 @@ void Task_Keyboard(void) {
         break;
       case GAME_INVADER:
         game = new Invader();
+        break;
+      case GAME_FLAPPY:
+        game = new Flappy();
         break;
       case GAME_DEMO:
         game = new Demo();

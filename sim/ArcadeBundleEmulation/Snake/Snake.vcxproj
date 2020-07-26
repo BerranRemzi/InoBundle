@@ -79,6 +79,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\examples\InoBundle\Brick.cpp" />
     <ClCompile Include="..\..\..\examples\InoBundle\Demo.cpp" />
+    <ClCompile Include="..\..\..\examples\InoBundle\Flappy.cpp" />
     <ClCompile Include="..\..\..\examples\InoBundle\Invader.cpp" />
     <ClCompile Include="..\..\..\examples\InoBundle\Snake.cpp" />
     <ClCompile Include="..\..\..\src\ArcadeBundle.cpp" />
@@ -90,6 +91,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\examples\InoBundle\Brick.h" />
     <ClInclude Include="..\..\..\examples\InoBundle\Demo.h" />
+    <ClInclude Include="..\..\..\examples\InoBundle\Flappy.h" />
     <ClInclude Include="..\..\..\examples\InoBundle\Invader.h" />
     <ClInclude Include="..\..\..\examples\InoBundle\Snake.h" />
     <ClInclude Include="..\..\..\src\ArcadeBundle.h" />
