@@ -27,7 +27,7 @@ void Task_Screen(void);
 
 Task_t TaskStruct[4];
 
-Game* game = new Invader();
+Game* game = new Flappy();
 //Brick brick;
 //Invader invader;		//not implemented yet
 //Tetris tetris;		//not implemented yet

@@ -1,7 +1,8 @@
 #include "Flappy.h"
 
 Flappy::Flappy() {
-	birdTimer = new Timer(TICK_MEDIUM);
+	keyTimer = new Timer(5);
+	birdTimer = new Timer(20);
 	tubeTimer = new Timer(TICK_MEDIUM * 2);
 
 	setup();
@@ -9,11 +10,7 @@ Flappy::Flappy() {
 
 void Flappy::setup() {
 	bird = { 2, 4 };
-
-	jumpFinished = false;
-	isDead = false;
-
-	tubeXSpace = 0;
+	jump = false;
 }
 
 void Flappy::reset() {
@@ -23,17 +20,18 @@ void Flappy::reset() {
 
 
 void Flappy::render() {
+	ClearScreen();
 
+	DrawObject(tubes, SCREEN_WIDTH * SCREEN_HEIGHT);
 
-
-	// Draw flappy dot
 	AB_SetLed(bird.x, bird.y, LED_ON);
 }
 
 void Flappy::update() {
+	keyTimer->tick();
 	birdTimer->tick();
 	tubeTimer->tick();
-	bool ready = birdTimer->isReady();
+	bool ready = keyTimer->isReady();
 
 	switch (state) {
 	case GameState::PAUSE:
@@ -43,32 +41,27 @@ void Flappy::update() {
 
 		if ((KB_IsKeyToggled(VK_UP) && KB_IsKeyDown(VK_UP))
 			|| (KB_IsKeyToggled(VK_A) && KB_IsKeyDown(VK_A))) {
-			jumpHeight = bird.y;
-			jumpFinished = false;
+			jump = true;
+			jumpHeight = 0;
 		}
 
-		if (jumpHeight - bird.y == 2) {
-			jumpFinished = true;
-			AB_SetLed(bird.x, bird.y, LED_OFF);
-		}
-		else if ((KB_IsKeyDown(VK_UP) || KB_IsKeyDown(VK_A))
-			&& !jumpFinished) {
-			bird.y -= 2;
-			AB_SetLed(bird.x, bird.y + 2, LED_OFF);
+		if (jump && (KB_IsKeyDown(VK_UP) || KB_IsKeyDown(VK_A)) && jumpHeight != 2) {
+			--bird.y;
+			++jumpHeight;
 		}
 		else {
-			AB_SetLed(bird.x, bird.y, LED_OFF);
+			jump = false;
 		}
 
-		++bird.y;
-		if (bird.y == SCREEN_HEIGHT || bird.y == -1)
-			reset();
+		if (birdTimer->isReady() && !jump) {
+			++bird.y;
+		}
 
+		if (tubeTimer->isReady())
+			MoveTubes();
 
-		if (AB_GetLed(bird.x, bird.y))
+		if (CheckCollision())
 			state = GameState::ANIM_RUN;
-
-		MoveTubes(tubeTimer->isReady());
 
 		render();
 		break;
@@ -111,32 +104,59 @@ void Flappy::ClearScreen() {
 	}
 }
 
-void Flappy::MoveTubes(bool isReady) {
-	if (!isReady)
-		return;
+void Flappy::MoveTubes() {
+	static uint8_t counter = 0;
+	++counter;
 
-	++tubeXSpace;
-
-	// Generate tube 
-	if (tubeXSpace == TUBE_X_SPACE) {
-		tubeXSpace = 0;
-
-		uint8_t startHeight = random(SCREEN_HEIGHT - 2 - TUBE_Y_SPACE);// Maybe delete "-1"
-		for (uint8_t i = 0; i <= startHeight; ++i)
-			AB_SetLed(SCREEN_WIDTH - 1, i, LED_ON);
-
-		for (uint8_t i = startHeight + TUBE_Y_SPACE + 1; i < SCREEN_HEIGHT; ++i)
-			AB_SetLed(SCREEN_WIDTH - 1, i, LED_ON);
-	}
-
-	// Move tubes
-	for (uint8_t x{ 0 }; x < SCREEN_WIDTH - 1; ++x) {
-		for (uint8_t y{ 0 }; y < SCREEN_HEIGHT; ++y) {
-			if (bird.x != x || bird.y != y)
-				AB_SetLed(x, y, AB_GetLed(x + 1, y));
+	for (uint8_t x{ 0 }; x < SCREEN_WIDTH; ++x) {
+		for (uint8_t y{ 1 }; y < SCREEN_HEIGHT - 1; ++y) {
+			uint8_t index = x + y * SCREEN_WIDTH;
+			tubes[index].x = tubes[index + SCREEN_WIDTH].x;
+			tubes[index].y = y;
 		}
 	}
 
-	for (uint8_t i = 0; i < SCREEN_HEIGHT; ++i)
-		AB_SetLed(7, i, LED_OFF);
+
+	if (counter > 3) {
+		counter = 0;
+
+		uint8_t startHeight = random(SCREEN_HEIGHT - TUBE_X_SPACE - 1);
+
+		for (int i = 0; i <= startHeight; ++i) {
+			uint8_t index = 7 + i * SCREEN_WIDTH;
+			tubes[index].x = 7;
+			tubes[index].y = i;
+		}
+	}
+}
+
+bool Flappy::CheckCollision() {
+	bool output = false;
+
+	if (bird.y > SCREEN_HEIGHT - 1 || bird.y < 0)
+		output = true;
+
+	return output;
+}
+
+void Flappy::DrawObject(Position_t* _object, uint8_t _size) {
+	for (uint8_t i = 0; i < _size; ++i) {
+		if (isInScreen(_object, i)) {
+			AB_SetLed(_object[i].x, _object[i].y, LED_ON);
+		}
+	}
+}
+
+bool Flappy::isInScreen(Position_t* _object, uint8_t _pos) {
+	bool value = false;
+
+	if (_object[_pos].x >= 0 && _object[_pos].x < SCREEN_WIDTH
+		&& _object[_pos].y >= 0 && _object[_pos].y < SCREEN_HEIGHT) {
+		value = true;
+	}
+	else {
+		_object[_pos] = { OUT_OF_SCREEN, OUT_OF_SCREEN };
+	}
+
+	return value;
 }
