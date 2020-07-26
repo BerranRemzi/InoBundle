@@ -1,7 +1,7 @@
 #include "Flappy.h"
 
 Flappy::Flappy() {
-	birdTimer = new Timer(15);
+	birdTimer = new Timer(TICK_MEDIUM);
 	tubeTimer = new Timer(TICK_MEDIUM * 2);
 
 	setup();
@@ -64,12 +64,11 @@ void Flappy::update() {
 		if (bird.y == SCREEN_HEIGHT || bird.y == -1)
 			reset();
 
-		MoveTubes(tubeTimer->isReady());
-
 
 		if (AB_GetLed(bird.x, bird.y))
 			state = GameState::ANIM_RUN;
 
+		MoveTubes(tubeTimer->isReady());
 
 		render();
 		break;
@@ -83,7 +82,7 @@ void Flappy::update() {
 
 		ready = AB_ClearAnimation();
 		if (ready) {
-			birdTimer->setTick(15);
+			birdTimer->setTick(TICK_MEDIUM);
 			state = GameState::RESTART;
 		}
 		break;
