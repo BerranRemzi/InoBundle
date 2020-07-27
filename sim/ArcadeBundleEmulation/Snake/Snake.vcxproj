@@ -82,6 +82,7 @@
     <ClCompile Include="..\..\..\examples\InoBundle\Flappy.cpp" />
     <ClCompile Include="..\..\..\examples\InoBundle\Invader.cpp" />
     <ClCompile Include="..\..\..\examples\InoBundle\Snake.cpp" />
+    <ClCompile Include="..\..\..\examples\InoBundle\Tetris.cpp" />
     <ClCompile Include="..\..\..\src\ArcadeBundle.cpp" />
     <ClCompile Include="..\..\..\src\Keyboard.cpp" />
     <ClCompile Include="..\..\..\src\xOS.c" />
@@ -94,6 +95,7 @@
     <ClInclude Include="..\..\..\examples\InoBundle\Flappy.h" />
     <ClInclude Include="..\..\..\examples\InoBundle\Invader.h" />
     <ClInclude Include="..\..\..\examples\InoBundle\Snake.h" />
+    <ClInclude Include="..\..\..\examples\InoBundle\Tetris.h" />
     <ClInclude Include="..\..\..\src\ArcadeBundle.h" />
     <ClInclude Include="..\..\..\src\ArcadeBundle_Types.h" />
     <ClInclude Include="..\..\..\src\Game.h" />

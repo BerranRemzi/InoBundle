@@ -32,6 +32,7 @@ bool KB_IsKeyDown(uint8_t _pin);
 bool KB_IsKeyPressed(uint8_t _pin);
 bool KB_IsKeyToggled(uint8_t _pin);
 bool KB_IsKeyDownLong(uint8_t _pin, uint16_t _tick);
+bool KB_IsSinglePressed(uint8_t _pin);
 
 void KB_ReadAll(void);
 void KB_Reset(void);

@@ -57,6 +57,9 @@
     <ClCompile Include="..\..\..\examples\InoBundle\Flappy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\examples\InoBundle\Tetris.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\emulator\Emulator.h">
@@ -96,6 +99,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\examples\InoBundle\Flappy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\examples\InoBundle\Tetris.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

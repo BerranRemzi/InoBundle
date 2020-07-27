@@ -99,6 +99,11 @@ bool KB_IsKeyDownLong(uint8_t _pin, uint16_t _tick) {
     return returnValue;
 }
 
+bool KB_IsSinglePressed(uint8_t _pin)
+{
+    return (KB_IsKeyToggled(_pin) && KB_IsKeyDown(_pin));
+}
+
 
 void KB_ReadAll(void) {
     for (uint8_t k = 0; k < keyMapSize; k++) {

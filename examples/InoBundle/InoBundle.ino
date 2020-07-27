@@ -5,6 +5,7 @@
 #include "Brick.h"
 #include "Invader.h"
 #include "Flappy.h"
+#include "Tetris.h"
 #include "Demo.h"
 
 #include "Keyboard.h"
@@ -15,7 +16,7 @@ enum Game_t {
   GAME_BRICK,
   GAME_INVADER,   
   GAME_FLAPPY,
-  //GAME_TETRIS,  //not implemented yet
+  GAME_TETRIS,  //not implemented yet
   //GAME_SQUARE,  //not implemented yet
   GAME_DEMO,
   GAME_COUNT
@@ -27,7 +28,7 @@ void Task_Screen(void);
 
 Task_t TaskStruct[4];
 
-Game* game = new Invader();
+Game* game = new Tetris();
 //Brick brick;
 //Invader invader;		//not implemented yet
 //Tetris tetris;		//not implemented yet
@@ -75,6 +76,9 @@ void Task_Keyboard(void) {
         break;
       case GAME_FLAPPY:
         game = new Flappy();
+        break;
+	  case GAME_TETRIS:
+        game = new Tetris();
         break;
       case GAME_DEMO:
         game = new Demo();
