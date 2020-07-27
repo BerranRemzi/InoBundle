@@ -12,17 +12,15 @@
 class Flappy : public Game {
 public:
 	Position_t bird;
-	bool isDead;
-
-	bool jumpFinished;
-	bool jumped;
 	uint8_t jumpHeight;
+	bool jump;
 
-	uint8_t tubeXSpace;
+	Position_t* tubes = matrix;
 
 	GameState state = GameState::GAME_RUN;
 	Sound_t sound;
 
+	Timer* keyTimer;
 	Timer* birdTimer;
 	Timer* tubeTimer;
 public:
@@ -35,5 +33,9 @@ public:
 
 	void ClearScreen();
 
-	void MoveTubes(bool isReady);
+	void MoveTubes();
+	bool CheckCollision();
+
+	void DrawObject(Position_t* _object, uint8_t _size);
+	bool isInScreen(Position_t* _object, uint8_t _pos);
 };
