@@ -3,14 +3,15 @@
 Tetris::Tetris(void)
 {
 	timer = new Timer(5);
-	spawner = new Timer(150);
+	spawner = new Timer(100);
     setup();
 }
 
 void Tetris::update()
 {
 	timer->tick();
-	
+	spawner->tick();
+
 	bool ready = timer->isReady();
 
 	switch (state) {
@@ -18,13 +19,13 @@ void Tetris::update()
 		break;
 	case GameState::GAME_RUN:
 	{
-		spawner->tick();
+		
 		timer->setTick(5);
 		state = GameState::GAME_WAIT;
 		
 		position = ReadDirection(&position);
 
-		if (timer->isReady()) {
+		if (spawner->isReady()) {
 			// Move block down
 			position.y++;
 		}
