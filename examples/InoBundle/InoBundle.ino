@@ -38,10 +38,9 @@ Game* game = new Tetris();
 uint8_t currGame = GAME_INVADER;
 
 void setup() {
-  AB_Setup();
+  game->Setup();
 
   xInit(TaskStruct); 	//Struct with function parameters
-
   xTaskCreate(&Task_Keyboard, 10);
   xTaskCreate(&Task_Game, 10);
   xTaskCreate(&Task_Screen, 10);
@@ -56,13 +55,13 @@ void Task_Game(void) {
 }
 
 void Task_Screen(void) {
-  AB_UpdateScreen();
+  game->UpdateScreen();
 }
 
 void Task_Keyboard(void) {
   KB_ReadAll();
   if (KB_IsKeyDownLong(VK_UP, 200) || KB_IsKeyDownLong(VK_Y, 100)) {	/* wait for 100ticks = 1000ms */
-    AB_ClearDisplay();
+    game->ClearDisplay();
     free(game);
     switch (++currGame) {
       case GAME_SNAKE:

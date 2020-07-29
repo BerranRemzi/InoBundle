@@ -7,7 +7,6 @@ struct KeyMap_t {
     bool isToggled;
 };
 
-
 KeyMap_t keyMap[8] = {
     {VK_UP      },
     {VK_DOWN    },
@@ -104,10 +103,8 @@ bool KB_IsSinglePressed(uint8_t _pin)
     return (KB_IsKeyToggled(_pin) && KB_IsKeyDown(_pin));
 }
 
-
 void KB_ReadAll(void) {
     for (uint8_t k = 0; k < keyMapSize; k++) {
-
         bool currentState = !digitalRead(keyMap[k].pin);
 
         if (currentState) {

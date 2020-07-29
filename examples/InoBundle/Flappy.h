@@ -11,31 +11,26 @@
 
 class Flappy : public Game {
 public:
-	Position_t bird;
-	uint8_t jumpHeight;
-	bool jump;
+    Position_t bird;
+    uint8_t jumpHeight;
+    bool jump;
 
-	Position_t* tubes = matrix;
+    Position_t* tubes = matrix;
 
-	GameState state = GameState::GAME_RUN;
-	Sound_t sound;
+    GameState state = GameState::GAME_RUN;
+    Sound_t sound;
 
-	Timer* keyTimer;
-	Timer* birdTimer;
-	Timer* tubeTimer;
+    Timer* keyTimer;
+    Timer* birdTimer;
+    Timer* tubeTimer;
 public:
-	Flappy();
-	void setup();
-	void reset();
+    Flappy();
+    void setup();
+    void reset();
 
-	void render();
-	void update() override;
+    void render();
+    void update() override;
 
-	void ClearScreen();
-
-	void MoveTubes();
-	bool CheckCollision();
-
-	void DrawObject(Position_t* _object, uint8_t _size);
-	bool isInScreen(Position_t* _object, uint8_t _pos);
+    void MoveTubes();
+    bool CheckCollision();
 };

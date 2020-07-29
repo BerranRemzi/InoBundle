@@ -6,7 +6,6 @@
 #include "Keyboard.h"
 #include "ArcadeBundle.h"
 
-
 #define BLOCK_HEIGHT 4
 #define BLOCK_WIDTH 4
 #define BRICK_ARRAY_SIZE (BLOCK_HEIGHT*BLOCK_WIDTH)
@@ -19,13 +18,9 @@ private:
     void setup(void);
     void reset(void);
     void render(void);
-    void ClearScreen(void);
     void HandleAction(Direction_t _dir);
     void DrawBlock(uint8_t _type, uint8_t _rotation, Position_t _pos);
     Position_t ReadDirection(Position_t* _pos);
-
-    void DrawObject(Position_t* _object, uint8_t _size);
-    bool IsInScreen(Position_t* _object, uint8_t _pos);
 
     bool CollisionStoredBlock(void);
     bool ColiisionBoardLimit(void);
@@ -48,5 +43,4 @@ private:
     const uint16_t block_z[4] = { 0x0C60, 0x4C80, 0xC600, 0x2640 };
 
     const uint16_t* blocksArray[7] = { block_i, block_j, block_l, block_o, block_s, block_t, block_z };
-
 };

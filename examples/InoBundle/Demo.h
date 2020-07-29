@@ -8,5 +8,5 @@
 
 class Demo : public Game {
 public:
-	void update();
+    void update();
 };

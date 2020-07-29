@@ -1,162 +1,129 @@
 #include "Flappy.h"
 
 Flappy::Flappy() {
-	keyTimer = new Timer(5);
-	birdTimer = new Timer(20);
-	tubeTimer = new Timer(TICK_MEDIUM * 2);
+    keyTimer = new Timer(5);
+    birdTimer = new Timer(20);
+    tubeTimer = new Timer(TICK_MEDIUM * 2);
 
-	setup();
+    setup();
 }
 
 void Flappy::setup() {
-	bird = { 2, 4 };
-	jump = false;
+    bird = { 2, 4 };
+    jump = false;
 }
 
 void Flappy::reset() {
-	setup();
-	ClearScreen();
+    setup();
+    ClearScreen();
 }
 
-
 void Flappy::render() {
-	ClearScreen();
+    ClearScreen();
 
-	DrawObject(tubes, SCREEN_WIDTH * SCREEN_HEIGHT);
+    DrawObject(tubes, SCREEN_WIDTH * SCREEN_HEIGHT);
 
-	AB_SetLed(bird.x, bird.y, LED_ON);
+    SetLed(bird.x, bird.y, LED_ON);
 }
 
 void Flappy::update() {
-	keyTimer->tick();
-	birdTimer->tick();
-	tubeTimer->tick();
-	bool ready = keyTimer->isReady();
+    keyTimer->tick();
+    birdTimer->tick();
+    tubeTimer->tick();
+    bool ready = keyTimer->isReady();
 
-	switch (state) {
-	case GameState::PAUSE:
-		break;
-	case GameState::GAME_RUN:
-		state = GameState::GAME_WAIT;
+    switch (state) {
+    case GameState::PAUSE:
+        break;
+    case GameState::GAME_RUN:
+        state = GameState::GAME_WAIT;
 
-		if ((KB_IsKeyToggled(VK_UP) && KB_IsKeyDown(VK_UP))
-			|| (KB_IsKeyToggled(VK_A) && KB_IsKeyDown(VK_A))) {
-			jump = true;
-			jumpHeight = 0;
-		}
+        if ((KB_IsKeyToggled(VK_UP) && KB_IsKeyDown(VK_UP))
+            || (KB_IsKeyToggled(VK_A) && KB_IsKeyDown(VK_A))) {
+            jump = true;
+            jumpHeight = 0;
+        }
 
-		if (jump && (KB_IsKeyDown(VK_UP) || KB_IsKeyDown(VK_A)) && jumpHeight != 2) {
-			--bird.y;
-			++jumpHeight;
-		}
-		else {
-			jump = false;
-		}
+        if (jump && (KB_IsKeyDown(VK_UP) || KB_IsKeyDown(VK_A)) && jumpHeight != 2) {
+            --bird.y;
+            ++jumpHeight;
+        }
+        else {
+            jump = false;
+        }
 
-		if (birdTimer->isReady() && !jump) {
-			++bird.y;
-		}
+        if (birdTimer->isReady() && !jump) {
+            ++bird.y;
+        }
 
-		if (tubeTimer->isReady())
-			MoveTubes();
+        if (tubeTimer->isReady())
+            MoveTubes();
 
-		if (CheckCollision())
-			state = GameState::ANIM_RUN;
+        if (CheckCollision())
+            state = GameState::ANIM_RUN;
 
-		render();
-		break;
-	case GameState::GAME_WAIT:
-		if (ready)
-			state = GameState::GAME_RUN;
-		break;
-	case GameState::ANIM_RUN:
-		birdTimer->setTick(TICK_ANIM);
-		state = GameState::ANIM_WAIT;
+        render();
+        break;
+    case GameState::GAME_WAIT:
+        if (ready)
+            state = GameState::GAME_RUN;
+        break;
+    case GameState::ANIM_RUN:
+        birdTimer->setTick(TICK_ANIM);
+        state = GameState::ANIM_WAIT;
 
-		ready = AB_ClearAnimation();
-		if (ready) {
-			birdTimer->setTick(TICK_MEDIUM);
-			state = GameState::RESTART;
-		}
-		break;
-	case GameState::ANIM_WAIT:
-		if (ready)
-			state = GameState::ANIM_RUN;
-		break;
-	case GameState::BLINK:
-		break;
-	case GameState::RESTART:
-		reset();
-		render();
-		state = GameState::GAME_RUN;
-		break;
-	default:
-		break;
-	}
-}
-
-void Flappy::ClearScreen() {
-	// Clear the whole matrix
-	for (uint8_t x{ 0 }; x < SCREEN_WIDTH; ++x) {
-		for (uint8_t y{ 0 }; y < SCREEN_HEIGHT; ++y) {
-			AB_SetLed(x, y, LED_OFF);
-		}
-	}
+        ready = ClearAnimation();
+        if (ready) {
+            birdTimer->setTick(TICK_MEDIUM);
+            state = GameState::RESTART;
+        }
+        break;
+    case GameState::ANIM_WAIT:
+        if (ready)
+            state = GameState::ANIM_RUN;
+        break;
+    case GameState::BLINK:
+        break;
+    case GameState::RESTART:
+        reset();
+        render();
+        state = GameState::GAME_RUN;
+        break;
+    default:
+        break;
+    }
 }
 
 void Flappy::MoveTubes() {
-	static uint8_t counter = 0;
-	++counter;
+    static uint8_t counter = 0;
+    ++counter;
 
-	for (uint8_t x{ 0 }; x < SCREEN_WIDTH; ++x) {
-		for (uint8_t y{ 1 }; y < SCREEN_HEIGHT - 1; ++y) {
-			uint8_t index = x + y * SCREEN_WIDTH;
-			tubes[index].x = tubes[index + SCREEN_WIDTH].x;
-			tubes[index].y = y;
-		}
-	}
+    for (uint8_t x{ 0 }; x < SCREEN_WIDTH; ++x) {
+        for (uint8_t y{ 1 }; y < SCREEN_HEIGHT - 1; ++y) {
+            uint8_t index = x + y * SCREEN_WIDTH;
+            tubes[index].x = tubes[index + SCREEN_WIDTH].x;
+            tubes[index].y = y;
+        }
+    }
 
+    if (counter > 3) {
+        counter = 0;
 
-	if (counter > 3) {
-		counter = 0;
+        uint8_t startHeight = (uint8_t)random(SCREEN_HEIGHT - TUBE_X_SPACE - 1);
 
-		uint8_t startHeight = random(SCREEN_HEIGHT - TUBE_X_SPACE - 1);
-
-		for (int i = 0; i <= startHeight; ++i) {
-			uint8_t index = 7 + i * SCREEN_WIDTH;
-			tubes[index].x = 7;
-			tubes[index].y = i;
-		}
-	}
+        for (uint8_t i = 0; i <= startHeight; ++i) {
+            uint8_t index = 7 + i * SCREEN_WIDTH;
+            tubes[index].x = 7;
+            tubes[index].y = i;
+        }
+    }
 }
 
 bool Flappy::CheckCollision() {
-	bool output = false;
+    bool output = false;
 
-	if (bird.y > SCREEN_HEIGHT - 1 || bird.y < 0)
-		output = true;
+    if (bird.y > SCREEN_HEIGHT - 1 || bird.y < 0)
+        output = true;
 
-	return output;
-}
-
-void Flappy::DrawObject(Position_t* _object, uint8_t _size) {
-	for (uint8_t i = 0; i < _size; ++i) {
-		if (isInScreen(_object, i)) {
-			AB_SetLed(_object[i].x, _object[i].y, LED_ON);
-		}
-	}
-}
-
-bool Flappy::isInScreen(Position_t* _object, uint8_t _pos) {
-	bool value = false;
-
-	if (_object[_pos].x >= 0 && _object[_pos].x < SCREEN_WIDTH
-		&& _object[_pos].y >= 0 && _object[_pos].y < SCREEN_HEIGHT) {
-		value = true;
-	}
-	else {
-		_object[_pos] = { OUT_OF_SCREEN, OUT_OF_SCREEN };
-	}
-
-	return value;
+    return output;
 }

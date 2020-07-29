@@ -6,38 +6,40 @@
 #include "Keyboard.h"
 #include "ArcadeBundle.h"
 
-#define SNAKE_START_SIZE 2
+#define SNAKE_START_SIZE        2u
+#define TOTAL_FOOD_TRY_COUNT    64u
 
 class Snake : public Game {
 public:
-	Position_t tail;
-	Position_t currentHead;
-	Position_t previousHead;
-	Position_t food;
+    Position_t tail;
+    Position_t currentHead;
+    Position_t previousHead;
+    Position_t food;
 
-	GameState state = GameState::GAME_RUN;
-	int8_t size{ 0 };
-	Direction_t direction;
-	Sound_t sound;
-	uint8_t speed{ 0 };
-	bool isFoodGenerated = false;
-	Direction_t lastDirection = Direction_t::STOPPED;
-	Timer* timer;
+    GameState state = GameState::GAME_RUN;
+    int8_t size{ 0 };
+
+    Sound_t sound;
+    uint8_t speed{ 0 };
+    bool isFoodGenerated = false;
+    Direction_t lastDirection = Direction_t::STOPPED;
+    Timer* timer;
 public:
-	Snake();
-	void setup();
-	void newGame(void);
-	void reset();
+    Snake();
+    void setup();
+    void newGame(void);
+    void reset(void);
 
-	void render();
-	void update() override;
+    const void render(void);
+    void update() override;
 
-	void generateFood();
-	void putFood();
-	void extendSnake();
-	void moveSnake();
-	void moveBody();
-	bool isInScreen(int i);
-	Sound_t playSound();
-	Direction_t getLastDirection(void);
+    void generateFood(void);
+    void putFood(void);
+    void extendSnake(void);
+    void MoveSnake(Direction_t _newDirection);
+    void moveBody(void);
+
+    Sound_t playSound(void);
+    Direction_t getLastDirection(void);
+    const Direction_t GetValidDirection(Direction_t _currentDirection);
 };
