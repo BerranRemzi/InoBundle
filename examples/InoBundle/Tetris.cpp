@@ -3,16 +3,17 @@
 Tetris::Tetris(void)
 {
     timer = new Timer(5);
-    spawner = new Timer(100);
+    dropTimer = new Timer(100);
     setup();
 }
 
 void Tetris::update()
 {
     timer->tick();
-    spawner->tick();
+    dropTimer->tick();
 
     bool ready = timer->isReady();
+    static bool isReadyForNewBlock = false;
 
     switch (state) {
     case GameState::PAUSE:
@@ -22,11 +23,20 @@ void Tetris::update()
         timer->setTick(5);
         state = GameState::GAME_WAIT;
 
-        position = ReadDirection(&position);
+        Direction_t dir = ReadDirection();
 
-        if (spawner->isReady()) {
+        position = GetNewBlockPosition(&position, dir);
+
+
+
+        if (dropTimer->isReady()) {
             // Move block down
             position.y++;
+            TryToDropPiece();
+        }
+
+        if (isReadyForNewBlock) {
+            position.y = -3;
         }
 
         if (KB_IsSinglePressed(VK_A)) {
@@ -38,19 +48,22 @@ void Tetris::update()
             type = type % 7;
         }
 
+        //MovoBlockToScreen();
+        isReadyForNewBlock = TryToMoveBlock(type, rotation, &position);
+
+        /* Draw currenct block */
         DrawBlock(type, rotation, position);
-        //MoveRocket(direction);
 
-        //DrawRocket();
-        //DrawFire(fire);
-        //DrawInvader(invaderSpawner->isReady());
+        if (CollisionDetect(grid, SCREEN_HEIGHT * SCREEN_WIDTH, block, BRICK_ARRAY_SIZE)) {
+            isReadyForNewBlock = true;
+        }
 
-        //CollisionBulletInvader();
-
-        //if (CollisionRocketInvader()) {
-        //	state = GameState::ANIM_RUN;
-        //}
-
+        if (isReadyForNewBlock || KB_IsSinglePressed(VK_B)) {
+            //TryToMoveBlock(type, rotation, &position);
+            CopyObject(grid, SCREEN_HEIGHT * SCREEN_WIDTH, block, BRICK_ARRAY_SIZE);
+            
+        }
+        RemoveFullRows();
         // Print to matrix
         render();
     }
@@ -83,11 +96,68 @@ void Tetris::update()
         break;
     }
 }
+void Tetris::RemoveFullRows(void)
+{
+    for (uint8_t r = 0; r < SCREEN_HEIGHT; r++) {
+        uint8_t c = 0;
+        for (uint8_t g = 0; g < gridSize; g++) {
+            if (grid[g].y == r) {
+                c++;
+            }
+        }
+        if (c == SCREEN_WIDTH) {
+            DeleteRow(r);
+        }
+    }
+}
+void Tetris::TryToDropPiece(void)
+{
+}
+bool Tetris::TryToMoveBlock(uint8_t _type, uint8_t _rotation, Position_t* _pos) {
+    Position_t correction = { 0, 0 };
+    Position_t tempPosition;
+    bool readyForNext = false;
+    uint8_t pos = 0;
+    for (uint8_t x = 0; x < BLOCK_WIDTH; x++) {
+        for (uint8_t y = 0; y < BLOCK_HEIGHT; y++) {
+            if (((blocksArray[_type][_rotation] >> pos) & 1) == true) {
+                tempPosition.x = _pos->x + x;
+                tempPosition.y = _pos->y + y;
+
+                PositionCorrection(tempPosition, &correction);
+            }
+            pos++;
+        }
+    }
+    _pos->x += correction.x;
+    _pos->y += correction.y;
+
+    if (correction.y < 0) {
+        readyForNext = true;
+    }
+    return readyForNext;
+}
+
+const void Tetris::PositionCorrection(Position_t _block, Position_t* _correction) {
+
+    if (_block.x < 0) {
+        _correction->x = 1;
+    }
+    if (_block.x >= SCREEN_WIDTH) {
+        _correction->x = -1;
+    }
+    if (_block.y < 0) {
+        _correction->y = 1;
+    }
+    if (_block.y >= SCREEN_HEIGHT) {
+        _correction->y = -1;
+    }
+}
 
 void Tetris::setup(void)
 {
     for (uint8_t i = 0; i < (SCREEN_WIDTH * SCREEN_HEIGHT); ++i) {
-        storedBricks[i] = { OUT_OF_SCREEN, OUT_OF_SCREEN };
+        grid[i] = { OUT_OF_SCREEN, OUT_OF_SCREEN };
     }
 }
 
@@ -105,19 +175,20 @@ void Tetris::render(void)
     DrawObject(block, BRICK_ARRAY_SIZE);
 
     //Draw stored bricks
-    DrawObject(storedBricks, SCREEN_HEIGHT * SCREEN_WIDTH);
+    DrawObject(grid, SCREEN_HEIGHT * SCREEN_WIDTH);
 }
 
 void Tetris::HandleAction(Direction_t _dir)
 {
+    //todo
 }
 
 void Tetris::DrawBlock(uint8_t _type, uint8_t _rotation, Position_t _pos)
 {
     uint8_t pos = 0;
-    for (uint8_t x = 0u; x < BLOCK_WIDTH; x++) {
-        for (uint8_t y = 0u; y < BLOCK_HEIGHT; y++) {
-            if (((blocksArray[_type][_rotation] >> pos) & 1u) == true) {
+    for (uint8_t x = 0; x < BLOCK_WIDTH; x++) {
+        for (uint8_t y = 0; y < BLOCK_HEIGHT; y++) {
+            if (((blocksArray[_type][_rotation] >> pos) & 1) == true) {
                 block[pos].x = _pos.x + x;
                 block[pos].y = _pos.y + y;
             }
@@ -129,30 +200,24 @@ void Tetris::DrawBlock(uint8_t _type, uint8_t _rotation, Position_t _pos)
     }
 }
 
-Position_t Tetris::ReadDirection(Position_t* _pos)
+const Position_t Tetris::GetNewBlockPosition(Position_t* _pos, Direction_t _dir)
 {
-    if (KB_IsSinglePressed(VK_UP)) {
+    if (Direction_t::UP == _dir) {
         _pos->y--;
     }
-    else if (KB_IsSinglePressed(VK_DOWN)) {
+    else if (Direction_t::DOWN == _dir) {
         _pos->y++;
     }
-    else if (KB_IsSinglePressed(VK_LEFT)) {
+    else if (Direction_t::LEFT == _dir) {
         _pos->x--;
     }
-    else if (KB_IsSinglePressed(VK_RIGHT)) {
+    else if (Direction_t::RIGHT == _dir) {
         _pos->x++;
     }
 
     return *_pos;
 }
 
-bool Tetris::CollisionStoredBlock(void)
+void Tetris::MovoBlockToScreen(void)
 {
-    return false;
-}
-
-bool Tetris::ColiisionBoardLimit(void)
-{
-    return false;
 }

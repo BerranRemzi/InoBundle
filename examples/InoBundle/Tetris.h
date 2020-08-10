@@ -15,21 +15,27 @@ public:
     Tetris(void);
     void update() override;
 private:
+    void RemoveFullRows(void);
+    void TryToDropPiece(void);
+    bool TryToMoveBlock(uint8_t _type, uint8_t _rotation, Position_t *_pos);
+    const void PositionCorrection(Position_t _block, Position_t *_correction);
+
     void setup(void);
     void reset(void);
     void render(void);
     void HandleAction(Direction_t _dir);
     void DrawBlock(uint8_t _type, uint8_t _rotation, Position_t _pos);
-    Position_t ReadDirection(Position_t* _pos);
+    const Position_t GetNewBlockPosition(Position_t* _pos, Direction_t _dir);
 
-    bool CollisionStoredBlock(void);
-    bool ColiisionBoardLimit(void);
+    void MovoBlockToScreen(void);
 
-    Position_t* storedBricks = matrix;
+    Position_t* grid = matrix;
+    uint8_t gridSize = matrixSize;
+
     Position_t block[BRICK_ARRAY_SIZE];
     GameState state = GameState::GAME_RUN;
     Timer* timer;
-    Timer* spawner;
+    Timer* dropTimer;
     Position_t position = { 0,0 };
     uint8_t rotation = 0;
     uint8_t type = 0;

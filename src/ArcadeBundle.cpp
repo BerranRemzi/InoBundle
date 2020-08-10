@@ -2,6 +2,7 @@
 
 uint8_t AB_screen[8][8];
 Position_t matrix[SCREEN_WIDTH * SCREEN_HEIGHT];
+uint8_t matrixSize = SCREEN_WIDTH * SCREEN_HEIGHT;
 
 Timer::Timer(uint8_t _totalTicks) {
     totalTicks = _totalTicks;
@@ -81,10 +82,10 @@ bool Game::ClearAnimation(void)
     for (int8_t x = SCREEN_WIDTH - 1; x >= 0; x--) {
         for (int8_t y = 0; y < SCREEN_HEIGHT; y++) {
             if ((AB_screen[x][y] == LED_ON) && (x < (SCREEN_WIDTH - 1))) {
-                    AB_screen[x + 1][y] = AB_screen[x][y];
+                AB_screen[x + 1][y] = AB_screen[x][y];
             }
 
-            if (AB_screen[x][y] == LED_ON){
+            if (AB_screen[x][y] == LED_ON) {
                 AB_screen[x][y] = LED_OFF;
                 /* return false if some of leds was ON */
                 return false;
@@ -152,14 +153,65 @@ void Game::FillObject(Position_t* _object, uint8_t _size, uint8_t _data)
     }
 }
 
-bool Game::CollisionDetect(const Position_t* _objectA, uint8_t _sizeA, const Position_t* _objectB, uint8_t _sizeB)
+bool Game::CollisionDetect( Position_t* _objectA, uint8_t _sizeA, Position_t* _objectB, uint8_t _sizeB)
 {
     for (uint8_t a = 0; a < _sizeA; a++) {
-        for (uint8_t b = 0; b < _sizeB; b++) {
-            if ((_objectA[a].y == _objectB[b].y) && (_objectA[a].x == _objectB[b].x)) {
-                return true;
+        if (true == IsInScreen(_objectA, a)) {
+            for (uint8_t b = 0; b < _sizeB; b++) {
+                if (true == IsInScreen(_objectB, b)) {
+                    if ((_objectA[a].y == _objectB[b].y) && (_objectA[a].x == _objectB[b].x)) {
+                        return true;
+                    }
+                }
             }
         }
     }
     return false;
+}
+
+bool Game::CopyObject(Position_t* _dst, uint8_t _dstSize, Position_t* _src, uint8_t _srcSize)
+{
+    for (uint8_t srcPos = 0; srcPos < _srcSize; srcPos++) {
+        if (true == IsInScreen(_src, srcPos)) {
+            for (uint8_t dstPos = 0; dstPos < _dstSize; dstPos++) {
+                if (false == IsInScreen(_dst, dstPos)) {
+                    _dst[dstPos] = _src[srcPos];
+                    break;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+Direction_t Game::ReadDirection(void)
+{
+    Direction_t returnValue = Direction_t::STOPPED;
+
+    if (KB_IsSinglePressed(VK_UP)) {
+        returnValue = Direction_t::UP;
+    }
+    else if (KB_IsSinglePressed(VK_DOWN)) {
+        returnValue = Direction_t::DOWN;
+    }
+    else if (KB_IsSinglePressed(VK_LEFT)) {
+        returnValue = Direction_t::LEFT;
+    }
+    else if (KB_IsSinglePressed(VK_RIGHT)) {
+        returnValue = Direction_t::RIGHT;
+    }
+
+    return returnValue;
+}
+
+void Game::DeleteRow(uint8_t _row)
+{
+    for (uint8_t i = 0; i < matrixSize; i++) {
+        if (matrix[i].y == _row) {
+            matrix[i] = { OUT_OF_SCREEN, OUT_OF_SCREEN };
+        }
+        else if (matrix[i].y < _row) {
+            matrix[i].y++;
+        }
+    }
 }

@@ -58,3 +58,4 @@ enum class GameState {
 };
 
 extern Position_t matrix[SCREEN_WIDTH * SCREEN_HEIGHT];
+extern uint8_t matrixSize;

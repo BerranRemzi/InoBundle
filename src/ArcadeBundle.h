@@ -48,5 +48,9 @@ public:
 
     static void DrawObject(Position_t* _object, uint8_t _size);
     static void FillObject(Position_t* _object, uint8_t _size, uint8_t _data);
-    static bool CollisionDetect(const Position_t* _objectA, uint8_t _sizeA, const Position_t* _objectB, uint8_t _sizeB);
+    static bool CollisionDetect( Position_t* _objectA, uint8_t _sizeA,  Position_t* _objectB, uint8_t _sizeB);
+    static bool CopyObject( Position_t* _objectA, uint8_t _sizeA,  Position_t* _objectB, uint8_t _sizeB);
+    static Direction_t ReadDirection(void);
+
+    static void DeleteRow(uint8_t _row);
 };
