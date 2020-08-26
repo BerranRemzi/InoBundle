@@ -1,8 +1,7 @@
 {
-    "programmer": "AVR ISP",
     "board": "arduino:avr:nano",
     "configuration": "cpu=atmega328old",
-    "port": "COM3",
-    "sketch": "examples\\LCDemoMatrix\\LCDemoMatrix.ino",
-    "output": "../../ArduinoOutput"
+    "port": "/dev/ttyUSB0",
+    "sketch": "examples/InoBundle/InoBundle.ino",
+    "output": "./build"
 }

@@ -8,29 +8,31 @@
 #include <stdbool.h>
 
 #ifdef ARDUINO
-#include <arduino.h>
+#include <Arduino.h>
 #else
 extern uint32_t millis();
 #endif // ARDUINO
 
-#define TASK_STOPPED 	(UINT32_MAX)
+#define TASK_STOPPED (UINT32_MAX)
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-    typedef struct Task_t {
+    typedef struct Task_t
+    {
         uint8_t priority;
         uint32_t period;
-        void(*TaskFunction)(void);
+        void (*TaskFunction)(void);
         uint32_t previousTime;
     } Task_t;
 
     void xLoop(void);
 
-    void xTaskCreate(void(*_p_Input)(void), uint32_t _period);
+    void xTaskCreate(void (*_p_Input)(void), uint32_t _period);
 
-    void xInit(Task_t* _input);
+    void xInit(Task_t *_input);
 
     bool IsRunning(uint8_t _id);
 
