@@ -7,6 +7,7 @@
 #include "Flappy.h"
 #include "Tetris.h"
 #include "Demo.h"
+#include "Calculator.h"
 
 #include "Keyboard.h"
 #include "xOS.h"
@@ -20,6 +21,7 @@ enum Game_t
     GAME_TETRIS, //not implemented yet
     //GAME_SQUARE,  //not implemented yet
     GAME_DEMO,
+    GAME_CALCULATOR,
     GAME_COUNT
 };
 
@@ -29,14 +31,14 @@ void Task_Screen(void);
 
 Task_t TaskStruct[4];
 
-Game *game = new Tetris();
+Game *game = new Calculator();
 //Brick brick;
 //Invader invader;		//not implemented yet
 //Tetris tetris;		//not implemented yet
 //Square square;		//not implemented yet
 //Demo demo;			//not implemented yet
 
-uint8_t currGame = GAME_INVADER;
+uint8_t currGame = GAME_CALCULATOR;
 
 void setup()
 {
@@ -89,6 +91,9 @@ void Task_Keyboard(void)
             break;
         case GAME_DEMO:
             game = new Demo();
+            break;
+        case GAME_CALCULATOR:
+            game = new Calculator();
             break;
         default:
             game = new Snake();

@@ -6,13 +6,15 @@
 #include "Keyboard.h"
 #include "ArcadeBundle.h"
 
-enum class BrickState {
+enum class BrickState
+{
     MOVING,
     CHECK_NEW_LINE,
     GOTO_RESTART
 };
 
-class Brick : public Game {
+class Brick : public Game
+{
 public:
     Brick();
     void update() override;
@@ -20,9 +22,9 @@ public:
 private:
     GameState state = GameState::GAME_RUN;
     uint8_t screen[8];
-    int8_t brickHeight{ SCREEN_HEIGHT - 1 };
-    Direction_t direction{ Direction_t::RIGHT };
-    Timer* timer;
+    int8_t brickHeight{SCREEN_HEIGHT - 1};
+    Direction_t direction{Direction_t::RIGHT};
+    Timer *timer;
     Position_t pos;
     uint8_t brickLength = 5;
     uint8_t bricksOnScreen = 0;
