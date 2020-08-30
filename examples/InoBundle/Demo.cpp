@@ -6,7 +6,7 @@ void Demo::update() {
 
     int8_t counter = 0;
 
-    for (uint8_t t = 0; t < 16; t++) {
+    for (uint8_t t = 0; t < 4; t++) {
         uint8_t randomX = random(8);
         uint8_t randomY = random(8);
 
