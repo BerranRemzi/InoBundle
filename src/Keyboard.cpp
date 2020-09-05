@@ -66,16 +66,13 @@ uint8_t AnalogButton_Compute(uint16_t _new_sample)
 
 bool GetAnalogButton(uint8_t _pin)
 {
-    static uint8_t btn1;
-    static uint8_t btn2;
-
     bool returnValue = false;
 
-        /* Arrow buttons */
-        btn1 = AnalogButton_Compute(adc1);
-        /* Control buttons */
-        btn2 = AnalogButton_Compute(adc2);
-        btn2 += 10;
+    /* Arrow buttons */
+    uint8_t btn1 = AnalogButton_Compute(adc1);
+    /* Control buttons */
+    uint8_t btn2 = AnalogButton_Compute(adc2);
+    btn2 += 10;
 
     if ((btn1 == _pin) || (btn2 == _pin))
     {
@@ -183,8 +180,8 @@ bool KB_IsSinglePressed(uint8_t _pin)
 
 void KB_ReadAll(void)
 {
-         adc1 = analogRead(A1) >> 2;
-         adc2 = analogRead(A0) >> 2;
+    adc1 = analogRead(A1) >> 2;
+    adc2 = analogRead(A0) >> 2;
     for (uint8_t k = 0; k < keyMapSize; k++)
     {
         bool currentState = GetAnalogButton(keyMap[k].pin);
@@ -202,9 +199,7 @@ void KB_ReadAll(void)
         {
             keyDownData |= 1U << k;
             keyPressData |= 1U << k;
-        }
-
-        if (keyMap[k].counter == 0)
+        }else if (keyMap[k].counter == 0)
         {
             keyDownData &= ~(1U << k);
         }
@@ -222,7 +217,7 @@ void KB_ReadAll(void)
 
 void KB_Reset(void)
 {
-    keyPressData = 0x0000;
+    keyPressData = 0;
 }
 
 Direction_t KB_GetLastDirection(void)

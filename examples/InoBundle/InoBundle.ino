@@ -25,29 +25,33 @@ enum Game_t
     GAME_COUNT
 };
 
+enum TaskNames{
+    TASK_GAME,
+    TASK_SCREEN,
+    TASK_KEYBOARD
+};
+
 void Task_Keyboard(void);
 void Task_Game(void);
 void Task_Screen(void);
 
 Task_t TaskStruct[4];
 
-Game* game = new Snake();
-//Brick brick;
-//Invader invader;		//not implemented yet
-//Tetris tetris;		//not implemented yet
-//Square square;		//not implemented yet
-//Demo demo;			//not implemented yet
+Game* game = new Invader();
 
-uint8_t currGame = GAME_CALCULATOR;
+uint8_t currGame = GAME_INVADER;
 
 void setup()
 {
+  Serial.begin(115200);  
+  AB_HAL_AnalogPrescaler(8);
   game->Setup();
 
   xInit(TaskStruct); 	//Struct with function parameters
   xTaskCreate(&Task_Screen, 1);
   xTaskCreate(&Task_Keyboard, 10);
   xTaskCreate(&Task_Game, 10);
+  xTaskCreate(&Task_Debug, 10);
 }
 
 void loop()
@@ -57,18 +61,23 @@ void loop()
 
 void Task_Game(void)
 {
+    TASK_ENTER(TASK_GAME);
     game->update();
+    TASK_LEAVE(TASK_GAME);
 }
 
 void Task_Screen(void)
 {
+    TASK_ENTER(TASK_SCREEN);
     game->UpdateScreen();
+    TASK_LEAVE(TASK_SCREEN);
 }
 
 void Task_Keyboard(void)
 {
+    TASK_ENTER(TASK_KEYBOARD);
     KB_ReadAll();
-    if (KB_IsKeyDownLong(VK_UP, 200) || KB_IsKeyDownLong(VK_Y, 100))
+    if (KB_IsKeyDownLong(VK_Y, 100))
     { /* wait for 100ticks = 1000ms */
         game->ClearDisplay();
         free(game);
@@ -101,4 +110,10 @@ void Task_Keyboard(void)
             break;
         }
     }
+    TASK_LEAVE(TASK_KEYBOARD);
+}
+
+void Task_Debug(void)
+{
+    TASK_PRINT_ALL();
 }

@@ -38,3 +38,17 @@ void WriteCols(uint8_t _state) {
     digitalWrite(col[x], _state);
   }
 }
+
+void AB_HAL_AnalogPrescaler(uint8_t _prescaler){
+  ADCSRA &= ~(bit (ADPS0) | bit (ADPS1) | bit (ADPS2)); // clear prescaler bits
+  
+  switch(_prescaler){
+    case 2: ADCSRA |= bit (ADPS0);                break;                //   2
+    case 4: ADCSRA |= bit (ADPS1);                break;                //   4  
+    case 8: ADCSRA |= bit (ADPS0) | bit (ADPS1);  break;                //   8  
+    case 16: ADCSRA |= bit (ADPS2);               break;                //  16 
+    case 32: ADCSRA |= bit (ADPS0) | bit (ADPS2); break;                //  32 
+    case 64: ADCSRA |= bit (ADPS1) | bit (ADPS2); break;                //  64 
+    default: ADCSRA |= bit (ADPS0) | bit (ADPS1) | bit (ADPS2); break; // 128
+  }
+}

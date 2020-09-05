@@ -11,5 +11,6 @@
 
 void AB_HAL_Init(void);
 void AB_HAL_UpdateScreen(void);
+void AB_HAL_AnalogPrescaler(uint8_t _prescaler);
 void WriteRows(uint8_t _state);
 void WriteCols(uint8_t _state);

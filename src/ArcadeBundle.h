@@ -2,6 +2,7 @@
 
 #include "ArcadeBundle_Types.h"
 #include "Keyboard.h"
+#include "Debug.h"
 
 #ifdef ARDUINO
 

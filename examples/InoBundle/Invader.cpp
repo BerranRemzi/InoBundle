@@ -32,10 +32,10 @@ void Invader::render() {
 
     //Draw rocket head
     DrawObject(&rocket, 1);
-
+   
     //Draw rocket body
     DrawObject(rocketBody, 4);
-
+    
     //Draw bullets
     DrawObject(bullet, SCREEN_HEIGHT - ROCKET_HEIGHT);
 
@@ -59,14 +59,14 @@ void Invader::update() {
         Direction_t dir = Direction_t::STOPPED;
         bool fire = false;
 
-        if ((KB_IsKeyToggled(VK_RIGHT) && KB_IsKeyDown(VK_RIGHT)) || KB_IsKeyDownLong(VK_RIGHT, 20)) {
+        if (KB_IsSinglePressed(VK_RIGHT) || KB_IsKeyDownLong(VK_RIGHT, 20)) {
             dir = Direction_t::RIGHT;
         }
-        else if ((KB_IsKeyToggled(VK_LEFT) && KB_IsKeyDown(VK_LEFT)) || KB_IsKeyDownLong(VK_LEFT, 20)) {
+        else if (KB_IsSinglePressed(VK_LEFT) || KB_IsKeyDownLong(VK_LEFT, 20)) {
             dir = Direction_t::LEFT;
         }
 
-        if (KB_IsKeyToggled(VK_A) && KB_IsKeyDown(VK_A)) {
+        if (KB_IsSinglePressed(VK_A)) {
             fire = true;
         }
 
@@ -75,7 +75,7 @@ void Invader::update() {
         DrawRocket();
         DrawFire(fire);
         DrawInvader(invaderSpawner->isReady());
-
+        
         CollisionBulletInvader();
 
         if (CollisionDetect(rocketBody, ROCHET_BODY_SIZE, invader, INVADER_MAX_COUNT)) {
@@ -117,10 +117,12 @@ void Invader::update() {
 
 void Invader::CollisionBulletInvader() {
     for (uint8_t b = 0; b < SCREEN_HEIGHT - ROCKET_HEIGHT; b++) {
-        for (uint8_t i = 0; i < SCREEN_HEIGHT * SCREEN_WIDTH; i++) {
-            if ((invader[i].y == bullet[b].y) && (invader[i].x == bullet[b].x)) {
-                invader[i] = { OUT_OF_SCREEN, OUT_OF_SCREEN };
-                bullet[b] = { OUT_OF_SCREEN, OUT_OF_SCREEN };
+        if(IsInScreen(bullet, b)){
+            for (uint8_t i = 0; i < SCREEN_HEIGHT * SCREEN_WIDTH; i++) {
+                if ((invader[i].y == bullet[b].y) && (invader[i].x == bullet[b].x)) {
+                    invader[i] = { OUT_OF_SCREEN, OUT_OF_SCREEN };
+                    bullet[b] = { OUT_OF_SCREEN, OUT_OF_SCREEN };
+                }
             }
         }
     }
