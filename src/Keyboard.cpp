@@ -20,6 +20,9 @@ const uint16_t buttonValues[] = {0, 133, 177, 196, 212, 255};
 AnalogButtonConfig_t buttonConfig = {buttonValues, BUTTON_MAX_NUMBER};
 AnalogButtonConfig_t *p_buttonConfig = &buttonConfig;
 
+uint8_t adc1;
+uint8_t adc2;
+
 struct KeyMap_t
 {
     uint8_t pin;
@@ -63,26 +66,16 @@ uint8_t AnalogButton_Compute(uint16_t _new_sample)
 
 bool GetAnalogButton(uint8_t _pin)
 {
-    static uint8_t counter = 0;
     static uint8_t btn1;
     static uint8_t btn2;
 
     bool returnValue = false;
 
-    if (counter & 1)
-    {
         /* Arrow buttons */
-        uint8_t adc1 = analogRead(A1) >> 2;
         btn1 = AnalogButton_Compute(adc1);
-    }
-    else
-    {
         /* Control buttons */
-        uint8_t adc2 = analogRead(A0) >> 2;
         btn2 = AnalogButton_Compute(adc2);
         btn2 += 10;
-    }
-    counter++;
 
     if ((btn1 == _pin) || (btn2 == _pin))
     {
@@ -190,6 +183,8 @@ bool KB_IsSinglePressed(uint8_t _pin)
 
 void KB_ReadAll(void)
 {
+         adc1 = analogRead(A1) >> 2;
+         adc2 = analogRead(A0) >> 2;
     for (uint8_t k = 0; k < keyMapSize; k++)
     {
         bool currentState = GetAnalogButton(keyMap[k].pin);

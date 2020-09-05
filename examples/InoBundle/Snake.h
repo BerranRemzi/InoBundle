@@ -7,7 +7,7 @@
 #include "ArcadeBundle.h"
 
 #define SNAKE_START_SIZE        2u
-#define TOTAL_FOOD_TRY_COUNT    64u
+#define TOTAL_FOOD_TRY_COUNT    32u
 
 class Snake : public Game {
 public:
