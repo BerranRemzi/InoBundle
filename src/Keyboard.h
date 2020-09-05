@@ -3,16 +3,16 @@
 
 #if ARDUINO
 
-#define VK_UP		5
+#define VK_UP		1
 #define VK_DOWN		2
-#define VK_RIGHT	3
-#define VK_LEFT		4
-#define VK_A		A0
-#define VK_B		A1
-#define VK_X		A2
-#define VK_Y		A3
+#define VK_RIGHT	0
+#define VK_LEFT		3
+#define VK_A		12
+#define VK_B		13
+#define VK_X		10
+#define VK_Y		11
 
-#define DEBOUNCE_TICK 2
+#define DEBOUNCE_TICK 3
 
 #else
 

@@ -31,7 +31,7 @@ void Task_Screen(void);
 
 Task_t TaskStruct[4];
 
-Game* game = new Demo();
+Game* game = new Snake();
 //Brick brick;
 //Invader invader;		//not implemented yet
 //Tetris tetris;		//not implemented yet
@@ -42,11 +42,11 @@ uint8_t currGame = GAME_CALCULATOR;
 
 void setup()
 {
-    game->Setup();
+  game->Setup();
 
   xInit(TaskStruct); 	//Struct with function parameters
   xTaskCreate(&Task_Screen, 1);
-  //xTaskCreate(&Task_Keyboard, 10); // Keyboard is not implemented for V2
+  xTaskCreate(&Task_Keyboard, 10);
   xTaskCreate(&Task_Game, 10);
 }
 
