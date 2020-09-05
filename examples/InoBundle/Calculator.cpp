@@ -4,6 +4,7 @@ Calculator::Calculator()
 {
     timer = new Timer(TICK_FAST);
     blinkTimer = new Timer(LED_PERIOD);
+    heldTimer = new Timer(10);
     reset();
 }
 
@@ -18,6 +19,7 @@ void Calculator::update()
 {
     timer->tick();
     blinkTimer->tick();
+    heldTimer->tick();
     bool ready = timer->isReady();
 
     switch (state)
@@ -60,19 +62,19 @@ void Calculator::update()
             }
         }
 
-        if (KB_IsSinglePressed(VK_X))
+        if (KB_IsSinglePressed(VK_A))
         {
             toggleBit(&buffer[cursor.y], SCREEN_WIDTH - 1 - cursor.x);
         }
-        if (KB_IsSinglePressed(VK_Y))
+        if (KB_IsSinglePressed(VK_X) || (KB_IsKeyDownLong(VK_X, 10) && heldTimer->isReady()))
         {
             buffer[cursor.y]++;
         }
-        if (KB_IsSinglePressed(VK_A))
+        if (KB_IsSinglePressed(VK_B) || (KB_IsKeyDownLong(VK_B, 10) && heldTimer->isReady()))
         {
             buffer[cursor.y]--;
         }
-        if (KB_IsSinglePressed(VK_B))
+        if (KB_IsSinglePressed(VK_Y))
         {
             calculate();
             buffer[NUM_1] = buffer[RESULT];

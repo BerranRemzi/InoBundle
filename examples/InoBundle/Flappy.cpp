@@ -1,6 +1,7 @@
 #include "Flappy.h"
 
-Flappy::Flappy() {
+Flappy::Flappy()
+{
     keyTimer = new Timer(5);
     birdTimer = new Timer(20);
     tubeTimer = new Timer(TICK_MEDIUM * 2);
@@ -8,17 +9,20 @@ Flappy::Flappy() {
     setup();
 }
 
-void Flappy::setup() {
-    bird = { 2, 4 };
+void Flappy::setup()
+{
+    bird = {2, 4};
     jump = false;
 }
 
-void Flappy::reset() {
+void Flappy::reset()
+{
     setup();
     ClearScreen();
 }
 
-void Flappy::render() {
+void Flappy::render()
+{
     ClearScreen();
 
     DrawObject(tubes, SCREEN_WIDTH * SCREEN_HEIGHT);
@@ -26,33 +30,38 @@ void Flappy::render() {
     SetLed(bird.x, bird.y, LED_ON);
 }
 
-void Flappy::update() {
+void Flappy::update()
+{
     keyTimer->tick();
     birdTimer->tick();
     tubeTimer->tick();
     bool ready = keyTimer->isReady();
 
-    switch (state) {
+    switch (state)
+    {
     case GameState::PAUSE:
         break;
     case GameState::GAME_RUN:
         state = GameState::GAME_WAIT;
 
-        if ((KB_IsKeyToggled(VK_UP) && KB_IsKeyDown(VK_UP))
-            || (KB_IsKeyToggled(VK_A) && KB_IsKeyDown(VK_A))) {
+        if ((KB_IsKeyToggled(VK_UP) && KB_IsKeyDown(VK_UP)) || (KB_IsKeyToggled(VK_A) && KB_IsKeyDown(VK_A)))
+        {
             jump = true;
             jumpHeight = 0;
         }
 
-        if (jump && (KB_IsKeyDown(VK_UP) || KB_IsKeyDown(VK_A)) && jumpHeight != 2) {
+        if (jump && (KB_IsKeyDown(VK_UP) || KB_IsKeyDown(VK_A)) && jumpHeight != 2)
+        {
             --bird.y;
             ++jumpHeight;
         }
-        else {
+        else
+        {
             jump = false;
         }
 
-        if (birdTimer->isReady() && !jump) {
+        if (birdTimer->isReady() && !jump)
+        {
             ++bird.y;
         }
 
@@ -73,7 +82,8 @@ void Flappy::update() {
         state = GameState::ANIM_WAIT;
 
         ready = ClearAnimation();
-        if (ready) {
+        if (ready)
+        {
             birdTimer->setTick(TICK_MEDIUM);
             state = GameState::RESTART;
         }
@@ -94,24 +104,29 @@ void Flappy::update() {
     }
 }
 
-void Flappy::MoveTubes() {
+void Flappy::MoveTubes()
+{
     static uint8_t counter = 0;
     ++counter;
 
-    for (uint8_t x{ 0 }; x < SCREEN_WIDTH; ++x) {
-        for (uint8_t y{ 1 }; y < SCREEN_HEIGHT - 1; ++y) {
+    for (uint8_t x{0}; x < SCREEN_WIDTH; ++x)
+    {
+        for (uint8_t y{1}; y < SCREEN_HEIGHT - 1; ++y)
+        {
             uint8_t index = x + y * SCREEN_WIDTH;
             tubes[index].x = tubes[index + SCREEN_WIDTH].x;
             tubes[index].y = y;
         }
     }
 
-    if (counter > 3) {
+    if (counter > 3)
+    {
         counter = 0;
 
         uint8_t startHeight = (uint8_t)random(SCREEN_HEIGHT - TUBE_X_SPACE - 1);
 
-        for (uint8_t i = 0; i <= startHeight; ++i) {
+        for (uint8_t i = 0; i <= startHeight; ++i)
+        {
             uint8_t index = 7 + i * SCREEN_WIDTH;
             tubes[index].x = 7;
             tubes[index].y = i;
@@ -119,7 +134,8 @@ void Flappy::MoveTubes() {
     }
 }
 
-bool Flappy::CheckCollision() {
+bool Flappy::CheckCollision()
+{
     bool output = false;
 
     if (bird.y > SCREEN_HEIGHT - 1 || bird.y < 0)

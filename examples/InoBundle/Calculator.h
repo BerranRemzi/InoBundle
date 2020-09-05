@@ -29,6 +29,7 @@ public:
     Position_t cursor;
     Timer *timer;
     Timer *blinkTimer;
+    Timer *heldTimer;
     uint8_t blinkCounter;
 
 public:
