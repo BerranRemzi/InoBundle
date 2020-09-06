@@ -23,5 +23,11 @@ void Task_PrintAll(void){
             Serial.println();
         }
     }
-
+}
+void Task_PutTotal(void){
+    leaveTime[BUFFER_SIZE-1] = 0;
+    enterTime[BUFFER_SIZE-1] = 0;
+    for(uint8_t i = 0; i < BUFFER_SIZE-1; i++){
+        leaveTime[BUFFER_SIZE-1]+=Task_Duration(i);
+    }
 }

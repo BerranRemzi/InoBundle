@@ -43,7 +43,12 @@ uint8_t currGame = GAME_INVADER;
 
 void setup()
 {
+  //Initialize serial and wait for port to open:
   Serial.begin(115200);  
+  while (!Serial) {
+    ; // wait for serial port to connect. Needed for native USB
+  }
+
   AB_HAL_AnalogPrescaler(8);
   game->Setup();
 
@@ -115,5 +120,6 @@ void Task_Keyboard(void)
 
 void Task_Debug(void)
 {
+    TASK_PUT_TOTAL();
     TASK_PRINT_ALL();
 }
