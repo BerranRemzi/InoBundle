@@ -8,6 +8,7 @@
 #include "Tetris.h"
 #include "Demo.h"
 #include "Calculator.h"
+#include "Joystick.h"
 
 #include "Keyboard.h"
 #include "xOS.h"
@@ -18,14 +19,16 @@ enum Game_t
     GAME_BRICK,
     GAME_INVADER,
     GAME_FLAPPY,
-    GAME_TETRIS, //not implemented yet
+    GAME_TETRIS,
     //GAME_SQUARE,  //not implemented yet
     GAME_DEMO,
     GAME_CALCULATOR,
+    GAME_JOYSTICK,
     GAME_COUNT
 };
 
-enum TaskNames{
+enum TaskNames
+{
     TASK_GAME,
     TASK_SCREEN,
     TASK_KEYBOARD
@@ -37,21 +40,21 @@ void Task_Screen(void);
 
 Task_t TaskStruct[4];
 
-Game* game = new Invader();
+Game *game = new Joystick();
 
-uint8_t currGame = GAME_INVADER;
+uint8_t currGame = GAME_JOYSTICK;
 
 void setup()
 {
-  Serial.begin(115200);  
-  AB_HAL_AnalogPrescaler(8);
-  game->Setup();
+    Serial.begin(115200);
+    AB_HAL_AnalogPrescaler(8);
+    game->Setup();
 
-  xInit(TaskStruct); 	//Struct with function parameters
-  xTaskCreate(&Task_Screen, 1);
-  xTaskCreate(&Task_Keyboard, 10);
-  xTaskCreate(&Task_Game, 10);
-  xTaskCreate(&Task_Debug, 10);
+    xInit(TaskStruct); //Struct with function parameters
+    xTaskCreate(&Task_Screen, 1);
+    xTaskCreate(&Task_Keyboard, 10);
+    xTaskCreate(&Task_Game, 10);
+    xTaskCreate(&Task_Debug, 10);
 }
 
 void loop()
@@ -103,6 +106,9 @@ void Task_Keyboard(void)
             break;
         case GAME_CALCULATOR:
             game = new Calculator();
+            break;
+        case GAME_JOYSTICK:
+            game = new Joystick();
             break;
         default:
             game = new Snake();

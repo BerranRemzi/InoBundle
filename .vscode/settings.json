@@ -8,6 +8,8 @@
         "ios": "cpp",
         "*.tcc": "cpp",
         "iosfwd": "cpp",
-        "string_view": "cpp"
+        "string_view": "cpp",
+        "thread": "cpp",
+        "memory": "cpp"
     }
 }
