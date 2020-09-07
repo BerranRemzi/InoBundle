@@ -84,7 +84,7 @@
     <ClCompile Include="..\..\..\examples\InoBundle\Snake.cpp" />
     <ClCompile Include="..\..\..\examples\InoBundle\Tetris.cpp" />
     <ClCompile Include="..\..\..\src\ArcadeBundle.cpp" />
-    <ClCompile Include="..\..\..\src\Keyboard.cpp" />
+    <ClCompile Include="..\..\..\src\Buttons.cpp" />
     <ClCompile Include="..\..\..\src\xOS.c" />
     <ClCompile Include="src\emulator\Emulator.cpp" />
     <ClCompile Include="src\main.cxx" />
@@ -99,7 +99,7 @@
     <ClInclude Include="..\..\..\src\ArcadeBundle.h" />
     <ClInclude Include="..\..\..\src\ArcadeBundle_Types.h" />
     <ClInclude Include="..\..\..\src\Game.h" />
-    <ClInclude Include="..\..\..\src\Keyboard.h" />
+    <ClInclude Include="..\..\..\src\Buttons.h" />
     <ClInclude Include="..\..\..\src\Utility.h" />
     <ClInclude Include="..\..\..\src\xOS.h" />
     <ClInclude Include="src\emulator\Arduino.h" />

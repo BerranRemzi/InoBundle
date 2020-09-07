@@ -1,4 +1,4 @@
-#include "Keyboard.h"
+#include "Buttons.h"
 
 typedef struct AnalogButtonConfig_t
 {
@@ -199,7 +199,8 @@ void KB_ReadAll(void)
         {
             keyDownData |= 1U << k;
             keyPressData |= 1U << k;
-        }else if (keyMap[k].counter == 0)
+        }
+        else if (keyMap[k].counter == 0)
         {
             keyDownData &= ~(1U << k);
         }

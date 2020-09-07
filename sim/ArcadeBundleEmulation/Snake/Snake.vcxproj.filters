@@ -36,7 +36,7 @@
     <ClCompile Include="..\..\..\src\xOS.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\Keyboard.cpp">
+    <ClCompile Include="..\..\..\src\Buttons.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\examples\InoBundle\Brick.cpp">
@@ -71,7 +71,7 @@
     <ClInclude Include="..\..\..\src\xOS.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\Keyboard.h">
+    <ClInclude Include="..\..\..\src\Buttons.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\Utility.h">

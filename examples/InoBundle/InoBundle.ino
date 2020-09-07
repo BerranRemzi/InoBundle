@@ -10,7 +10,7 @@
 #include "Calculator.h"
 #include "Joystick.h"
 
-#include "Keyboard.h"
+#include "Buttons.h"
 #include "xOS.h"
 
 enum Game_t
@@ -31,10 +31,10 @@ enum TaskNames
 {
     TASK_GAME,
     TASK_SCREEN,
-    TASK_KEYBOARD
+    TASK_Buttons
 };
 
-void Task_Keyboard(void);
+void Task_Buttons(void);
 void Task_Game(void);
 void Task_Screen(void);
 
@@ -58,7 +58,7 @@ void setup()
 
     xInit(TaskStruct); //Struct with function parameters
     xTaskCreate(&Task_Screen, 1);
-    xTaskCreate(&Task_Keyboard, 10);
+    xTaskCreate(&Task_Buttons, 10);
     xTaskCreate(&Task_Game, 10);
     xTaskCreate(&Task_Debug, 10);
 }
@@ -82,9 +82,9 @@ void Task_Screen(void)
     TASK_LEAVE(TASK_SCREEN);
 }
 
-void Task_Keyboard(void)
+void Task_Buttons(void)
 {
-    TASK_ENTER(TASK_KEYBOARD);
+    TASK_ENTER(TASK_Buttons);
     KB_ReadAll();
     if (KB_IsKeyDownLong(VK_Y, 100))
     { /* wait for 100ticks = 1000ms */
@@ -122,7 +122,7 @@ void Task_Keyboard(void)
             break;
         }
     }
-    TASK_LEAVE(TASK_KEYBOARD);
+    TASK_LEAVE(TASK_Buttons);
 }
 
 void Task_Debug(void)
