@@ -1,4 +1,5 @@
 #include "Keyboard.h"
+#include "LowPower.h"
 
 typedef struct AnalogButtonConfig_t
 {
@@ -72,6 +73,9 @@ bool GetAnalogButton(uint8_t _pin)
     uint8_t btn1 = AnalogButton_Compute(adc1);
     /* Control buttons */
     uint8_t btn2 = AnalogButton_Compute(adc2);
+	if((VK_NOT_PRESSED != btn1) || (VK_NOT_PRESSED != btn1)){
+		PowerManager_Refresh();
+	}
     btn2 += 10;
 
     if ((btn1 == _pin) || (btn2 == _pin))
@@ -245,4 +249,34 @@ Direction_t KB_GetLastDirection(void)
     }
     KB_Reset();
     return lastDirection;
+}
+
+
+uint16_t timeoutCounter = 0;
+uint16_t sleepTimeout = 30;
+
+void PowerManager_SetSleepTimeout(uint16_t _timeout){
+	sleepTimeout = _timeout;
+}
+void PowerManager_Refresh(void){
+	timeoutCounter = 0;
+}
+
+void PowerManager_Task(void){
+	if(timeoutCounter > sleepTimeout){
+		for(int i = 0; i<16;i++){
+			pinMode(i, INPUT);
+		}
+		pinMode(A0, INPUT);
+pinMode(A1, INPUT);
+pinMode(A2, INPUT);
+pinMode(A3, INPUT);
+pinMode(A4, INPUT);
+pinMode(A5, INPUT);
+
+		LowPower.powerDown(SLEEP_FOREVER, ADC_OFF, BOD_OFF);
+		delay(100);
+		/* Sleep forever and wait RESET signal */
+	}
+	timeoutCounter++;
 }

@@ -23,7 +23,11 @@ void AB_HAL_UpdateScreen(void) {
   }
 
   for (uint8_t x = 0; x < SCREEN_WIDTH; x++) {
-    digitalWrite(col[x], AB_screen[y][x]);
+	  if(COLUMN_ON){
+		    digitalWrite(col[x], !AB_screen[y][x]);
+	  }else{
+			digitalWrite(col[x], AB_screen[y][x]);
+	  }
   }
   digitalWrite(row[y], ROW_ON);
 }

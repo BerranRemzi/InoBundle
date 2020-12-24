@@ -6,7 +6,7 @@
 #define COLUMN_OFF LOW
 #define COLUMN_ON (!COLUMN_OFF)
 
-#define ROW_OFF HIGH
+#define ROW_OFF LOW
 #define ROW_ON (!ROW_OFF)
 
 void AB_HAL_Init(void);
