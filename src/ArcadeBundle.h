@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ArcadeBundle_Types.h"
-#include "Keyboard.h"
+#include "Buttons.h"
 #include "Debug.h"
 
 #ifdef ARDUINO

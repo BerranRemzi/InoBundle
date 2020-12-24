@@ -3,13 +3,14 @@
 #include "Game.h"
 #include "Utility.h"
 #include "Arduino.h"
-#include "Keyboard.h"
+#include "Buttons.h"
 #include "ArcadeBundle.h"
 
-#define SNAKE_START_SIZE        2u
-#define TOTAL_FOOD_TRY_COUNT    32u
+#define SNAKE_START_SIZE 2u
+#define TOTAL_FOOD_TRY_COUNT 32u
 
-class Snake : public Game {
+class Snake : public Game
+{
 public:
     Position_t tail;
     Position_t currentHead;
@@ -17,13 +18,14 @@ public:
     Position_t food;
 
     GameState state = GameState::GAME_RUN;
-    int8_t size{ 0 };
+    int8_t size{0};
 
     Sound_t sound;
-    uint8_t speed{ 0 };
+    uint8_t speed{0};
     bool isFoodGenerated = false;
     Direction_t lastDirection = Direction_t::STOPPED;
-    Timer* timer;
+    Timer *timer;
+
 public:
     Snake();
     void setup();
