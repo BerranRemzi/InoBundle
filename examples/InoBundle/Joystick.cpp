@@ -59,54 +59,54 @@ void Joystick::update()
     }
     else
     {
-        if (KB_IsKeyDown(VK_UP) || KB_IsKeyDown(VK_B))
-        {
-            Keyboard.press('w');
-        }
-        else
-        {
-            Keyboard.release('w');
-        }
-
-        if (KB_IsKeyDown(VK_LEFT))
-        {
-            Keyboard.press('a');
-        }
-        else
-        {
-            Keyboard.release('a');
-        }
-
-        if (KB_IsKeyDown(VK_DOWN))
-        {
-            Keyboard.press('s');
-        }
-        else
-        {
-            Keyboard.release('s');
-        }
-
-        if (KB_IsKeyDown(VK_RIGHT))
-        {
-            Keyboard.press('d');
-        }
-        else
-        {
-            Keyboard.release('d');
-        }
-
-        if (KB_IsKeyDown(VK_A))
-        {
-            Keyboard.press(KEY_LEFT_SHIFT);
-        }
-        else
-        {
-            Keyboard.release(KEY_LEFT_SHIFT);
-        }
+		if(KB_IsKeyToggled(VK_UP) || KB_IsKeyToggled(VK_Y))
+		{
+			if (KB_IsKeyDown(VK_UP) || KB_IsKeyDown(VK_Y))
+			{
+				Keyboard.press('w');
+			}
+			else
+			{
+				Keyboard.release('w');
+			}
+		}
+		if(KB_IsKeyToggled(VK_LEFT))
+		{
+			if (KB_IsKeyDown(VK_LEFT))
+			{
+				Keyboard.press('a');
+			}
+			else
+			{
+				Keyboard.release('a');
+			}
+		}
+		if(KB_IsKeyToggled(VK_DOWN) || KB_IsKeyToggled(VK_A))
+		{
+			if (KB_IsKeyDown(VK_DOWN) || KB_IsKeyDown(VK_A))
+			{
+				Keyboard.press('s');
+			}
+			else
+			{
+				Keyboard.release('s');
+			}
+		}
+		if(KB_IsKeyToggled(VK_RIGHT))
+		{
+			if (KB_IsKeyDown(VK_RIGHT))
+			{
+				Keyboard.press('d');
+			}
+			else
+			{
+				Keyboard.release('d');
+			}
+		}
     }
 
     // Change mode
-    if (KB_IsKeyDownLong(VK_A, 200))
+    if (KB_IsKeyDownLong(VK_X, 200))
     {
         mode = !mode;
     }

@@ -25,3 +25,36 @@ public:
 };
 
 static SoftwareSerial Serial;
+
+static class Keyboard {
+public:
+    static void begin(void) {
+    }
+    static void press(int a) {
+
+    }
+    static void release(int a) {
+
+    }
+}Keyboard;
+
+static class Mouse {
+public:
+    static void begin(void) {
+    }
+    static void move(int a, int b) {
+
+    }
+    static void move(int a, int b, int c) {
+
+    }
+    static void press(int a ) {
+
+    }
+    static void release(int a) {
+
+    }
+    static void click(int a) {
+
+    }
+}Mouse;

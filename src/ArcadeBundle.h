@@ -17,6 +17,13 @@ extern void AB_HAL_UpdateScreen(void);
 
 #endif
 
+typedef enum {
+    TSL,
+    TSR,
+    TSU,
+    TSD
+}Transform_t;
+
 class Timer
 {
 private:
@@ -43,6 +50,8 @@ public:
     static void SetLed(uint8_t _x, uint8_t _y, uint8_t _brightness);
     static uint8_t GetLed(uint8_t _x, uint8_t _y);
     static void SetRow(uint8_t _y, uint8_t _value);
+    static void SetColumn(uint8_t _x, uint8_t _value);
+    static void Transform(uint8_t _action);
     static void ClearDisplay(void);
     static void ClearScreen(void);
 

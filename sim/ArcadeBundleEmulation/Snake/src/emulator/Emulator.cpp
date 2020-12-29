@@ -31,3 +31,7 @@ uint32_t millis(void) {
     delay(10);
     return (uint32_t)GetTickCount64();
 }
+
+void AB_HAL_AnalogPrescaler(uint8_t _prescaler) {
+
+}

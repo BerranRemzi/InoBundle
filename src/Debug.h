@@ -2,7 +2,7 @@
 #include "Arduino.h"
 #define BUFFER_SIZE 5
 
-#define DEBUG
+//#define DEBUG
 
 #ifdef DEBUG
 #define TASK_ENTER(INPUT) Task_Enter(INPUT)

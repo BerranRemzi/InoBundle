@@ -22,6 +22,8 @@ inline void toggleBit(uint8_t *_data, uint8_t _pos)
 
 #define SCREEN_WIDTH 8
 #define SCREEN_HEIGHT 8
+#define COL_SIZE 8
+#define ROW_SIZE 8
 
 #define OUT_OF_SCREEN -1
 

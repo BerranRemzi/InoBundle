@@ -5,8 +5,8 @@
 #include "Buttons.h"
 #include "ArcadeBundle.h"
 
-#include "Keyboard.h"
 #include "Mouse.h"
+#include "Keyboard.h"
 
 enum MODE
 {

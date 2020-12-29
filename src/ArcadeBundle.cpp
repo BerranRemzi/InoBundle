@@ -95,6 +95,40 @@ void Game::SetRow(uint8_t _y, uint8_t _value)
     }
 }
 
+void Game::SetColumn(uint8_t _x, uint8_t _value)
+{
+    for (int y = 0; y < 8; y++)
+    {
+        if ((_value >> y) & 1U)
+        {
+            AB_screen[y][_x] = LED_ON;
+        }
+        else
+        {
+            AB_screen[y][_x] = LED_OFF;
+        }
+    }
+}
+void Game::Transform(uint8_t _action) {
+    switch (_action) {
+    case TSL: 
+        for (int8_t x = 0; x < SCREEN_WIDTH; x++) {
+            for (int8_t y = 0; y < SCREEN_HEIGHT; y++)
+            {
+                if (x == (SCREEN_WIDTH - 1)) {
+                    AB_screen[y][x] = 0;
+                }
+                else {
+                    AB_screen[y][x] = AB_screen[y][x + 1];
+                }               
+            }
+        }
+        
+        break;
+    default: break;
+    }
+}
+
 bool Game::ClearAnimation(void)
 {
     for (int8_t x = SCREEN_WIDTH - 1; x >= 0; x--)

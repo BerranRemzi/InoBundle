@@ -9,6 +9,7 @@
 #include "Demo.h"
 #include "Calculator.h"
 #include "Joystick.h"
+#include "Text.h"
 
 #include "Buttons.h"
 #include "xOS.h"
@@ -18,12 +19,13 @@ enum Game_t
   GAME_SNAKE,
   GAME_BRICK,
   GAME_INVADER,
-  GAME_FLAPPY,
-  GAME_TETRIS,
+  //GAME_FLAPPY,
+  //GAME_TETRIS,
   //GAME_SQUARE,  //not implemented yet
   GAME_DEMO,
   GAME_CALCULATOR,
   GAME_JOYSTICK,
+  GAME_TEXT,
   GAME_COUNT
 };
 
@@ -37,12 +39,13 @@ enum TaskNames
 void Task_Buttons(void);
 void Task_Game(void);
 void Task_Screen(void);
+void Task_Debug(void);
 
 Task_t TaskStruct[5];
 
-Game *game = new Invader();
+Game *game = new Text();
 
-uint8_t currGame = GAME_DEMO;
+uint8_t currGame = GAME_TEXT;
 
 void setup()
 {
@@ -58,6 +61,7 @@ void setup()
   xTaskCreate(&Task_Game, 10);
   xTaskCreate(&Task_Debug, 100);
   xTaskCreate(&PowerManager_Task, 1000);
+  PowerManager_SetSleepTimeout(60);
 }
 
 void loop()
@@ -83,7 +87,7 @@ void Task_Buttons(void)
 {
   TASK_ENTER(TASK_BUTTONS);
   KB_ReadAll();
-  if (KB_IsKeyDownLong(VK_Y, 100))
+  if (KB_IsSinglePressed(VK_NEXT))
   { /* wait for 100ticks = 1000ms */
     game->ClearDisplay();
     free(game);
@@ -98,12 +102,12 @@ void Task_Buttons(void)
       case GAME_INVADER:
         game = new Invader();
         break;
-      case GAME_FLAPPY:
-        game = new Flappy();
-        break;
-      case GAME_TETRIS:
-        game = new Tetris();
-        break;
+      //case GAME_FLAPPY:
+      //  game = new Flappy();
+      //  break;
+      //case GAME_TETRIS:
+      //  game = new Tetris();
+      //  break;
       case GAME_DEMO:
         game = new Demo();
         break;
@@ -113,11 +117,17 @@ void Task_Buttons(void)
       case GAME_JOYSTICK:
         game = new Joystick();
         break;
+      case GAME_TEXT:
+        game = new Text();
+        break;
       default:
         game = new Snake();
         currGame = 0;
         break;
     }
+  }
+  if(KB_IsKeyDownLong(VK_NEXT, 200)){
+    PowerManager_GotoSleep();
   }
   TASK_LEAVE(TASK_BUTTONS);
 }
