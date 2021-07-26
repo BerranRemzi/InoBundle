@@ -1,7 +1,0 @@
-{
-    "board": "arduino:avr:leonardo",
-    "port": "/dev/ttyUSB0",
-    "sketch": "examples/InoBundle/InoBundle.ino",
-    "output": "./build",
-    "programmer": "ArduinoISP"
-}

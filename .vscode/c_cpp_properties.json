@@ -1,36 +1,60 @@
+//
+// !!! WARNING !!! AUTO-GENERATED FILE!
+// PLEASE DO NOT MODIFY IT AND USE "platformio.ini":
+// https://docs.platformio.org/page/projectconf/section_env_build.html#build-flags
+//
 {
     "configurations": [
         {
-            "name": "Win32",
+            "name": "PlatformIO",
             "includePath": [
-                "C:\\Users\\Berran\\AppData\\Local\\Arduino15\\packages\\arduino\\tools\\**",
-                "C:\\Users\\Berran\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.2\\**",
-                "/home/user/Documents/arduino-1.8.13/hardware/arduino/avr/**",
-                "/home/user/Documents/arduino-1.8.13/tools/**"
+                "C:/Users/PC/Documents/PlatformIO/Projects/InoBundle/include",
+                "C:/Users/PC/Documents/PlatformIO/Projects/InoBundle/src",
+                "C:/Users/PC/Documents/PlatformIO/Projects/InoBundle/.pio/libdeps/leonardo/TimerOne",
+                "C:/Users/PC/.platformio/packages/framework-arduino-avr/cores/arduino",
+                "C:/Users/PC/.platformio/packages/framework-arduino-avr/variants/leonardo",
+                "C:/Users/PC/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
+                "C:/Users/PC/.platformio/packages/framework-arduino-avr/libraries/HID/src",
+                "C:/Users/PC/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
+                "C:/Users/PC/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
+                "C:/Users/PC/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
+                ""
             ],
-            "forcedInclude": [
-                "C:\\Users\\Berran\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.2\\cores\\arduino\\Arduino.h",
-                "/home/user/Documents/arduino-1.8.13/hardware/arduino/avr/cores/arduino/Arduino.h"
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true,
+                "path": [
+                    "C:/Users/PC/Documents/PlatformIO/Projects/InoBundle/include",
+                    "C:/Users/PC/Documents/PlatformIO/Projects/InoBundle/src",
+                    "C:/Users/PC/Documents/PlatformIO/Projects/InoBundle/.pio/libdeps/leonardo/TimerOne",
+                    "C:/Users/PC/.platformio/packages/framework-arduino-avr/cores/arduino",
+                    "C:/Users/PC/.platformio/packages/framework-arduino-avr/variants/leonardo",
+                    "C:/Users/PC/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
+                    "C:/Users/PC/.platformio/packages/framework-arduino-avr/libraries/HID/src",
+                    "C:/Users/PC/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
+                    "C:/Users/PC/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
+                    "C:/Users/PC/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
+                    ""
+                ]
+            },
+            "defines": [
+                "PLATFORMIO=50101",
+                "ARDUINO_AVR_LEONARDO",
+                "F_CPU=16000000L",
+                "ARDUINO_ARCH_AVR",
+                "ARDUINO=10808",
+                "USB_VID=0x2341",
+                "USB_PID=0x8036",
+                "USB_PRODUCT=\"Arduino Leonardo\"",
+                "USB_MANUFACTURER=\"Arduino\"",
+                "__AVR_ATmega32U4__",
+                ""
             ],
-            "intelliSenseMode": "msvc-x64",
-            "compilerPath": "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.24.28314/bin/Hostx64/x64/cl.exe",
             "cStandard": "c11",
-            "cppStandard": "c++17"
-        },
-        {
-            "name": "Linux",
-            "includePath": [
-                "/home/user/Documents/arduino-1.8.13/tools/**",
-                "/home/user/Documents/arduino-1.8.13/hardware/arduino/avr/**",
-                "${workspaceFolder}/**"
-            ],
-            "defines": [],
-            "compilerPath": "/usr/bin/gcc",
-            "cStandard": "gnu11",
-            "cppStandard": "gnu++14",
-            "intelliSenseMode": "clang-x64",
-            "forcedInclude": [
-                "/home/user/Documents/arduino-1.8.13/hardware/arduino/avr/cores/arduino/Arduino.h"
+            "cppStandard": "c++11",
+            "compilerPath": "C:/Users/PC/.platformio/packages/toolchain-atmelavr/bin/avr-gcc.exe",
+            "compilerArgs": [
+                "-mmcu=atmega32u4",
+                ""
             ]
         }
     ],
