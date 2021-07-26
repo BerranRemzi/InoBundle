@@ -5,6 +5,11 @@ void Start()
   GenerateFood();
 }
 
+void Update()
+{
+  MoveSnake();
+}
+
 void MoveSnake()
 {
 }

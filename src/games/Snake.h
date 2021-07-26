@@ -2,12 +2,15 @@
 
 struct Snake_t
 {
-    int snakeX = 0;
-    int snakeY = 0;
-    int size = 1;
+    uint8_t snakeX;
+    uint8_t snakeY;
+    uint8_t foodX;
+    uint8_t foodY;
+    uint8_t size;
 };
 
 void Start();
+void Update();
 void MoveSnake();
 void GenerateFood();
 void ConsumeFood();
