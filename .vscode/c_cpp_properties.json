@@ -8,9 +8,9 @@
         {
             "name": "PlatformIO",
             "includePath": [
-                "C:/Users/PC/Documents/PlatformIO/Projects/InoBundle/include",
-                "C:/Users/PC/Documents/PlatformIO/Projects/InoBundle/src",
-                "C:/Users/PC/Documents/PlatformIO/Projects/InoBundle/.pio/libdeps/leonardo/TimerOne",
+                "C:/Users/PC/Documents/GitHub/InoBundle/include",
+                "C:/Users/PC/Documents/GitHub/InoBundle/src",
+                "C:/Users/PC/Documents/GitHub/InoBundle/.pio/libdeps/leonardo/TimerOne",
                 "C:/Users/PC/.platformio/packages/framework-arduino-avr/cores/arduino",
                 "C:/Users/PC/.platformio/packages/framework-arduino-avr/variants/leonardo",
                 "C:/Users/PC/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
@@ -23,9 +23,9 @@
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
                 "path": [
-                    "C:/Users/PC/Documents/PlatformIO/Projects/InoBundle/include",
-                    "C:/Users/PC/Documents/PlatformIO/Projects/InoBundle/src",
-                    "C:/Users/PC/Documents/PlatformIO/Projects/InoBundle/.pio/libdeps/leonardo/TimerOne",
+                    "C:/Users/PC/Documents/GitHub/InoBundle/include",
+                    "C:/Users/PC/Documents/GitHub/InoBundle/src",
+                    "C:/Users/PC/Documents/GitHub/InoBundle/.pio/libdeps/leonardo/TimerOne",
                     "C:/Users/PC/.platformio/packages/framework-arduino-avr/cores/arduino",
                     "C:/Users/PC/.platformio/packages/framework-arduino-avr/variants/leonardo",
                     "C:/Users/PC/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",

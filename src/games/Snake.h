@@ -1,7 +1,16 @@
 #include "../InoBundle.h"
 
-struct Snake
+struct Snake_t
 {
-    int x = 0;
-    int y = 0;
+    uint8_t snakeX;
+    uint8_t snakeY;
+    uint8_t foodX;
+    uint8_t foodY;
+    uint8_t size;
 };
+
+void Start();
+void Update();
+void MoveSnake();
+void GenerateFood();
+void ConsumeFood();
