@@ -16,6 +16,7 @@ void Init(void)
         pinMode(col[x], OUTPUT);
     }
 
+    Clear();
     UpdateScreen();
 
     Timer1.initialize(UPDATE_PERIOD_US);
@@ -78,6 +79,14 @@ void Clear(void)
     {
         screen[y] = 0x00;
     }
+}
+
+boolean GetButtonDown(Button_t input){
+    return false;
+}
+
+boolean GetButton(Button_t input){
+    return false;
 }
 
 #include "wiring_private.h"

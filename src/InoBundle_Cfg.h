@@ -22,21 +22,18 @@ const int button[][2] = {
     {0x06, 439},
     {0x0A, 411}};
 
-enum
+typedef enum
 {
+    RIGHT_BTN_GROUP,
     UP_BTN,
     DOWN_BTN,
     LEFT_BTN,
-    RIGHT_BTN
-};
-
-enum
-{
+    RIGHT_BTN,
+    LEFT_BTN_GROUP,
     A_BTN,
     B_BTN,
     X_BTN,
     Y_BTN
-};
-
+}Button_t;
 
 #endif /* INO_BUNDLE_CFG_H */

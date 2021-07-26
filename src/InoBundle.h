@@ -4,8 +4,6 @@
 #include "Arduino.h"
 #include "InoBundle_Cfg.h"
 
-
-
 #ifdef LED_1088
 #define ROW_ON LOW
 #define ROW_OFF HIGH
@@ -22,5 +20,7 @@ void Pixel(int x, int y, bool value);
 void WriteRow(int y, uint16_t value);
 void WriteCol(int x, uint16_t value);
 void Clear(void);
+boolean GetButtonDown(Button_t input);
+boolean GetButton(Button_t input);
 
 #endif /* INO_BUNDLE_H */
