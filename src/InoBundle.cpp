@@ -23,6 +23,17 @@ void Init(void)
     Timer1.attachInterrupt(UpdateScreen);
 }
 
+unsigned long previousTaskMillis = 0;
+void Task(void)
+{
+    if ((unsigned long)(millis() - previousTaskMillis) > TASK_INTERVAL_MS)
+    {
+        previousTaskMillis = millis();
+        ReadButtons();
+        Serial.println(GetButton(LEFT_BTN));
+    }
+}
+
 void UpdateScreen(void)
 {
     static uint8_t y = 0;
@@ -81,12 +92,62 @@ void Clear(void)
     }
 }
 
-boolean GetButtonDown(Button_t input){
+boolean GetButtonDown(Button_t input)
+{
     return false;
 }
+uint16_t decodedButton[2];
+boolean GetButton(Button_t input)
+{
+    uint8_t value = input;
+    boolean returnValue = false;
+    if (value > LEFT_BTN_GROUP)
+    {
+        value -= LEFT_BTN_GROUP + 1;
+        returnValue = decodedButton[0] >> value & 1U;
+    }
+    else
+    {
+        value--;
+        returnValue = decodedButton[1] >> value & 1U;
+    }
 
-boolean GetButton(Button_t input){
-    return false;
+    return returnValue;
+}
+
+
+extern const int button[][2];
+
+uint8_t AnalogButton_Compute(uint16_t _newSample)
+{
+    int16_t lastDiff = 0;
+    uint8_t returnValue = 0;
+    for (uint8_t p = 0; p < 9; p++)
+    {
+        int16_t newDiff = (int16_t)abs((int16_t)_newSample - (int16_t)button[p][1]);
+        if ((lastDiff >= newDiff) || (p == 0))
+        {
+            lastDiff = newDiff;
+            returnValue = button[p][0];
+        }
+    }
+    return returnValue;
+}
+
+void ReadButtons(void)
+{
+    static uint8_t buttonGroup = 0;
+
+    decodedButton[buttonGroup] = AnalogButton_Compute(analogRead(adc[buttonGroup]));
+
+    if (0 == buttonGroup)
+    {
+        buttonGroup = 1;
+    }
+    else
+    {
+        buttonGroup = 0;
+    }
 }
 
 #include "wiring_private.h"
@@ -96,62 +157,68 @@ extern uint8_t analog_reference;
 
 int analogRead_Custom(uint8_t pin)
 {
-	uint8_t low, high;
+    uint8_t low, high;
 
 #if defined(analogPinToChannel)
 #if defined(__AVR_ATmega32U4__)
-	if (pin >= 18) pin -= 18; // allow for channel or pin numbers
+    if (pin >= 18)
+        pin -= 18; // allow for channel or pin numbers
 #endif
-	pin = analogPinToChannel(pin);
+    pin = analogPinToChannel(pin);
 #elif defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
-	if (pin >= 54) pin -= 54; // allow for channel or pin numbers
+    if (pin >= 54)
+        pin -= 54; // allow for channel or pin numbers
 #elif defined(__AVR_ATmega32U4__)
-	if (pin >= 18) pin -= 18; // allow for channel or pin numbers
+    if (pin >= 18)
+        pin -= 18; // allow for channel or pin numbers
 #elif defined(__AVR_ATmega1284__) || defined(__AVR_ATmega1284P__) || defined(__AVR_ATmega644__) || defined(__AVR_ATmega644A__) || defined(__AVR_ATmega644P__) || defined(__AVR_ATmega644PA__)
-	if (pin >= 24) pin -= 24; // allow for channel or pin numbers
+    if (pin >= 24)
+        pin -= 24; // allow for channel or pin numbers
 #else
-	if (pin >= 14) pin -= 14; // allow for channel or pin numbers
+    if (pin >= 14)
+        pin -= 14; // allow for channel or pin numbers
 #endif
 
 #if defined(ADCSRB) && defined(MUX5)
-	// the MUX5 bit of ADCSRB selects whether we're reading from channels
-	// 0 to 7 (MUX5 low) or 8 to 15 (MUX5 high).
-	ADCSRB = (ADCSRB & ~(1 << MUX5)) | (((pin >> 3) & 0x01) << MUX5);
+    // the MUX5 bit of ADCSRB selects whether we're reading from channels
+    // 0 to 7 (MUX5 low) or 8 to 15 (MUX5 high).
+    ADCSRB = (ADCSRB & ~(1 << MUX5)) | (((pin >> 3) & 0x01) << MUX5);
 #endif
-  
-	// set the analog reference (high two bits of ADMUX) and select the
-	// channel (low 4 bits).  this also sets ADLAR (left-adjust result)
-	// to 0 (the default).
+
+    // set the analog reference (high two bits of ADMUX) and select the
+    // channel (low 4 bits).  this also sets ADLAR (left-adjust result)
+    // to 0 (the default).
 #if defined(ADMUX)
 #if defined(__AVR_ATtiny25__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny85__)
-	ADMUX = (analog_reference << 4) | (pin & 0x07);
+    ADMUX = (analog_reference << 4) | (pin & 0x07);
 #else
-	ADMUX = (analog_reference << 6) | (pin & 0x07);
+    ADMUX = (analog_reference << 6) | (pin & 0x07);
 #endif
 #endif
 
-	// without a delay, we seem to read from the wrong channel
-	//delay(1);
+    // without a delay, we seem to read from the wrong channel
+    //delay(1);
 
 #if defined(ADCSRA) && defined(ADCL)
-	// start the conversion
-	sbi(ADCSRA, ADSC);
+    // start the conversion
+    sbi(ADCSRA, ADSC);
 
-	// ADSC is cleared when the conversion finishes
-	while (bit_is_set(ADCSRA, ADSC));
+    // ADSC is cleared when the conversion finishes
+    while (bit_is_set(ADCSRA, ADSC))
+        ;
 
-	// we have to read ADCL first; doing so locks both ADCL
-	// and ADCH until ADCH is read.  reading ADCL second would
-	// cause the results of each conversion to be discarded,
-	// as ADCL and ADCH would be locked when it completed.
-	low  = ADCL;
-	high = ADCH;
+    // we have to read ADCL first; doing so locks both ADCL
+    // and ADCH until ADCH is read.  reading ADCL second would
+    // cause the results of each conversion to be discarded,
+    // as ADCL and ADCH would be locked when it completed.
+    low = ADCL;
+    high = ADCH;
 #else
-	// we dont have an ADC, return 0
-	low  = 0;
-	high = 0;
+    // we dont have an ADC, return 0
+    low = 0;
+    high = 0;
 #endif
 
-	// combine the two bytes
-	return (high << 8) | low;
+    // combine the two bytes
+    return (high << 8) | low;
 }

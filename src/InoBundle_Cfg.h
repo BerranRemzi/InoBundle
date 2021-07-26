@@ -1,6 +1,8 @@
 #ifndef INO_BUNDLE_CFG_H
 #define INO_BUNDLE_CFG_H
 
+#define TASK_INTERVAL_MS 10
+
 #define UPDATE_PERIOD_US 1000
 #define SCREEN_HEIGHT 8
 #define SCREEN_WIDTH 8
@@ -25,15 +27,16 @@ const int button[][2] = {
 typedef enum
 {
     RIGHT_BTN_GROUP,
-    UP_BTN,
-    DOWN_BTN,
     LEFT_BTN,
     RIGHT_BTN,
+    DOWN_BTN,
+    UP_BTN,
     LEFT_BTN_GROUP,
     A_BTN,
     B_BTN,
     X_BTN,
-    Y_BTN
-}Button_t;
+    Y_BTN,
+    END_BTN_GROUP
+} Button_t;
 
 #endif /* INO_BUNDLE_CFG_H */

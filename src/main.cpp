@@ -6,10 +6,12 @@
 void setup()
 {
   Init();
+  Init_Tetris();
 }
 
 void loop()
 {
-  //Task_Tetris();
-  Task_Demo();
+  Task_Tetris();
+  //Task_Demo();
+  Task();
 }

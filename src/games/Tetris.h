@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 
+void Init_Tetris(void);
 void Task_Tetris(void);
 
 #endif /* TETRIS_H */
