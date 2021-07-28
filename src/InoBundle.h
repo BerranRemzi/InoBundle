@@ -24,5 +24,6 @@ void Clear(void);
 boolean GetButtonDown(Button_t input);
 boolean GetButton(Button_t input);
 void ReadButtons(void);
+void ComputeButtonParameter(Button_t input, uint8_t * value, uint8_t * btnGroup);
 
 #endif /* INO_BUNDLE_H */

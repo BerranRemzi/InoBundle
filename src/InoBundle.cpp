@@ -30,7 +30,6 @@ void Task(void)
     {
         previousTaskMillis = millis();
         ReadButtons();
-        Serial.println(GetButton(LEFT_BTN));
     }
 }
 
@@ -92,30 +91,89 @@ void Clear(void)
     }
 }
 
+uint16_t decodedButton[2][3];
 boolean GetButtonDown(Button_t input)
 {
-    return false;
-}
-uint16_t decodedButton[2];
-boolean GetButton(Button_t input)
-{
     uint8_t value = input;
+    uint8_t btnGroup = 0;
     boolean returnValue = false;
+    boolean val0;
+    boolean val1;
+    boolean val2;
     if (value > LEFT_BTN_GROUP)
     {
         value -= LEFT_BTN_GROUP + 1;
-        returnValue = decodedButton[0] >> value & 1U;
+        btnGroup = 0;
     }
     else
     {
         value--;
-        returnValue = decodedButton[1] >> value & 1U;
+        btnGroup = 1;
+    }
+    val0 = decodedButton[btnGroup][0] >> value & 1U;
+    val1 = decodedButton[btnGroup][1] >> value & 1U;
+    val2 = decodedButton[btnGroup][2] >> value & 1U;   
+    returnValue = val0 && val1 && !val2;
+
+    if(true == returnValue){
+        decodedButton[btnGroup][2] |= 1U << value;
     }
 
     return returnValue;
 }
+boolean GetButton(Button_t input)
+{
+    uint8_t value = input;
+    uint8_t btnGroup = 0;
+    boolean returnValue = false;
+    boolean val0;
+    boolean val1;
+    boolean val2;
+    if (value > LEFT_BTN_GROUP)
+    {
+        value -= LEFT_BTN_GROUP + 1;
+        btnGroup = 0;
+    }
+    else
+    {
+        value--;
+        btnGroup = 1;
+    }
+    val0 = decodedButton[btnGroup][0] >> value & 1U;
+    val1 = decodedButton[btnGroup][1] >> value & 1U;
+    val2 = decodedButton[btnGroup][2] >> value & 1U;   
 
+    return val0 && val1;
+}
 
+#if 0
+boolean GetButton(Button_t input)
+{
+    uint8_t value = 0;
+    uint8_t btnGroup = 0;
+    boolean val0;
+    ComputeButtonParameter(input, &value, &btnGroup);
+    
+    val0 = (decodedButton[btnGroup][0] >> value) & 1U;
+    //boolean val1 = decodedButton[btnGroup][1] >> value & 1U;
+    //boolean val2 = decodedButton[btnGroup][2] >> value & 1U;
+
+    return val0;
+}
+#endif
+
+void ComputeButtonParameter(Button_t input, uint8_t * value, uint8_t * btnGroup){
+    if ((*value) > (uint8_t)LEFT_BTN_GROUP)
+    {
+        (*value) -= (uint8_t)LEFT_BTN_GROUP + 1u;
+        (*btnGroup) = 0;
+    }
+    else
+    {
+        (*value)--;
+        (*btnGroup) = 1;
+    }
+}
 extern const int button[][2];
 
 uint8_t AnalogButton_Compute(uint16_t _newSample)
@@ -137,9 +195,10 @@ uint8_t AnalogButton_Compute(uint16_t _newSample)
 void ReadButtons(void)
 {
     static uint8_t buttonGroup = 0;
-
-    decodedButton[buttonGroup] = AnalogButton_Compute(analogRead(adc[buttonGroup]));
-
+    decodedButton[buttonGroup][2] = decodedButton[buttonGroup][1];
+    decodedButton[buttonGroup][1] = decodedButton[buttonGroup][0];
+    decodedButton[buttonGroup][0] = AnalogButton_Compute(analogRead(adc[buttonGroup]));
+    
     if (0 == buttonGroup)
     {
         buttonGroup = 1;
@@ -149,7 +208,7 @@ void ReadButtons(void)
         buttonGroup = 0;
     }
 }
-
+#if 0
 #include "wiring_private.h"
 #include "pins_arduino.h"
 
@@ -222,3 +281,4 @@ int analogRead_Custom(uint8_t pin)
     // combine the two bytes
     return (high << 8) | low;
 }
+#endif

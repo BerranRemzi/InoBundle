@@ -32,9 +32,9 @@ typedef enum
     DOWN_BTN,
     UP_BTN,
     LEFT_BTN_GROUP,
-    A_BTN,
     B_BTN,
     X_BTN,
+    A_BTN,
     Y_BTN,
     END_BTN_GROUP
 } Button_t;
