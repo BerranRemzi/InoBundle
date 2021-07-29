@@ -81,6 +81,9 @@ void GenerateFood(Snake_t* snake)
 {
     snake->foodX = (uint8_t)random(SCREEN_WIDTH);
     snake->foodY = (uint8_t)random(SCREEN_HEIGHT);
+    
+    // Draw the food
+    Pixel(snake->foodX, snake->foodY, HIGH);
 }
 
 void ConsumeFood(Snake_t* snake)
