@@ -70,6 +70,10 @@ void Pixel(int x, int y, bool state)
     }
 }
 
+boolean GetPixel(int x, int y) {
+    return false;
+}
+
 void WriteRow(int y, uint16_t value)
 {
     screen[y] = value;
