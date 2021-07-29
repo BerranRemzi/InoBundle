@@ -23,14 +23,9 @@ void Init(void)
     Timer1.attachInterrupt(UpdateScreen);
 }
 
-unsigned long previousTaskMillis = 0;
 void Task(void)
 {
-    if ((unsigned long)(millis() - previousTaskMillis) > TASK_INTERVAL_MS)
-    {
-        previousTaskMillis = millis();
-        ReadButtons();
-    }
+
 }
 
 void UpdateScreen(void)

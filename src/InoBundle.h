@@ -14,6 +14,14 @@
 #define COLUMN_ON LOW
 #endif
 
+#define TASK(NAME, FUNCTION, PERIOD)                     \
+  static uint32_t millis##NAME = 0;                      \
+  if ((unsigned long)(millis() - millis##NAME) > PERIOD) \
+  {                                                      \
+    millis##NAME = millis();                             \
+    FUNCTION;                                            \
+  }
+
 void Init(void);
 void Task(void);
 void UpdateScreen(void);
