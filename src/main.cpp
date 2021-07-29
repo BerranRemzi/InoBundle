@@ -6,17 +6,23 @@
 
 Snake_t* snake;
 
+Snake_t tempSnake;
 void setup()
 {
+  snake = &tempSnake;
   Init();
   //Init_Tetris();
   Start(snake);
 }
-
+uint32_t previousUpdateMillis = 0;
 void loop()
 {
   //Task_Tetris();
   //Task_Demo();
   Task();
-  Update(snake);
+  if ((unsigned long)(millis() - previousUpdateMillis) > 300)
+    {
+        previousUpdateMillis = millis();
+        Update(snake);
+    }
 }

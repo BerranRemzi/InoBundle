@@ -71,7 +71,7 @@ void Pixel(int x, int y, bool state)
 }
 
 boolean GetPixel(int x, int y) {
-    return false;
+    return ((screen[y] >> x) & 1U);
 }
 
 void WriteRow(int y, uint16_t value)
@@ -129,7 +129,6 @@ boolean GetButton(Button_t input)
 {
     uint8_t value = input;
     uint8_t btnGroup = 0;
-    boolean returnValue = false;
     boolean val0;
     boolean val1;
     boolean val2;

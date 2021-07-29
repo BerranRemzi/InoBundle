@@ -37,10 +37,26 @@ void Update(Snake_t* snake)
 
 void MoveSnake(Snake_t* snake)
 {
-    if (GetButtonDown(Button_t::UP_BTN)    && snake->movementY !=  1) snake->movementY = -1;
-    if (GetButtonDown(Button_t::DOWN_BTN)  && snake->movementY != -1) snake->movementY =  1;
-    if (GetButtonDown(Button_t::LEFT_BTN)  && snake->movementX !=  1) snake->movementX = -1;
-    if (GetButtonDown(Button_t::RIGHT_BTN) && snake->movementX != -1) snake->movementX =  1;
+    if (GetButton(Button_t::UP_BTN) && snake->movementY != 1)
+    {
+        snake->movementY = -1;
+        snake->movementX = 0;
+    }
+    if (GetButton(Button_t::DOWN_BTN) && snake->movementY != -1)
+    {
+        snake->movementY = 1;
+        snake->movementX = 0;
+    }
+    if (GetButton(Button_t::LEFT_BTN) && snake->movementX != 1)
+    {
+        snake->movementX = -1;
+        snake->movementY = 0;
+    }
+    if (GetButton(Button_t::RIGHT_BTN) && snake->movementX != -1)
+    {
+        snake->movementX = 1;
+        snake->movementY = 0;
+    }
 
     int8_t headX = snake->positionX[snake->size - 1];
     int8_t headY = snake->positionY[snake->size - 1];
@@ -50,8 +66,8 @@ void MoveSnake(Snake_t* snake)
     // Clamp snake head position
     headX += snake->movementX;
     headY += snake->movementY;
-    MirrorClamp(headX, 0, SCREEN_WIDTH);
-    MirrorClamp(headY, 0, SCREEN_HEIGHT);
+    MirrorClamp(&headX, 0, SCREEN_WIDTH);
+    MirrorClamp(&headY, 0, SCREEN_HEIGHT);
 
     if (headX == snake->foodX && headY == snake->foodY) {
         ConsumeFood(snake);
@@ -81,7 +97,7 @@ void GenerateFood(Snake_t* snake)
 {
     snake->foodX = (uint8_t)random(SCREEN_WIDTH);
     snake->foodY = (uint8_t)random(SCREEN_HEIGHT);
-    
+
     // Draw the food
     Pixel(snake->foodX, snake->foodY, HIGH);
 }
