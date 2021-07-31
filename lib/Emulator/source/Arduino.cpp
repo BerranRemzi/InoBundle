@@ -6,7 +6,7 @@
 #include <Windows.h>
 #include <ctime>
 
-uint32_t millisTime = 0;
+uint32_t millisTime = 1;
 
 SoftwareSerial::SoftwareSerial(){
 }
@@ -38,6 +38,9 @@ int Test(int a, int b){
 	return (a + b);
 };
 
+void incrementMillis(uint32_t input){
+	millisTime+=input;
+}
 uint32_t millis(){
 	return millisTime;
 }

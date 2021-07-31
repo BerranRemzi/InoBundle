@@ -3,6 +3,7 @@
 
 //#include <stdio.h>
 #include <stdint.h>
+#include <stdbool.h>
 #include <graphics.h>
 
 #define LOW	0
@@ -26,6 +27,7 @@ extern SoftwareSerial Serial;
 
 void setup();
 void loop();
+void incrementMillis(uint32_t input);
 uint32_t millis();
 int random(int _max);
 void randomSeed(int16_t);

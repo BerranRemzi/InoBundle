@@ -1,7 +1,7 @@
 #include "Arduino.h"
 #include "InoBundle.h"
 #include "InoBundle_Cfg.h"
-
+#include <stdint.h>
 #ifdef ARDUINO
 #include <TimerOne.h>
 #include <avr/wdt.h>
@@ -102,10 +102,17 @@ void Clear(void)
     }
 }
 
+volatile uint16_t * GetScreenBuffer(int *width, int *height){
+    *width = SCREEN_WIDTH;
+    *height = SCREEN_HEIGHT;
+
+    return (screen);
+}
+
 uint16_t decodedButton[2][3];
 
 #ifdef ARDUINO
-boolean GetButtonDown(Button_t input)
+bool GetButtonDown(Button_t input)
 {
     uint8_t value = input;
     uint8_t btnGroup = 0;
@@ -134,7 +141,7 @@ boolean GetButtonDown(Button_t input)
 
     return returnValue;
 }
-boolean GetButton(Button_t input)
+bool GetButton(Button_t input)
 {
     uint8_t value = input;
     uint8_t btnGroup = 0;

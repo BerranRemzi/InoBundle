@@ -3,6 +3,8 @@
 
 #include "Arduino.h"
 #include "InoBundle_Cfg.h"
+#include <stdint.h>
+#include <stdbool.h>
 
 #ifdef LED_1088
 #define ROW_ON LOW
@@ -25,11 +27,14 @@
 void Init(void);
 void InoBundle(void);
 void UpdateScreen(void);
+
 void Pixel(int x, int y, bool value);
 bool GetPixel(int x, int y);
 void WriteRow(int y, uint16_t value);
 void WriteCol(int x, uint16_t value);
 void Clear(void);
+volatile uint16_t * GetScreenBuffer(int *width, int *height);
+
 bool GetButtonDown(Button_t input);
 bool GetButton(Button_t input);
 void ReadButtons(void);

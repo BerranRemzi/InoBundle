@@ -5,14 +5,12 @@
 //#include "games/Demo.h"
 #include "games/Snake.h"
 
-Snake_t *snake;
+Snake_t *snake = new Snake_t;
 
 void setup()
 {
-  snake = (Snake_t*)malloc(sizeof(Snake_t));
+  Serial.begin(9600);
   Init();
-  //Pixel(0,0, HIGH);
-  //Pixel(7,7, HIGH);
   Start(snake);
 }
 
