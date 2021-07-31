@@ -9,9 +9,11 @@
 
 #define LED_1088
 
+#ifdef ARDUINO
 const uint8_t row[] = {4, 3, 8, 12, A4, 9, A3, 5};
 const uint8_t col[] = {2, A2, 13, 6, 10, 11, A5, 7};
 const uint8_t adc[] = {A0, A1};
+#endif
 
 const int button[][2] = {
     {0x00, 1023},

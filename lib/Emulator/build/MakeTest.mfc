@@ -1,0 +1,20 @@
+[CONFIG]
+AppType=1
+ProgLang=1
+OptmMinSize=0
+OptmShowWar=1
+OptmSpeed=0
+Libraries=-L ..\lib -lbgi -lgdi32 -lcomdlg32 -luuid -loleaut32 -lole32
+Includes=-I ..\include
+Others=
+Target=InoBundle.exe
+Compiler=0
+[FILES]
+File1=..\source\Arduino.cpp
+File2=..\source\Emulator.cpp
+File3=..\..\..\src\main.cpp
+File4=..\..\..\src\games\Snake.cpp
+File5=..\..\..\src\InoBundle.cpp
+File6=..\..\..\src\games\Snake.h
+File7=..\..\..\src\InoBundle.h
+File8=..\..\..\src\InoBundle_Cfg.h

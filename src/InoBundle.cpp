@@ -1,12 +1,19 @@
 #include "Arduino.h"
 #include "InoBundle.h"
 #include "InoBundle_Cfg.h"
+
+#ifdef ARDUINO
 #include <TimerOne.h>
+#include <avr/wdt.h>
+#endif
 
 volatile uint16_t screen[SCREEN_HEIGHT];
 
 void Init(void)
 {
+    #ifdef ARDUINO
+    wdt_enable(WDTO_250MS);
+
     for (int y = 0; y < SCREEN_HEIGHT; y++)
     {
         pinMode(row[y], OUTPUT);
@@ -15,21 +22,25 @@ void Init(void)
     {
         pinMode(col[x], OUTPUT);
     }
+    
+    Timer1.initialize(UPDATE_PERIOD_US);
+    Timer1.attachInterrupt(UpdateScreen);
+
+    #endif
 
     Clear();
     UpdateScreen();
-
-    Timer1.initialize(UPDATE_PERIOD_US);
-    Timer1.attachInterrupt(UpdateScreen);
 }
 
-void Task(void)
+void InoBundle(void)
 {
-
+    ReadButtons();
+    wdt_reset();
 }
 
 void UpdateScreen(void)
 {
+    #ifdef ARDUINO
     static uint8_t y = 0;
     digitalWrite(row[y], ROW_OFF);
 
@@ -51,6 +62,7 @@ void UpdateScreen(void)
         }
     }
     digitalWrite(row[y], ROW_ON);
+    #endif
 }
 
 void Pixel(int x, int y, bool state)
@@ -65,7 +77,7 @@ void Pixel(int x, int y, bool state)
     }
 }
 
-boolean GetPixel(int x, int y) {
+bool GetPixel(int x, int y) {
     return ((screen[y] >> x) & 1U);
 }
 
@@ -91,6 +103,8 @@ void Clear(void)
 }
 
 uint16_t decodedButton[2][3];
+
+#ifdef ARDUINO
 boolean GetButtonDown(Button_t input)
 {
     uint8_t value = input;
@@ -144,22 +158,6 @@ boolean GetButton(Button_t input)
     return val0 && val1;
 }
 
-#if 0
-boolean GetButton(Button_t input)
-{
-    uint8_t value = 0;
-    uint8_t btnGroup = 0;
-    boolean val0;
-    ComputeButtonParameter(input, &value, &btnGroup);
-    
-    val0 = (decodedButton[btnGroup][0] >> value) & 1U;
-    //boolean val1 = decodedButton[btnGroup][1] >> value & 1U;
-    //boolean val2 = decodedButton[btnGroup][2] >> value & 1U;
-
-    return val0;
-}
-#endif
-
 void ComputeButtonParameter(Button_t input, uint8_t * value, uint8_t * btnGroup){
     if ((*value) > (uint8_t)LEFT_BTN_GROUP)
     {
@@ -206,77 +204,11 @@ void ReadButtons(void)
         buttonGroup = 0;
     }
 }
-#if 0
-#include "wiring_private.h"
-#include "pins_arduino.h"
-
-extern uint8_t analog_reference;
-
-int analogRead_Custom(uint8_t pin)
-{
-    uint8_t low, high;
-
-#if defined(analogPinToChannel)
-#if defined(__AVR_ATmega32U4__)
-    if (pin >= 18)
-        pin -= 18; // allow for channel or pin numbers
-#endif
-    pin = analogPinToChannel(pin);
-#elif defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
-    if (pin >= 54)
-        pin -= 54; // allow for channel or pin numbers
-#elif defined(__AVR_ATmega32U4__)
-    if (pin >= 18)
-        pin -= 18; // allow for channel or pin numbers
-#elif defined(__AVR_ATmega1284__) || defined(__AVR_ATmega1284P__) || defined(__AVR_ATmega644__) || defined(__AVR_ATmega644A__) || defined(__AVR_ATmega644P__) || defined(__AVR_ATmega644PA__)
-    if (pin >= 24)
-        pin -= 24; // allow for channel or pin numbers
 #else
-    if (pin >= 14)
-        pin -= 14; // allow for channel or pin numbers
-#endif
 
-#if defined(ADCSRB) && defined(MUX5)
-    // the MUX5 bit of ADCSRB selects whether we're reading from channels
-    // 0 to 7 (MUX5 low) or 8 to 15 (MUX5 high).
-    ADCSRB = (ADCSRB & ~(1 << MUX5)) | (((pin >> 3) & 0x01) << MUX5);
-#endif
+bool GetButtonDown(Button_t input){return false;}
+bool GetButton(Button_t input){return false;}
+void ReadButtons(void){}
+void ComputeButtonParameter(Button_t input, uint8_t * value, uint8_t * btnGroup){}
 
-    // set the analog reference (high two bits of ADMUX) and select the
-    // channel (low 4 bits).  this also sets ADLAR (left-adjust result)
-    // to 0 (the default).
-#if defined(ADMUX)
-#if defined(__AVR_ATtiny25__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny85__)
-    ADMUX = (analog_reference << 4) | (pin & 0x07);
-#else
-    ADMUX = (analog_reference << 6) | (pin & 0x07);
-#endif
-#endif
-
-    // without a delay, we seem to read from the wrong channel
-    //delay(1);
-
-#if defined(ADCSRA) && defined(ADCL)
-    // start the conversion
-    sbi(ADCSRA, ADSC);
-
-    // ADSC is cleared when the conversion finishes
-    while (bit_is_set(ADCSRA, ADSC))
-        ;
-
-    // we have to read ADCL first; doing so locks both ADCL
-    // and ADCH until ADCH is read.  reading ADCL second would
-    // cause the results of each conversion to be discarded,
-    // as ADCL and ADCH would be locked when it completed.
-    low = ADCL;
-    high = ADCH;
-#else
-    // we dont have an ADC, return 0
-    low = 0;
-    high = 0;
-#endif
-
-    // combine the two bytes
-    return (high << 8) | low;
-}
-#endif
+#endif /* ARDUINO */

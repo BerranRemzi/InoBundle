@@ -23,15 +23,15 @@
   }
 
 void Init(void);
-void Task(void);
+void InoBundle(void);
 void UpdateScreen(void);
 void Pixel(int x, int y, bool value);
-boolean GetPixel(int x, int y);
+bool GetPixel(int x, int y);
 void WriteRow(int y, uint16_t value);
 void WriteCol(int x, uint16_t value);
 void Clear(void);
-boolean GetButtonDown(Button_t input);
-boolean GetButton(Button_t input);
+bool GetButtonDown(Button_t input);
+bool GetButton(Button_t input);
 void ReadButtons(void);
 void ComputeButtonParameter(Button_t input, uint8_t * value, uint8_t * btnGroup);
 
