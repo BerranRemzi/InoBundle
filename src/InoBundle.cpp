@@ -214,7 +214,24 @@ void ReadButtons(void)
 #else
 
 bool GetButtonDown(Button_t input){return false;}
-bool GetButton(Button_t input){return false;}
+extern int key;
+bool GetButton(Button_t input){
+
+    bool returnValue = false;
+    if(input == UP_BTN && key == KEY_UP){
+        returnValue = true;
+    }
+    if(input == DOWN_BTN && key == KEY_DOWN){
+        returnValue = true;
+    }
+    if(input == RIGHT_BTN && key == KEY_RIGHT){
+        returnValue = true;
+    }
+    if(input == LEFT_BTN && key == KEY_LEFT){
+        returnValue = true;
+    }
+    return (returnValue);
+}
 void ReadButtons(void){}
 void ComputeButtonParameter(Button_t input, uint8_t * value, uint8_t * btnGroup){}
 

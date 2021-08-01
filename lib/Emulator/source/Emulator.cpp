@@ -8,6 +8,7 @@ int height;
 int width;
 uint16_t *currentBuffer;
 uint16_t prevBuffer[16];
+int key = 0;
 
 extern uint16_t * GetScreenBuffer(int *width, int *height);
 extern uint16_t screen[];
@@ -28,8 +29,9 @@ int APIENTRY WinMain(
    if(false == Serial.isOpen()){
       FreeConsole();
    }
-   while(!kbhit()){
+   while(1){
       incrementMillis(10);
+      read_keys();
       loop();
       refreshScreen();
       delay(10);
@@ -50,7 +52,7 @@ void draw_dot(int _x, int _y, int _color) {
 
     setcolor(_color);
     setfillstyle(SOLID_FILL, _color);
-    fillellipse(y, x, size, size);
+    fillellipse(x, y, size, size);
 }
 
 void refreshScreen() {
@@ -68,4 +70,13 @@ void refreshScreen() {
         }
         prevBuffer[y] = screen[y];
     }
+}
+
+void read_keys(){
+    if(kbhit()){
+        getch();
+        key = getch();
+        printf("%d\n", key);
+    }
+    
 }
