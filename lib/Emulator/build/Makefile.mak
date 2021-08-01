@@ -3,14 +3,14 @@ TARGET=InoBundle.exe
 OBJS  =Arduino.o Emulator.o main.o Snake.o InoBundle.o
 
 MINGW =$(MINGW_PATH)
-LIBS  = -L"$(MINGW)\lib" -L ..\lib -lbgi -lgdi32 -lcomdlg32 -luuid -loleaut32 -lole32
+LIBS  = -L"$(MINGW)\lib" -L ..\lib -lbgi -lgdi32 -lcomdlg32 -luuid -loleaut32 -lole32 -static-libgcc -static-libstdc++ -static
 CFLAGS= -I"$(MINGW)\include" -I ..\include
 CPP   =g++.exe
 
 all: build
 
 build: compile
-	@$(CPP) -Wall -o $(TARGET) $(OBJS) $(LIBS)
+	@$(CPP) -Wall -s -O2 -o $(TARGET) $(OBJS) $(LIBS)
 
 compile: $(FILES)
-	@$(CPP) -Wall -c $(FILES) $(CFLAGS)
+	@$(CPP) -Wall -s -O2 -c $(FILES) $(CFLAGS)

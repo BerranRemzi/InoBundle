@@ -1,10 +1,10 @@
 [CONFIG]
 AppType=1
 ProgLang=1
-OptmMinSize=0
+OptmMinSize=1
 OptmShowWar=1
-OptmSpeed=0
-Libraries=-L ..\lib -lbgi -lgdi32 -lcomdlg32 -luuid -loleaut32 -lole32
+OptmSpeed=1
+Libraries=-L ..\lib -lbgi -lgdi32 -lcomdlg32 -luuid -loleaut32 -lole32 -static-libgcc -static-libstdc++ -static
 Includes=-I ..\include
 Others=
 Target=InoBundle.exe
