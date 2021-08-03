@@ -1,21 +1,38 @@
 #include "../InoBundle.h"
 
 #define SNAKE_MAX_SIZE (SCREEN_WIDTH * SCREEN_HEIGHT)
-#define SNAKE_START_SIZE 2
+#define SNAKE_START_SIZE 3
 
-struct Snake_t
+
+#define NO_MOVE     0
+#define RIGHT_MOVE  1
+#define LEFT_MOVE   -1
+#define UP_MOVE     -1
+#define DOWN_MOVE   1
+
+#define OUT_OF_SCREEN -1
+
+typedef struct{
+    int8_t X;
+    int8_t Y;
+}Position_t;
+
+typedef struct{
+    int8_t X;
+    int8_t Y;
+}Movement_t;
+
+typedef struct 
 {
-    int8_t positionX[SNAKE_MAX_SIZE];
-    int8_t positionY[SNAKE_MAX_SIZE];
+    Position_t position[SNAKE_MAX_SIZE];
 
-    int8_t movementX; 
-    int8_t movementY; 
+    Movement_t headDir;
+    Movement_t tailDir;
 
-    uint8_t foodX;
-    uint8_t foodY;
+    Position_t food;
 
     uint8_t size;
-};
+}Snake_t;
 
 void Start(Snake_t* snake);
 void Update(Snake_t* snake);
