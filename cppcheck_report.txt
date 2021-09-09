@@ -1,0 +1,44 @@
+src/InoBundle.cpp:68:31: style:inconclusive: Function 'Pixel' argument 3 names different: declaration 'value' definition 'state'. [funcArgNamesDifferent]
+void Pixel(int x, int y, bool state)
+                              ^
+src/InoBundle.h:31:31: note: Function 'Pixel' argument 3 names different: declaration 'value' definition 'state'.
+void Pixel(int x, int y, bool value);
+                              ^
+src/InoBundle.cpp:68:31: note: Function 'Pixel' argument 3 names different: declaration 'value' definition 'state'.
+void Pixel(int x, int y, bool state)
+                              ^
+src/InoBundle.cpp:57:52: style:inconclusive: Boolean expression '!(screen[y]>>x)' is used in bitwise operation. Did you mean '&&'? [bitwiseOnBoolean]
+            digitalWrite(col[x], !(screen[y] >> x) & 1U);
+                                                   ^
+src/InoBundle.cpp:57:52: style: Boolean result is used in bitwise operation. Clarify expression with parentheses. [clarifyCondition]
+            digitalWrite(col[x], !(screen[y] >> x) & 1U);
+                                                   ^
+src/InoBundle.cpp:163:10: style: Variable 'val2' is assigned a value that is never used. [unreadVariable]
+    val2 = decodedButton[btnGroup][2] >> value & 1U;
+         ^
+src/games/Tetris.cpp:331:13: style: The scope of the variable 'c' can be reduced. [variableScope]
+  int x, y, c;
+            ^
+src/InoBundle.cpp:236:0: style: The function 'ComputeButtonParameter' is never used. [unusedFunction]
+
+^
+src/InoBundle.cpp:216:0: style: The function 'GetButtonDown' is never used. [unusedFunction]
+
+^
+src/games/Tetris.cpp:518:0: style: The function 'Init_Tetris' is never used. [unusedFunction]
+
+^
+src/games/Demo.cpp:6:0: style: The function 'Task_Demo' is never used. [unusedFunction]
+
+^
+src/games/Tetris.cpp:535:0: style: The function 'Task_Tetris' is never used. [unusedFunction]
+
+^
+lib/Emulator/source/Arduino.cpp:37:0: style: The function 'Test' is never used. [unusedFunction]
+
+^
+lib/Emulator/source/Emulator.cpp:16:0: style: The function 'WinMain' is never used. [unusedFunction]
+
+^
+nofile:0:0: information: Cppcheck cannot find all the include files (use --check-config for details) [missingInclude]
+
