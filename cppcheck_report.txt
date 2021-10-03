@@ -1,28 +1,73 @@
-src/InoBundle.cpp:68:31: style:inconclusive: Function 'Pixel' argument 3 names different: declaration 'value' definition 'state'. [funcArgNamesDifferent]
+src/InoBundle.cpp:70:31: style:inconclusive: Function 'Pixel' argument 3 names different: declaration 'value' definition 'state'. [funcArgNamesDifferent]
 void Pixel(int x, int y, bool state)
                               ^
 src/InoBundle.h:31:31: note: Function 'Pixel' argument 3 names different: declaration 'value' definition 'state'.
 void Pixel(int x, int y, bool value);
                               ^
-src/InoBundle.cpp:68:31: note: Function 'Pixel' argument 3 names different: declaration 'value' definition 'state'.
+src/InoBundle.cpp:70:31: note: Function 'Pixel' argument 3 names different: declaration 'value' definition 'state'.
 void Pixel(int x, int y, bool state)
                               ^
-src/InoBundle.cpp:57:52: style:inconclusive: Boolean expression '!(screen[y]>>x)' is used in bitwise operation. Did you mean '&&'? [bitwiseOnBoolean]
+src/InoBundle.cpp:264:0: information: Skipping configuration 'ADCL;ADCSRA;ARDUINO' since the value of 'ADCL' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly. [ConfigurationNotChecked]
+    low = ADCL;
+^
+src/InoBundle.cpp:248:0: information: Skipping configuration 'ADCL;ADCSRA;ARDUINO' since the value of 'ADCSRA' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly. [ConfigurationNotChecked]
+    sbi(ADCSRA, ADSC);
+^
+src/InoBundle.cpp:254:0: information: Skipping configuration 'ADCL;ADCSRA;ARDUINO' since the value of 'ADCSRA' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly. [ConfigurationNotChecked]
+    return (bit_is_set(ADCSRA, ADSC));
+^
+src/InoBundle.cpp:229:0: information: Skipping configuration 'ADCSRB;MUX5;ARDUINO' since the value of 'ADCSRB' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly. [ConfigurationNotChecked]
+    ADCSRB = (ADCSRB & ~(1 << MUX5)) | (((pin >> 3) & 0x01) << MUX5);
+^
+src/InoBundle.cpp:229:0: information: Skipping configuration 'ADCSRB;MUX5;ARDUINO' since the value of 'MUX5' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly. [ConfigurationNotChecked]
+    ADCSRB = (ADCSRB & ~(1 << MUX5)) | (((pin >> 3) & 0x01) << MUX5);
+^
+src/InoBundle.cpp:239:0: information: Skipping configuration 'ADMUX;ARDUINO' since the value of 'ADMUX' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly. [ConfigurationNotChecked]
+    ADMUX = (analog_reference << 6) | (pin & 0x07);
+^
+src/InoBundle.cpp:237:0: information: Skipping configuration 'ADMUX;ARDUINO;__AVR_ATtiny25__;__AVR_ATtiny45__;__AVR_ATtiny85__' since the value of 'ADMUX' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly. [ConfigurationNotChecked]
+    ADMUX = (analog_reference << 4) | (pin & 0x07);
+^
+src/InoBundle.cpp:223:9: style: Assignment of function parameter has no effect outside the function. [uselessAssignmentArg]
+        pin -= 14; // allow for channel or pin numbers
+        ^
+src/InoBundle.cpp:59:52: style:inconclusive: Boolean expression '!(screen[y]>>x)' is used in bitwise operation. Did you mean '&&'? [bitwiseOnBoolean]
             digitalWrite(col[x], !(screen[y] >> x) & 1U);
                                                    ^
-src/InoBundle.cpp:57:52: style: Boolean result is used in bitwise operation. Clarify expression with parentheses. [clarifyCondition]
+src/InoBundle.cpp:59:52: style: Boolean result is used in bitwise operation. Clarify expression with parentheses. [clarifyCondition]
             digitalWrite(col[x], !(screen[y] >> x) & 1U);
                                                    ^
-src/InoBundle.cpp:163:10: style: Variable 'val2' is assigned a value that is never used. [unreadVariable]
+src/InoBundle.cpp:168:10: style: Variable 'val2' is assigned a value that is never used. [unreadVariable]
     val2 = decodedButton[btnGroup][2] >> value & 1U;
          ^
+src/InoBundle.cpp:223:13: style: Variable 'pin' is assigned a value that is never used. [unreadVariable]
+        pin -= 14; // allow for channel or pin numbers
+            ^
+src/InoBundle.cpp:214:9: style: Assignment of function parameter has no effect outside the function. [uselessAssignmentArg]
+        pin -= 54; // allow for channel or pin numbers
+        ^
+src/InoBundle.cpp:214:13: style: Variable 'pin' is assigned a value that is never used. [unreadVariable]
+        pin -= 54; // allow for channel or pin numbers
+            ^
+src/InoBundle.cpp:220:9: style: Assignment of function parameter has no effect outside the function. [uselessAssignmentArg]
+        pin -= 24; // allow for channel or pin numbers
+        ^
+src/InoBundle.cpp:220:13: style: Variable 'pin' is assigned a value that is never used. [unreadVariable]
+        pin -= 24; // allow for channel or pin numbers
+            ^
+src/InoBundle.cpp:211:0: information: Skipping configuration 'ARDUINO;__AVR_ATmega32U4__;analogPinToChannel' since the value of 'analogPinToChannel' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly. [ConfigurationNotChecked]
+    pin = analogPinToChannel(pin);
+^
+src/InoBundle.cpp:211:0: information: Skipping configuration 'ARDUINO;analogPinToChannel' since the value of 'analogPinToChannel' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly. [ConfigurationNotChecked]
+    pin = analogPinToChannel(pin);
+^
 src/games/Tetris.cpp:331:13: style: The scope of the variable 'c' can be reduced. [variableScope]
   int x, y, c;
             ^
-src/InoBundle.cpp:236:0: style: The function 'ComputeButtonParameter' is never used. [unusedFunction]
+src/InoBundle.cpp:325:0: style: The function 'ComputeButtonParameter' is never used. [unusedFunction]
 
 ^
-src/InoBundle.cpp:216:0: style: The function 'GetButtonDown' is never used. [unusedFunction]
+src/InoBundle.cpp:297:0: style: The function 'GetButtonDown' is never used. [unusedFunction]
 
 ^
 src/games/Tetris.cpp:518:0: style: The function 'Init_Tetris' is never used. [unusedFunction]
@@ -38,6 +83,9 @@ lib/Emulator/source/Arduino.cpp:37:0: style: The function 'Test' is never used. 
 
 ^
 lib/Emulator/source/Emulator.cpp:16:0: style: The function 'WinMain' is never used. [unusedFunction]
+
+^
+src/InoBundle.cpp:251:0: style: The function 'analogRead_IsReady' is never used. [unusedFunction]
 
 ^
 nofile:0:0: information: Cppcheck cannot find all the include files (use --check-config for details) [missingInclude]
